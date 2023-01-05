@@ -5,9 +5,9 @@ import Header from "./header";
 export default function Layout(props) {
   if (typeof window !== undefined) console.log("this is layout ");
   return (
-    <Fragment>
+    <Flex w="100%" direction="column">
       <Header />
       <Flex>{props.children}</Flex>
-    </Fragment>
+    </Flex>
   );
 }

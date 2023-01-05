@@ -21,7 +21,7 @@ export default function Login() {
   async function handleLogin(values) {
     const user = { email: values.email, password: values.password };
     try {
-      let response = await fetch(`http://localhost:4000/login`, {
+      let response = await fetch(`http://localhost:4000/user/login`, {
         method: "POST",
         body: JSON.stringify(user),
         headers: {

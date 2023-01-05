@@ -28,12 +28,15 @@ export default function Header(props) {
   function uploader() {
     router.push("/uploader");
   }
+  function goto(route) {
+    router.push(route);
+  }
   async function logout() {
     console.log("logut clicked");
     try {
       const token = await localStorage.getItem("token");
       if (token) {
-        let response = await fetch(`http://localhost:4000/logout`, {
+        let response = await fetch(`http://localhost:4000/user/logout`, {
           method: "POST",
           body: JSON.stringify({ token: token }),
           headers: {
@@ -53,13 +56,14 @@ export default function Header(props) {
             <ToastBox message={response.message} isError={response.isError} />
           ),
         });
+        console.log("deleting the token");
         await localStorage.removeItem("token");
         router.push("/");
       } else {
         throw new Error("session expired ");
       }
     } catch (error) {
-      console.log("in the errro logout client");
+      console.log("in the errro logout client", error);
       toast({
         position: "bottom-left",
         duration: 4000,
@@ -98,8 +102,9 @@ export default function Header(props) {
       alignItems={"center"}
       justifyContent="space-between"
       py={4}
-      h="10vh"
       px={8}
+      wrap={true}
+      direction={["column", "row"]}
     >
       <Link as={NextLink} href="/">
         <Center w="100px" color={"white"}>
@@ -109,29 +114,59 @@ export default function Header(props) {
         </Center>
       </Link>
 
-      <HStack space={4}>
-        <Button colorScheme="teal" variant="ghost" onClick={uploader}>
+      <Flex space={4} wrap={true} direction={["column", "column", "row"]}>
+        <Button
+          colorScheme="teal"
+          variant="ghost"
+          onClick={() => goto("/create-course")}
+        >
+          Create course
+        </Button>
+        <Button
+          colorScheme="teal"
+          variant="ghost"
+          onClick={() => goto("/view-course")}
+        >
+          View course
+        </Button>
+        <Button
+          colorScheme="teal"
+          variant="ghost"
+          onClick={() => goto("/uploader")}
+        >
           Uploader
         </Button>
-        {/* <Button colorScheme="teal" variant="ghost" onClick={graphql}>
+        {/* <Button colorScheme="teal" variant="ghost" onClick={()=>goto("/ex-graphql")}>
           Graphql
         </Button> */}
-        <Button colorScheme="teal" variant="ghost" onClick={signup}>
+        <Button
+          colorScheme="teal"
+          variant="ghost"
+          onClick={() => goto("/signup")}
+        >
           Signup
         </Button>
-        <Button colorScheme="teal" variant="ghost" onClick={login}>
+        <Button
+          colorScheme="teal"
+          variant="ghost"
+          onClick={() => goto("/login")}
+        >
           Login
         </Button>
         <Button colorScheme="teal" variant="ghost" onClick={logout}>
           Logout
         </Button>
-        <Button colorScheme="teal" variant="ghost" onClick={profile}>
+        <Button
+          colorScheme="teal"
+          variant="ghost"
+          onClick={() => goto("/user-profile")}
+        >
           Profile
         </Button>
-        <Button colorScheme="teal" variant="ghost" onClick={closeServer}>
+        {/* <Button colorScheme="teal" variant="ghost" onClick={closeServer}>
           Close Server
-        </Button>
-      </HStack>
+        </Button> */}
+      </Flex>
     </Flex>
   );
 }

@@ -20,7 +20,7 @@ export default function SignUp() {
   const router = useRouter();
   async function handleSignUp(values) {
     const user = { email: values.email, password: values.password };
-    let response = await fetch(`http://localhost:4000/signup`, {
+    let response = await fetch(`http://localhost:4000/user/signup`, {
       method: "POST",
       body: JSON.stringify(user),
       headers: {

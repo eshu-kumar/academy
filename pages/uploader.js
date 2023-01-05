@@ -30,72 +30,15 @@ function Uploader() {
   const maxNumber = 69;
 
   const onChange = (imageList, addUpdateIndex) => {
-    // data for submit
+    // data for submit this array you can send to server for saving the image files
     console.log(imageList, addUpdateIndex);
     setImages(imageList);
   };
 
-  const handleFileUpload = () => {
-    const formData = new FormData();
-    formData.append("image", fileInput.current.files[0]);
-    formData.append("user_mail", "eshu.ek.23@gmail.com");
-
-    fetch("http://localhost:4000/upload-image", {
-      method: "POST",
-      body: formData,
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-      });
-  };
-
-  //   useEffect(() => {
-  //     console.log("in the use effect");
-
-  //     async function getUserProfile() {
-  //       try {
-  //         const token = await localStorage.getItem("token");
-  //         if (token) {
-  //           let response = await fetch(`http://localhost:4000/user-profile`, {
-  //             method: "POST",
-  //             body: JSON.stringify({ token: token }),
-  //             headers: {
-  //               "Content-Type": "application/json",
-  //             },
-  //           });
-  //           response = await response.json();
-  //           if (response.isError) {
-  //             throw new Error(response.isError);
-  //           }
-  //           toast({
-  //             position: "bottom-left",
-  //             duration: 4000,
-  //             render: () => (
-  //               <ToastBox message={response.message} isError={response.isError} />
-  //             ),
-  //           });
-  //         } else {
-  //           throw new Error("session expired ");
-  //         }
-  //       } catch (error) {
-  //         toast({
-  //           position: "bottom-left",
-  //           duration: 4000,
-  //           render: () => <ToastBox message={"session expired"} isError={true} />,
-  //         });
-  //         router.push("/");
-  //       }
-  //     }
-  //     let result = getUserProfile();
-
-  //     console.log("out of the await function and in useeffect");
-  //   }, []);
-
   return (
     <VStack bg="gray.50" align="center" justify="center" h="90vh" w="100%">
-      <Text fontSize={"6xl"}>Uploader</Text>
-      {/* <ImageUploading
+      <Text fontSize={"4xl"}>Images Uploader</Text>
+      <ImageUploading
         multiple
         value={images}
         onChange={onChange}
@@ -169,13 +112,7 @@ function Uploader() {
             </SimpleGrid>
           </VStack>
         )}
-      </ImageUploading> */}
-      <form>
-        <input ref={fileInput} type="file" />
-        <button type="submit" onClick={handleFileUpload}>
-          Upload
-        </button>
-      </form>
+      </ImageUploading>
     </VStack>
   );
 }

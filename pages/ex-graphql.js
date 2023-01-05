@@ -17,6 +17,7 @@ import { useRouter } from "next/router";
 import ToastBox from "../components/others/ToastBox";
 
 export default function ExGraphql() {
+  //run graph ql server before using the graph ql services or using this page
   const toast = useToast();
   const router = useRouter();
   async function handleSignUp(values) {
