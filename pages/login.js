@@ -11,13 +11,17 @@ import {
   VStack,
   Text,
   useToast,
+  Spinner,
 } from "@chakra-ui/react";
 import ToastBox from "../components/others/ToastBox";
 
 import { useRouter } from "next/router";
+import cookies from "js-cookie";
+import { authStore } from "../store/authStore";
 export default function Login() {
   const toast = useToast();
   const router = useRouter();
+  const { setAuthenticated } = authStore();
   async function handleLogin(values) {
     const user = { email: values.email, password: values.password };
     try {
@@ -32,7 +36,13 @@ export default function Login() {
       const isError = response.isError;
       if (!isError) {
         console.log("token is ", response.data.token);
-        await localStorage.setItem("token", response.data.token);
+        const token = response.data.token;
+        //once its deployed on the server side add the secure to true it will besent by https only
+        await localStorage.setItem("token", token, { sameSite: "strict" });
+        // Set the cookie
+        cookies.set("token", token);
+        console.log("cookie in client ", document.cookie);
+        setAuthenticated();
         toast({
           position: "bottom-left",
           duration: 4000,
@@ -40,7 +50,7 @@ export default function Login() {
             <ToastBox message={response.message} isError={response.isError} />
           ),
         });
-        router.push("/user-profile");
+        router.replace("/user-profile");
       } else {
         throw new Error(response.message);
       }
@@ -53,7 +63,14 @@ export default function Login() {
     }
   }
   return (
-    <Flex bg="gray.50" align="center" justify="center" h="90vh" w="100%">
+    <VStack
+      position="relative"
+      bg="gray.50"
+      align="center"
+      justify="center"
+      minH="100vh"
+      w="100%"
+    >
       <VStack space={2}>
         <Text fontSize={"3xl"} color={"gray.700"}>
           Login your account
@@ -136,6 +153,6 @@ export default function Login() {
           </Formik>
         </Box>
       </VStack>
-    </Flex>
+    </VStack>
   );
 }

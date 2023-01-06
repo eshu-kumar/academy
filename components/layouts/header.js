@@ -12,24 +12,15 @@ import {
 import ToastBox from "../others/ToastBox";
 import { useRouter } from "next/router";
 import NextLink from "next/link";
+import cookies from "js-cookie";
+import { authStore } from "../../store/authStore";
 export default function Header(props) {
   console.log("this is header");
+  const { setAuthenticated, isAuthenticated } = authStore();
   const toast = useToast();
   const router = useRouter();
-  function graphql() {
-    router.push("/ex-graphql");
-  }
-  function signup() {
-    router.push("/signup");
-  }
-  function login() {
-    router.push("/login");
-  }
-  function uploader() {
-    router.push("/uploader");
-  }
   function goto(route) {
-    router.push(route);
+    router.push(route, undefined, { shallow: false });
   }
   async function logout() {
     console.log("logut clicked");
@@ -58,7 +49,9 @@ export default function Header(props) {
         });
         console.log("deleting the token");
         await localStorage.removeItem("token");
-        router.push("/");
+        cookies.remove("token");
+        setAuthenticated();
+        router.replace("/");
       } else {
         throw new Error("session expired ");
       }
@@ -71,9 +64,6 @@ export default function Header(props) {
       });
       router.push("/");
     }
-  }
-  function profile() {
-    router.push("/user-profile");
   }
   async function closeServer() {
     try {
@@ -98,6 +88,7 @@ export default function Header(props) {
 
   return (
     <Flex
+      w="full"
       borderWidth={1}
       alignItems={"center"}
       justifyContent="space-between"
@@ -115,57 +106,71 @@ export default function Header(props) {
       </Link>
 
       <Flex space={4} wrap={true} direction={["column", "column", "row"]}>
-        <Button
-          colorScheme="teal"
-          variant="ghost"
-          onClick={() => goto("/create-course")}
-        >
-          Create course
-        </Button>
-        <Button
-          colorScheme="teal"
-          variant="ghost"
-          onClick={() => goto("/view-course")}
-        >
-          View course
-        </Button>
-        <Button
-          colorScheme="teal"
-          variant="ghost"
-          onClick={() => goto("/uploader")}
-        >
-          Uploader
-        </Button>
-        {/* <Button colorScheme="teal" variant="ghost" onClick={()=>goto("/ex-graphql")}>
+        {isAuthenticated ? (
+          <>
+            <Button
+              colorScheme="teal"
+              variant="ghost"
+              onClick={() => goto("/create-course")}
+            >
+              Create course
+            </Button>
+            <Button
+              colorScheme="teal"
+              variant="ghost"
+              onClick={() => goto("/view-course")}
+            >
+              View course
+            </Button>
+            <Button
+              colorScheme="teal"
+              variant="ghost"
+              onClick={() => goto("/uploader")}
+            >
+              Uploader
+            </Button>
+            {/* <Button colorScheme="teal" variant="ghost" onClick={()=>goto("/ex-graphql")}>
           Graphql
         </Button> */}
-        <Button
-          colorScheme="teal"
-          variant="ghost"
-          onClick={() => goto("/signup")}
-        >
-          Signup
-        </Button>
-        <Button
-          colorScheme="teal"
-          variant="ghost"
-          onClick={() => goto("/login")}
-        >
-          Login
-        </Button>
-        <Button colorScheme="teal" variant="ghost" onClick={logout}>
-          Logout
-        </Button>
-        <Button
-          colorScheme="teal"
-          variant="ghost"
-          onClick={() => goto("/user-profile")}
-        >
-          Profile
-        </Button>
-        {/* <Button colorScheme="teal" variant="ghost" onClick={closeServer}>
+            {/* <Button colorScheme="teal" variant="ghost" onClick={closeServer}>
           Close Server
         </Button> */}
+            <Button
+              colorScheme="teal"
+              variant="ghost"
+              onClick={() => goto("/user-profile")}
+            >
+              Profile
+            </Button>
+            <Button colorScheme="teal" variant="ghost" onClick={logout}>
+              Logout
+            </Button>
+          </>
+        ) : (
+          <>
+            <Button
+              colorScheme="teal"
+              variant="ghost"
+              onClick={() => goto("/ex-graphql")}
+            >
+              Graphql
+            </Button>
+            <Button
+              colorScheme="teal"
+              variant="ghost"
+              onClick={() => goto("/login")}
+            >
+              Login
+            </Button>
+            <Button
+              colorScheme="teal"
+              variant="ghost"
+              onClick={() => goto("/signup")}
+            >
+              Signup
+            </Button>
+          </>
+        )}
       </Flex>
     </Flex>
   );

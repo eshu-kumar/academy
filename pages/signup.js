@@ -14,6 +14,7 @@ import {
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import ToastBox from "../components/others/ToastBox";
+import cookies from "cookie";
 
 export default function SignUp() {
   const toast = useToast();
@@ -30,6 +31,11 @@ export default function SignUp() {
     response = await response.json();
     if (!response.isError)
       await localStorage.setItem("token", response.data.token);
+    // Set the cookie
+    // Set the cookie
+    const token = response.data.token;
+    cookies.set("token", token);
+    console.log("cookie in client ", document.cookie);
     toast({
       position: "bottom-left",
       duration: 4000,
