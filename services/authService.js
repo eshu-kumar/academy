@@ -7,6 +7,7 @@ const authUser = async () => {
       body: JSON.stringify({ token: token }),
       headers: {
         "Content-Type": "application/json",
+        token: token,
       },
     });
     response = await response.json();

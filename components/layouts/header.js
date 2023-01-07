@@ -129,9 +129,13 @@ export default function Header(props) {
             >
               Uploader
             </Button>
-            {/* <Button colorScheme="teal" variant="ghost" onClick={()=>goto("/ex-graphql")}>
-          Graphql
-        </Button> */}
+            <Button
+              colorScheme="teal"
+              variant="ghost"
+              onClick={() => goto("/ex-graphql")}
+            >
+              Graphql
+            </Button>
             {/* <Button colorScheme="teal" variant="ghost" onClick={closeServer}>
           Close Server
         </Button> */}

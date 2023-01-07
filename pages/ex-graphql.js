@@ -22,42 +22,40 @@ export default function ExGraphql() {
   const router = useRouter();
   async function handleSignUp(values) {
     let gquery = values.gquery.replace(/[\r\n]/gm, "");
-    //gquery example if you want to yse it from textarea input
-    //    gquery=addFriend(friend:$friend) {
-    //     firstName
-    //     lastName
-    //    age
+    //gquery example if you want to yse it from textarea input uncomment and  paste below string in input
+    // {
+    //   getFriends {
+    //       firstName,
+    //    lastName
     //   }
+    //   }
+
     console.log(gquery);
     console.log("gquery is ", gquery);
-
+    const token = await localStorage.getItem("token");
     let response = await fetch(`http://localhost:4000/graphql`, {
       method: "POST",
+      headers: {
+        Authorization: `Bearer tokenvaluewillcomehere`,
+        "Content-Type": "application/json",
+        token: token,
+      },
       body: JSON.stringify({
-        // query: ` mutation addFriend($friend: FriendInput,$series:SeriesInput) {
+        // query: ` mutation addFriend($friend: FriendInput) {
         //     addFriend(friend:$friend) {
         //         firstName
         //         lastName
         //        age
         //       }
-        //       addSeries(series:$series) {
-        //         seriesName
-        //         year
-        //        rating
-        //       }
+
         // }
         // `,
-        query: `query {
-            getFriends {
-                firstName
-                lastName
-            }
-        }`,
+        query: `${gquery}`,
         // operationName: "addFriend",
         variables: {
           friend: {
-            firstName: "hn",
-            lastName: "ow",
+            firstName: "Aka",
+            lastName: "jadon",
             age: 47,
           },
           series: {
@@ -66,12 +64,7 @@ export default function ExGraphql() {
             rating: "TWO",
           },
         },
-        token: "this is token to graphql server",
       }),
-      headers: {
-        Authorization: `Bearer tokenvaluewillcomehere`,
-        "Content-Type": "application/json",
-      },
     });
     response = await response.json();
     console.log("response graphql", response);
