@@ -89,17 +89,19 @@ export default function Header(props) {
   return (
     <Flex
       w="full"
-      borderWidth={1}
+      borderBottomWidth={1}
       alignItems={"center"}
       justifyContent="space-between"
       py={4}
       px={8}
       wrap={true}
       direction={["column", "row"]}
+      borderBottomColor="whiteAlpha.700"
+      backgroundColor="background.900"
     >
       <Link as={NextLink} href="/">
-        <Center w="100px" color={"white"}>
-          <Text fontSize="3xl" color={"black"}>
+        <Center w="100px">
+          <Text fontSize="3xl" color="text.900">
             Academy
           </Text>
         </Center>
@@ -110,28 +112,36 @@ export default function Header(props) {
           <>
             <Button
               colorScheme="teal"
+              color="text.900"
               variant="ghost"
+              _hover={{ backgroundColor: "hover.900" }}
               onClick={() => goto("/create-course")}
             >
               Create course
             </Button>
             <Button
               colorScheme="teal"
+              color="text.900"
               variant="ghost"
+              _hover={{ backgroundColor: "hover.900" }}
               onClick={() => goto("/view-course")}
             >
               View course
             </Button>
             <Button
               colorScheme="teal"
+              color="text.900"
               variant="ghost"
+              _hover={{ backgroundColor: "hover.900" }}
               onClick={() => goto("/uploader")}
             >
               Uploader
             </Button>
             <Button
               colorScheme="teal"
+              color="text.900"
               variant="ghost"
+              _hover={{ backgroundColor: "hover.900" }}
               onClick={() => goto("/ex-graphql")}
             >
               Graphql
@@ -141,12 +151,20 @@ export default function Header(props) {
         </Button> */}
             <Button
               colorScheme="teal"
+              color="text.900"
               variant="ghost"
+              _hover={{ backgroundColor: "hover.900" }}
               onClick={() => goto("/user-profile")}
             >
               Profile
             </Button>
-            <Button colorScheme="teal" variant="ghost" onClick={logout}>
+            <Button
+              colorScheme="teal"
+              color="text.900"
+              variant="ghost"
+              _hover={{ backgroundColor: "hover.900" }}
+              onClick={logout}
+            >
               Logout
             </Button>
           </>
@@ -154,21 +172,27 @@ export default function Header(props) {
           <>
             <Button
               colorScheme="teal"
+              color="text.900"
               variant="ghost"
+              _hover={{ backgroundColor: "hover.900" }}
               onClick={() => goto("/ex-graphql")}
             >
               Graphql
             </Button>
             <Button
               colorScheme="teal"
+              color="text.900"
               variant="ghost"
+              _hover={{ backgroundColor: "hover.900" }}
               onClick={() => goto("/login")}
             >
               Login
             </Button>
             <Button
               colorScheme="teal"
+              color="text.900"
               variant="ghost"
+              _hover={{ backgroundColor: "hover.900" }}
               onClick={() => goto("/signup")}
             >
               Signup

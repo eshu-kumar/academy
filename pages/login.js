@@ -64,18 +64,25 @@ export default function Login() {
   }
   return (
     <VStack
-      position="relative"
-      bg="gray.50"
+      flex={1}
+      backgroundColor="background.900"
+      h="70vh"
       align="center"
       justify="center"
-      minH="100vh"
-      w="100%"
     >
       <VStack space={2}>
-        <Text fontSize={"3xl"} color={"gray.700"}>
-          Login your account
+        <Text fontSize="lg" fontWeight="bold" color="text.900" textAlign="left">
+          Log in to your Ademy account
         </Text>
-        <Box bg="white" px={10} py={6} rounded="md" w={400}>
+        <Box
+          borderColor="whiteAlpha.400"
+          borderWidth={1}
+          px={10}
+          py={6}
+          rounded="md"
+          w={400}
+          flex={1}
+        >
           <Formik
             initialValues={{
               email: "",
@@ -89,12 +96,16 @@ export default function Login() {
               <form onSubmit={handleSubmit}>
                 <VStack spacing={4} align="flex-start">
                   <FormControl isInvalid={!!errors.email && touched.email}>
-                    <FormLabel htmlFor="email">Email Address</FormLabel>
+                    <FormLabel htmlFor="email" color="text.900">
+                      Email Address
+                    </FormLabel>
                     <Field
                       as={Input}
                       id="email"
                       name="email"
                       type="email"
+                      backgroundColor="#1A1C21"
+                      _hover={{ borderColor: "whiteAlpha.600" }}
                       validate={(value) => {
                         let error;
                         if (!value) {
@@ -116,13 +127,17 @@ export default function Login() {
                   <FormControl
                     isInvalid={!!errors.password && touched.password}
                   >
-                    <FormLabel htmlFor="password">Password</FormLabel>
+                    <FormLabel htmlFor="password" color="text.900">
+                      Password
+                    </FormLabel>
                     <Field
                       as={Input}
                       id="password"
                       name="password"
                       type="password"
                       variant="filled"
+                      backgroundColor="#1A1C21"
+                      _hover={{ borderColor: "whiteAlpha.600" }}
                       validate={(value) => {
                         let error;
 
@@ -135,16 +150,22 @@ export default function Login() {
                     />
                     <FormErrorMessage>{errors.password}</FormErrorMessage>
                   </FormControl>
-
                   <Field
                     as={Checkbox}
                     id="rememberMe"
                     name="rememberMe"
                     colorScheme="purple"
+                    color="text.900"
                   >
                     Remember me?
                   </Field>
-                  <Button type="submit" colorScheme="purple" width="full">
+                  <Button
+                    type="submit"
+                    backgroundColor="primary.900"
+                    color="text.900"
+                    width="full"
+                    _hover={{ backgroundColor: "primary.600" }}
+                  >
                     Login
                   </Button>
                 </VStack>
