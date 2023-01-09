@@ -46,12 +46,19 @@ export default function SignUp() {
     router.push("/user-profile");
   }
   return (
-    <Flex bg="gray.50" align="center" justify="center" h="90vh" w="100%">
+    <Flex bg="background.900" align="center" justify="center" h="70vh" w="100%">
       <VStack space={2}>
-        <Text fontSize={"3xl"} color={"gray.700"}>
+        <Text fontSize={"3xl"} color="text.900">
           Create your account
         </Text>
-        <Box bg="white" px={10} py={6} rounded="md" w={400}>
+        <Box
+          px={8}
+          py={6}
+          rounded="md"
+          w={400}
+          borderColor="whiteAlpha.400"
+          borderWidth={1}
+        >
           <Formik
             initialValues={{
               email: "",
@@ -65,12 +72,19 @@ export default function SignUp() {
               <form onSubmit={handleSubmit}>
                 <VStack spacing={4} align="flex-start">
                   <FormControl isInvalid={!!errors.email && touched.email}>
-                    <FormLabel htmlFor="email">Email Address</FormLabel>
+                    <FormLabel htmlFor="email" color="text.900">
+                      Email Address
+                    </FormLabel>
                     <Field
                       as={Input}
                       id="email"
                       name="email"
                       type="email"
+                      borderWidth={1}
+                      borderColor="whiteAlpha.400"
+                      backgroundColor="#1A1C21"
+                      _hover={{ borderColor: "whiteAlpha.600" }}
+                      // _focus={{ borderColor: "whiteAlpha.300" }}
                       validate={(value) => {
                         let error;
                         if (!value) {
@@ -92,12 +106,18 @@ export default function SignUp() {
                   <FormControl
                     isInvalid={!!errors.password && touched.password}
                   >
-                    <FormLabel htmlFor="password">Password</FormLabel>
+                    <FormLabel htmlFor="password" color="text.900">
+                      Password
+                    </FormLabel>
                     <Field
                       as={Input}
                       id="password"
                       name="password"
                       type="password"
+                      backgroundColor="#1A1C21"
+                      borderWidth={1}
+                      borderColor="whiteAlpha.400"
+                      _hover={{ borderColor: "whiteAlpha.600" }}
                       variant="filled"
                       validate={(value) => {
                         let error;
@@ -114,13 +134,19 @@ export default function SignUp() {
                   <FormControl
                     isInvalid={!!errors.cpassword && touched.cpassword}
                   >
-                    <FormLabel htmlFor="cpassword">Confirm Password</FormLabel>
+                    <FormLabel htmlFor="cpassword" color="text.900">
+                      Confirm Password
+                    </FormLabel>
                     <Field
                       as={Input}
                       id="cpassword"
                       name="cpassword"
                       type="password"
                       variant="filled"
+                      borderWidth={1}
+                      borderColor="whiteAlpha.400"
+                      backgroundColor="#1A1C21"
+                      _hover={{ borderColor: "whiteAlpha.600" }}
                       validate={(value) => {
                         let error;
 
@@ -134,7 +160,13 @@ export default function SignUp() {
                     />
                     <FormErrorMessage>{errors.cpassword}</FormErrorMessage>
                   </FormControl>
-                  <Button type="submit" colorScheme="purple" width="full">
+                  <Button
+                    type="submit"
+                    backgroundColor="primary.900"
+                    color="text.900"
+                    width="full"
+                    _hover={{ backgroundColor: "primary.600" }}
+                  >
                     SignUp
                   </Button>
                 </VStack>

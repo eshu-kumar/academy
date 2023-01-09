@@ -9,7 +9,8 @@ import {
   Skeleton,
   useToast,
 } from "@chakra-ui/react";
-import Header from "./header";
+import Header from "./Header";
+import Footer from "./Footer";
 import { authStore } from "../../store/authStore";
 import { useRouter } from "next/router";
 import ToastBox from "../others/ToastBox";
@@ -43,6 +44,7 @@ export default function Layout(props) {
             ),
           })
         : null} */}
+      <Footer />
     </Flex>
   );
 }
