@@ -1,9 +1,66 @@
 import React from "react";
-import { Flex, Center, Text, Button, Box, VStack } from "@chakra-ui/react";
-import CardComponent from "../components/CardComponent";
-import StudentsActiveCourses from "../components/others/StudentsActiveCourses";
+import {
+  Flex,
+  Center,
+  Text,
+  Button,
+  Box,
+  VStack,
+  HStack,
+} from "@chakra-ui/react";
+import CardComponent from "../components/Card";
 
 export default function StudentLandingPage(props) {
+  const info = [
+    {
+      courseName: "Build Responsive Real-World Websites with HTML and CSS",
+      authorName: "jhon doe",
+      rating: "4.5",
+      price: "100",
+    },
+    {
+      courseName: "The Complete Financial Analyst Course Year 2022",
+      authorName: "jhon doe",
+      rating: "4.2",
+      price: "100",
+    },
+    {
+      courseName: "The Complete 2023 Web Development Bootcamp",
+      authorName: "jhon doe",
+      rating: "4.4",
+      price: "100",
+    },
+    {
+      courseName: "The Complete 2023 Web Development Bootcamp",
+      authorName: "jhon doe",
+      rating: "4.1",
+      price: "100",
+    },
+    {
+      courseName: "Build Responsive Real-World Websites with HTML and CSS",
+      authorName: "jhon doe",
+      rating: "4",
+      price: "100",
+    },
+  ];
+  function CardHstack(props) {
+    return (
+      <HStack px={10} spacing={3}>
+        {info.map((item, index) => {
+          return (
+            <CardComponent
+              isBought={props.isBought}
+              courseName={item.courseName}
+              authorName={item.authorName}
+              rating={item.rating}
+              price={item.price}
+              key={index}
+            />
+          );
+        })}
+      </HStack>
+    );
+  }
   return (
     <>
       <VStack flex={1} bg="background.900" height="100%" px={4} spacing={6}>
@@ -34,7 +91,7 @@ export default function StudentLandingPage(props) {
         >
           My Active Courses
         </Text>
-        <StudentsActiveCourses />
+        <CardHstack isBought={true} />
         <Text
           color="text.900"
           fontWeight="bold"
@@ -51,7 +108,7 @@ export default function StudentLandingPage(props) {
         >
           Students Are Viewing
         </Text>
-        <CardComponent />
+        <CardHstack />
         <Text
           color="text.900"
           fontWeight="bold"
@@ -61,7 +118,7 @@ export default function StudentLandingPage(props) {
         >
           Top In Business
         </Text>
-        <CardComponent />
+        <CardHstack />
         <Text
           color="text.900"
           fontWeight="bold"
@@ -70,7 +127,7 @@ export default function StudentLandingPage(props) {
         >
           Top in Business
         </Text>
-        <CardComponent />
+        <CardHstack />
         <Text
           color="text.900"
           fontWeight="bold"
@@ -79,7 +136,7 @@ export default function StudentLandingPage(props) {
         >
           Top In IT And Software
         </Text>
-        <CardComponent />
+        <CardHstack />
       </VStack>
     </>
   );

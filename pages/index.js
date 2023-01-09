@@ -1,8 +1,57 @@
 import React from "react";
-import { Link, Text, VStack } from "@chakra-ui/react";
-import CardComponent from "../components/CardComponent";
+import { Link, Text, VStack, HStack } from "@chakra-ui/react";
+import CardComponent from "../components/Card";
 import ReviewsComponent from "../components/others/Reviews";
 export default function Home() {
+  const info = [
+    {
+      courseName: "Build Responsive Real-World Websites with HTML and CSS",
+      authorName: "jhon doe",
+      rating: "4.5",
+      price: "100",
+    },
+    {
+      courseName: "The Complete Financial Analyst Course Year 2022",
+      authorName: "jhon doe",
+      rating: "4.2",
+      price: "100",
+    },
+    {
+      courseName: "The Complete 2023 Web Development Bootcamp",
+      authorName: "jhon doe",
+      rating: "4.4",
+      price: "100",
+    },
+    {
+      courseName: "The Complete 2023 Web Development Bootcamp",
+      authorName: "jhon doe",
+      rating: "4.1",
+      price: "100",
+    },
+    {
+      courseName: "Build Responsive Real-World Websites with HTML and CSS",
+      authorName: "jhon doe",
+      rating: "4",
+      price: "100",
+    },
+  ];
+  function CardHstack() {
+    return (
+      <HStack px={10} spacing={3}>
+        {info.map((item, index) => {
+          return (
+            <CardComponent
+              courseName={item.courseName}
+              authorName={item.authorName}
+              rating={item.rating}
+              price={item.price}
+              key={index}
+            />
+          );
+        })}
+      </HStack>
+    );
+  }
   return (
     <VStack flex={1} backgroundColor="background.900" spacing={5} pt={5} pb={6}>
       <Text
@@ -26,7 +75,7 @@ export default function Home() {
         Choose from courses in English and many other languages
       </Text>
       <VStack mt={3} spacing={5}>
-        <CardComponent />
+        <CardHstack />
         <Text
           fontSize="xl"
           color="text.900"
@@ -44,7 +93,7 @@ export default function Home() {
         >
           What Students are Looking into
         </Text>
-        <CardComponent />
+        <CardHstack />
       </VStack>
     </VStack>
   );
