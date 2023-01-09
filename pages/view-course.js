@@ -43,6 +43,7 @@ function ViewCourse() {
   const [courseList, setCourseList] = useState([]);
   const [userEmail, setUserEmail] = useState("");
   const [viewingCourse, setViewingCourse] = useState("");
+  const [defaultUrl, setDefaultUrl] = useState("");
 
   useEffect(() => {
     async function getCoursesList() {
@@ -85,6 +86,7 @@ function ViewCourse() {
       }
     }
     let result = getCoursesList();
+    setDefaultUrl(`https://www.youtube.com/watch?v=Oedp_e35Vmk`);
   }, []);
 
   return (
@@ -147,13 +149,9 @@ function ViewCourse() {
                 controls
                 url={`http://localhost:4000/course/get-course?file=${viewingCourse.toString()}&&userEmail=${userEmail.toString()}`}
               />
-            ) : (
-              <ReactPlayer
-                width="100%"
-                height="100%"
-                url={`https://www.youtube.com/watch?v=Oedp_e35Vmk`}
-              />
-            )}
+            ) : defaultUrl.length > 0 ? (
+              <ReactPlayer width="100%" height="100%" url={defaultUrl} />
+            ) : null}
           </Center>
         </VStack>
       </HStack>
