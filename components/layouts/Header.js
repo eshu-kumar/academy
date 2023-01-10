@@ -90,18 +90,16 @@ export default function Header(props) {
   return (
     <Flex
       w="100%"
-      overflow={"auto"}
+      wrap={"wrap"}
       borderBottomWidth={1}
-      alignItems={"center"}
-      // justifyContent="space-between"
+      justifyContent="space-between"
+      alignItems="center"
       py={4}
       px={8}
-      wrap={true}
-      direction={["row", "row"]}
       borderBottomColor="whiteAlpha.700"
       backgroundColor="background.900"
     >
-      <Link as={NextLink} href="/">
+      <Link mr={10} as={NextLink} href="/">
         <Center w="100px">
           <Text fontSize="3xl" color="text.900">
             Academy
@@ -109,7 +107,7 @@ export default function Header(props) {
         </Center>
       </Link>
       <Spacer />
-      <Flex space={4} wrap={true} direction={["column", "row", "row"]}>
+      <Flex wrap={"wrap"}>
         {isAuthenticated ? (
           <>
             <Button

@@ -8,14 +8,14 @@ import {
   HStack,
   Button,
   Icon,
+  Flex,
 } from "@chakra-ui/react";
 
 export default function Footer(props) {
   return (
-    <Box
-      flex={1}
-      width="100%"
-      overflowX={"auto"}
+    <Flex
+      direction={"column"}
+      width="full"
       bg="background.900"
       px={5}
       py={7}
@@ -77,6 +77,6 @@ export default function Footer(props) {
         <Text textColor="text.900">ACADEMY</Text>
         <Text textColor="text.900"> © 2022 Ademy, Inc.</Text>
       </HStack>
-    </Box>
+    </Flex>
   );
 }
