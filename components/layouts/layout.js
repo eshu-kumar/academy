@@ -28,7 +28,7 @@ export default function Layout(props) {
   }, []);
   console.log("authstroe in layout ", auth);
   return (
-    <Flex w="full" bg="red.500" direction="column" minH="100vh">
+    <Flex w="full" direction="column" minH="100vh">
       <Header />
       <Skeleton
         minH="100%"

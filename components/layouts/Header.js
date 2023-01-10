@@ -99,7 +99,7 @@ export default function Header(props) {
       wrap={true}
       direction={["row", "row"]}
       borderBottomColor="whiteAlpha.700"
-      //backgroundColor="background.900"
+      backgroundColor="background.900"
     >
       <Link as={NextLink} href="/">
         <Center w="100px">
