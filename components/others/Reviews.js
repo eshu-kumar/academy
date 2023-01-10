@@ -30,28 +30,29 @@ const review = [
 ];
 export default function ReviewsComponent(props) {
   return (
-    <HStack px={10} py={2}>
+    <HStack w="full" overflow={"auto"} py={2}>
       {review.map((item, index) => {
         return (
           <Card
+            minW={"200"}
             key={index}
             px={3}
             py={4}
-            border='2px'
-            borderColor='whiteAlpha.300'
+            border="2px"
+            borderColor="whiteAlpha.300"
           >
             <CardBody>
-              <Text fontSize='md' fontWeight='medium' color='text.900'>
+              <Text fontSize="md" fontWeight="medium" color="text.900">
                 {item.review}
               </Text>
-              <HStack spacing={2} alignItems='center' mt={2}>
+              <HStack spacing={2} alignItems="center" mt={2}>
                 <Avatar
                   name={item.reviewer}
-                  color='text.900'
-                  backgroundColor='primary.900'
-                  size='sm'
+                  color="text.900"
+                  backgroundColor="primary.900"
+                  size="sm"
                 />
-                <Text fontSize='sm' color='text.900'>
+                <Text fontSize="sm" color="text.900">
                   {item.reviewer}
                 </Text>
               </HStack>

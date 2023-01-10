@@ -8,6 +8,7 @@ import {
   HStack,
   Link,
   useToast,
+  Spacer,
 } from "@chakra-ui/react";
 import ToastBox from "../others/ToastBox";
 import { useRouter } from "next/router";
@@ -88,16 +89,17 @@ export default function Header(props) {
 
   return (
     <Flex
-      w="full"
+      w="100%"
+      overflow={"auto"}
       borderBottomWidth={1}
       alignItems={"center"}
-      justifyContent="space-between"
+      // justifyContent="space-between"
       py={4}
       px={8}
       wrap={true}
-      direction={["column", "row"]}
+      direction={["row", "row"]}
       borderBottomColor="whiteAlpha.700"
-      backgroundColor="background.900"
+      //backgroundColor="background.900"
     >
       <Link as={NextLink} href="/">
         <Center w="100px">
@@ -106,8 +108,8 @@ export default function Header(props) {
           </Text>
         </Center>
       </Link>
-
-      <Flex space={4} wrap={true} direction={["column", "column", "row"]}>
+      <Spacer />
+      <Flex space={4} wrap={true} direction={["column", "row", "row"]}>
         {isAuthenticated ? (
           <>
             <Button

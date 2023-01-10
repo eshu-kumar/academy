@@ -1,7 +1,6 @@
 import React from "react";
 import { Text, Button, Box, HStack, VStack } from "@chakra-ui/react";
 import Router, { useRouter } from "next/router";
-import StudentsActiveCourses from "../components/others/StudentsActiveCourses";
 
 export default function TeacherProfilePage(props) {
   function redirectToCoursePage() {
@@ -109,7 +108,6 @@ export default function TeacherProfilePage(props) {
       <Text color="text.900" fontWeight="bold" fontSize="xl">
         My Active Courses
       </Text>
-      <StudentsActiveCourses />
     </VStack>
   );
 }

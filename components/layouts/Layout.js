@@ -8,6 +8,7 @@ import {
   Container,
   Skeleton,
   useToast,
+  VStack,
 } from "@chakra-ui/react";
 import Header from "./Header";
 import Footer from "./Footer";
@@ -27,7 +28,7 @@ export default function Layout(props) {
   }, []);
   console.log("authstroe in layout ", auth);
   return (
-    <Flex w="full" direction="column" minH="100vh" position="relative">
+    <Flex w="full" bg="red.500" direction="column" minH="100vh">
       <Header />
       <Skeleton
         minH="100%"

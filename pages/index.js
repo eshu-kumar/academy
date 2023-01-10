@@ -37,7 +37,7 @@ export default function Home() {
   ];
   function CardHstack() {
     return (
-      <HStack px={10} spacing={3}>
+      <HStack w="full" overflow={"auto"} spacing={3}>
         {info.map((item, index) => {
           return (
             <CardComponent
@@ -53,28 +53,39 @@ export default function Home() {
     );
   }
   return (
-    <VStack flex={1} backgroundColor="background.900" spacing={5} pt={5} pb={6}>
-      <Text
-        textAlign="left"
-        fontWeight="extrabold"
-        fontSize="2xl"
-        color="text.900"
-      >
-        Learn{" "}
-        <Link color="primary.900" textDecoration="none">
-          in-demand{" "}
-        </Link>{" "}
-        professional skills
-      </Text>
-      <Text
-        textAlign="start"
-        fontWeight="medium"
-        fontSize="xl"
-        color="text.900"
-      >
-        Choose from courses in English and many other languages
-      </Text>
-      <VStack mt={3} spacing={5}>
+    <VStack
+      alignItems={"center"}
+      w="full"
+      backgroundColor="background.900"
+      spacing={5}
+      pt={5}
+      pb={6}
+      px={10}
+    >
+      <VStack alignItems={"center"} w="full">
+        <Text
+          textAlign="center"
+          fontWeight="extrabold"
+          fontSize="2xl"
+          color="text.900"
+        >
+          Learn{" "}
+          <Link color="primary.900" textDecoration="none">
+            in-demand{" "}
+          </Link>{" "}
+          professional skills
+        </Text>
+        <Text
+          textAlign="center"
+          fontWeight="medium"
+          fontSize="xl"
+          color="text.900"
+        >
+          Choose from courses in English and many other languages
+        </Text>
+      </VStack>
+
+      <VStack w="full" mt={3} spacing={5}>
         <CardHstack />
         <Text
           fontSize="xl"
