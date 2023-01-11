@@ -26,6 +26,18 @@ export default function Layout(props) {
   useEffect(() => {
     auth.fetchData();
   }, []);
+  //uncomment when want to show unauthorization toast
+  // useEffect(() => {
+  //   if (auth.error && !auth.isLoading) {
+  //     console.log("toast is being called");
+  //     toast({
+  //       position: "bottom-left",
+  //       duration: 4000,
+  //       render: () => <ToastBox message={auth.error} isError={auth.error} />,
+  //     });
+  //   }
+  // }, [auth.error]);
+
   console.log("authstroe in layout ", auth);
   return (
     <Flex w="full" direction="column" minH="100vh">
@@ -36,15 +48,7 @@ export default function Layout(props) {
       >
         <Flex>{props.children}</Flex>
       </Skeleton>
-      {/* {auth.error
-        ? toast({
-            position: "bottom-left",
-            duration: 4000,
-            render: () => (
-              <ToastBox message={auth.error} isError={auth.error} />
-            ),
-          })
-        : null} */}
+
       <Footer />
     </Flex>
   );
