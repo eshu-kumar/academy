@@ -95,14 +95,14 @@ function ViewCourse() {
       bg="gray.50"
       align="center"
       justify="center"
-      h="90vh"
+      minH="90vh"
       w="100%"
     >
       {/* <Text fontSize={"6xl"}>View courses</Text> */}
       <HStack w="100%" justifyContent={"space-around"}>
-        <VStack w="25%" h="700" mx={10} align="left" spacing={2}>
+        <VStack w="25%" mx={10} align="left" spacing={2}>
           <Text fontSize="3xl"> Courses </Text>
-          <VStack alignItems="left" spacing={4}>
+          <VStack h="700" overflow={"auto"} alignItems="left" spacing={4}>
             {courseList.length > 0 ? (
               courseList.map((item, index) => {
                 return (

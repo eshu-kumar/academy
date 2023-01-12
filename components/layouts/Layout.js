@@ -44,7 +44,8 @@ export default function Layout(props) {
       <Header />
       <Skeleton
         minH="100%"
-        isLoaded={auth.isAuthenticated || publicPaths.includes(path)}
+        // isLoaded={auth.isAuthenticated || publicPaths.includes(path)}
+        isLoaded={true}
       >
         <Flex>{props.children}</Flex>
       </Skeleton>
