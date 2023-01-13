@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, Text, VStack, HStack } from "@chakra-ui/react";
 import CardComponent from "../components/Card";
 import ReviewsComponent from "../components/others/Reviews";
+import { getCourseListService } from "../services/courseService";
 export default function Home() {
+  const [courseList, setCourseList] = useState([]);
+  const [userEmail, setUserEmail] = useState();
   const info = [
     {
       courseName: "Build Responsive Real-World Websites with HTML and CSS",
@@ -35,15 +38,28 @@ export default function Home() {
       price: "100",
     },
   ];
+  useEffect(() => {
+    async function getCourseList() {
+      const response = await getCourseListService();
+      if (!response.isError) {
+        setCourseList(response.courses);
+        setUserEmail(response.userEmail);
+      }
+      console.log("course list in index", response);
+    }
+    getCourseList();
+  }, []);
+
   function CardHstack() {
     return (
       <HStack w="full" overflow={"auto"} spacing={3}>
-        {info.map((item, index) => {
+        {courseList.map((item, index) => {
           return (
             <CardComponent
-              courseName={item.courseName}
-              authorName={item.authorName}
-              rating={item.rating}
+              courseName={item.coursename}
+              authorName={item.author}
+              imageUri={`http://localhost:4000/course/get-course?file=${item.file.toString()}&&userEmail=${userEmail.toString()}`}
+              rating={4.2}
               price={item.price}
               key={index}
             />

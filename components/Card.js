@@ -15,9 +15,11 @@ import {
 export default function CardComponent(item) {
   return (
     <Card minW={200} flex={1} border="2px" borderColor="whiteAlpha.300">
-      <CardBody>
+      <CardBody w="full">
         <Image
-          src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
+          w={"full"}
+          h={200}
+          src={item.imageUri}
           alt="Green double couch with wooden legs"
           borderRadius="lg"
         />
@@ -46,7 +48,7 @@ export default function CardComponent(item) {
             _hover={{ backgroundColor: "hover.900" }}
             // onClick={onOpen}
           >
-            Add to cart
+            View Course
           </Button>
         </CardFooter>
       ) : null}

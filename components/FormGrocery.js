@@ -8,6 +8,7 @@ import {
   Input,
   Select,
   Checkbox,
+  Textarea,
 } from "@chakra-ui/react";
 
 export const MyTextInput = ({ label, ...props }) => {
@@ -19,6 +20,19 @@ export const MyTextInput = ({ label, ...props }) => {
     <FormControl isInvalid={meta.touched && meta.error}>
       <FormLabel htmlFor={props.id || props.name}>{label}</FormLabel>
       <Input {...field} {...props} />
+      <FormErrorMessage>{meta.error}</FormErrorMessage>
+    </FormControl>
+  );
+};
+export const MyTextArea = ({ label, ...props }) => {
+  // useField() returns [formik.getFieldProps(), formik.getFieldMeta()]
+  // which we can spread on <input>. We can use field meta to show an error
+  // message if the field is invalid and it has been touched (i.e. visited)
+  const [field, meta] = useField(props);
+  return (
+    <FormControl isInvalid={meta.touched && meta.error}>
+      <FormLabel htmlFor={props.id || props.name}>{label}</FormLabel>
+      <Textarea size="lg" {...field} {...props} />
       <FormErrorMessage>{meta.error}</FormErrorMessage>
     </FormControl>
   );

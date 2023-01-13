@@ -25,17 +25,6 @@ import ToastBox from "../components/others/ToastBox";
 import dynamic from "next/dynamic";
 const ReactPlayer = dynamic(() => import("react-player/lazy"), { ssr: false });
 chakra(ReactPlayer);
-import {
-  Table,
-  Thead,
-  Tbody,
-  Tfoot,
-  Tr,
-  Th,
-  Td,
-  TableCaption,
-  TableContainer,
-} from "@chakra-ui/react";
 
 function ViewCourse() {
   const toast = useToast();
