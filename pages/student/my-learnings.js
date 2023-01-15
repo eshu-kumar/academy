@@ -60,7 +60,7 @@ export default function MyLearnings(props) {
         fontSize="2xl"
         textAlign="start"
       >
-        Students Are Viewing
+        Students Are Also Viewing
       </Text>
       <Courses userEmail={userEmail} list={courseList} />
     </VStack>
