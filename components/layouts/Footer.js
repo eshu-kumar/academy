@@ -28,8 +28,13 @@ export default function Footer(props) {
         </Text>
       </HStack>
       <Divider />
-      <HStack justifyContent="space-between" alignItems="start" py={5}>
-        <HStack spacing={10}>
+      <HStack
+        flexWrap={"wrap"}
+        justifyContent="space-between"
+        alignItems="start"
+        py={5}
+      >
+        <HStack spacing={[4, 8, 10]}>
           <VStack spacing={2} alignItems="start">
             <Link textColor="text.900" fontSize="sm">
               Academy Business

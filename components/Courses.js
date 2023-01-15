@@ -47,7 +47,14 @@ export default function Courses(props) {
     list = props.list;
   }
   return (
-    <HStack w="full" overflowX={"auto"} alignItems="stretch" spacing={3}>
+    <HStack
+      justifyItems="center"
+      w="full"
+      overflowX={"auto"}
+      alignItems="stretch"
+      spacing={[3, 4, 6]}
+      justifyContent={["left", "left", list.length < 4 ? "center" : "left"]}
+    >
       {list.map((item, index) => {
         const uri =
           item.file && props.userEmail

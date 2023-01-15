@@ -16,7 +16,8 @@ export default function CardComponent(item) {
   const router = useRouter();
   return (
     <Card
-      minW={200}
+      minW={280}
+      maxW={280}
       h="100%"
       border="2px"
       borderColor="whiteAlpha.300"
@@ -24,7 +25,7 @@ export default function CardComponent(item) {
     >
       <CardBody h="100%" w="full" justifyContent="space-around">
         <Image
-          w={"full"}
+          width={"full"}
           h={200}
           src={item.imageUri}
           alt="Green double couch with wooden legs"

@@ -5,7 +5,7 @@ import Courses from "../../components/Courses";
 import { getCourseListService } from "../../services/courseService";
 export default function MyCreations(props) {
   const [courseList, setCourseList] = useState([]);
-  const [userEmail, setUserEmail] = useState();
+  const [userEmail, setUserEmail] = useState("");
   const router = useRouter();
   useEffect(() => {
     async function getCourseList() {
@@ -28,17 +28,19 @@ export default function MyCreations(props) {
       width="full"
       backgroundColor="background.900"
       alignItems="center"
-      px={10}
-      py={10}
+      p={[4, 6, 6]}
+      spacing={2}
     >
-      <Text color="text.900" fontWeight="bold" fontSize="2xl">
-        Welcome
-      </Text>
-      <Text color="text.900" fontWeight="normal" fontSize="lg">
-        {userEmail}
+      <Text
+        color="text.900"
+        fontWeight="bold"
+        fontSize="2xl"
+        textAlign="center"
+      >
+        Welcome Back {userEmail.split(".")[0]}
       </Text>
       <HStack
-        marginY={10}
+        marginY={4}
         w="100%"
         alignItems="center"
         justifyContent="center"
@@ -79,8 +81,7 @@ export default function MyCreations(props) {
         alignItems="center"
         justifyContent="space-between"
         spacing={4}
-        pt={6}
-        pb={12}
+        p={2}
       >
         <Box
           borderWidth={1}

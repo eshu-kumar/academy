@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Flex,
   Center,
@@ -7,20 +7,35 @@ import {
   Box,
   VStack,
   HStack,
+  useEditable,
+  useFocusEffect,
 } from "@chakra-ui/react";
+import { getCourseListService } from "../../services/courseService";
 import Courses from "../../components/Courses";
-
 export default function MyLearnings(props) {
+  const [courseList, setCourseList] = useState([]);
+  const [userEmail, setUserEmail] = useState("");
+  useEffect(() => {
+    async function getCourseList() {
+      const response = await getCourseListService();
+      if (!response.isError) {
+        setCourseList(response.courses);
+        setUserEmail(response.userEmail);
+      }
+      console.log("course list in index", response);
+    }
+    getCourseList();
+  }, []);
   return (
-    <VStack w="full" bg="background.900" px={4} spacing={6}>
+    <VStack p={[4, 6, 6]} spacing={2} w="full" bg="background.900" px={4}>
       <Text
         color="text.900"
         fontWeight="bold"
         fontSize="2xl"
-        textAlign="start"
+        textAlign="center"
         pt={6}
       >
-        Welcome Back User&apos;s Name
+        Welcome Back {userEmail.split(".")[0]}
       </Text>
       <Box borderWidth={1} borderColor="primary.900" p={4} alignItems="center">
         <Text
@@ -35,7 +50,7 @@ export default function MyLearnings(props) {
       <Text color="text.900" fontWeight="bold" fontSize="2xl" textAlign="start">
         My Active Courses
       </Text>
-      <Courses isBought={true} />
+      <Courses userEmail={userEmail} list={courseList} isBought={true} />
       <Text color="text.900" fontWeight="bold" fontSize="3xl" textAlign="start">
         What To Learn Next
       </Text>
@@ -47,25 +62,7 @@ export default function MyLearnings(props) {
       >
         Students Are Viewing
       </Text>
-      <Courses />
-      <Text
-        color="text.900"
-        fontWeight="bold"
-        fontSize="2xl"
-        textAlign="start"
-        pt={6}
-      >
-        Top In Business
-      </Text>
-      <Courses />
-      <Text color="text.900" fontWeight="bold" fontSize="2xl" textAlign="start">
-        Top in Business
-      </Text>
-      <Courses />
-      <Text color="text.900" fontWeight="bold" fontSize="2xl" textAlign="start">
-        Top In IT And Software
-      </Text>
-      <Courses />
+      <Courses userEmail={userEmail} list={courseList} />
     </VStack>
   );
 }

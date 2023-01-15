@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, Text, VStack, HStack } from "@chakra-ui/react";
-import CardHstack from "../components/Courses";
+import Courses from "../components/Courses";
 import Reviews from "../components/Reviews";
 import { getCourseListService } from "../services/courseService";
 export default function Home() {
@@ -52,7 +52,7 @@ export default function Home() {
       </VStack>
 
       <VStack w="full" mt={3} spacing={5}>
-        <CardHstack userEmail={userEmail} list={courseList} />
+        <Courses userEmail={userEmail} list={courseList} />
         <Text
           fontSize="xl"
           color="text.900"
@@ -70,7 +70,7 @@ export default function Home() {
         >
           What Students are Looking into
         </Text>
-        <CardHstack userEmail={userEmail} list={courseList} />
+        <Courses userEmail={userEmail} list={courseList} />
       </VStack>
     </VStack>
   );

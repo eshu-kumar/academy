@@ -20,6 +20,15 @@ export default function Header(props) {
   const { setAuthenticated, isAuthenticated } = authStore();
   const toast = useToast();
   const router = useRouter();
+  const url = router.asPath;
+  const path = url.split("?")[0];
+  let isStudent = true;
+  const isInsructor = path.includes("/instructor/");
+  isStudent = path.includes("/student/");
+  console.log("url in header", url);
+  console.log("path is header", path);
+  console.log("isInstructor", isInsructor);
+  console.log("isStudent", isStudent);
   function goto(route) {
     router.push(route, undefined, { shallow: false });
   }
@@ -86,7 +95,171 @@ export default function Header(props) {
       router.push("/");
     }
   }
-
+  function InstructorHeader() {
+    return (
+      <>
+        <Button
+          colorScheme="teal"
+          color="text.900"
+          variant="ghost"
+          _hover={{ backgroundColor: "hover.900" }}
+          onClick={() => goto("/instructor/my-creations")}
+        >
+          InstructorCreations
+        </Button>
+        <Button
+          colorScheme="teal"
+          color="text.900"
+          variant="ghost"
+          _hover={{ backgroundColor: "hover.900" }}
+          onClick={() => goto("/instructor/create-course")}
+        >
+          CreateCourse
+        </Button>
+        <Button
+          colorScheme="teal"
+          color="text.900"
+          variant="ghost"
+          _hover={{ backgroundColor: "hover.900" }}
+          onClick={() => goto("/instructor/course-edit")}
+        >
+          CourseEdit
+        </Button>
+        <Button
+          colorScheme="teal"
+          color="text.900"
+          variant="ghost"
+          _hover={{ backgroundColor: "hover.900" }}
+          onClick={() => goto("/student/my-learnings")}
+        >
+          GoStudentView
+        </Button>
+      </>
+    );
+  }
+  function StudentHeader() {
+    return (
+      <>
+        <Button
+          colorScheme="teal"
+          color="text.900"
+          variant="ghost"
+          _hover={{ backgroundColor: "hover.900" }}
+          onClick={() => goto("/student/my-learnings")}
+        >
+          MyLearning
+        </Button>
+        <Button
+          colorScheme="teal"
+          color="text.900"
+          variant="ghost"
+          _hover={{ backgroundColor: "hover.900" }}
+          onClick={() => goto("/student/course-info")}
+        >
+          CourseInfo
+        </Button>
+        <Button
+          colorScheme="teal"
+          color="text.900"
+          variant="ghost"
+          _hover={{ backgroundColor: "hover.900" }}
+          onClick={() => goto("/view-course")}
+        >
+          ViewCourse
+        </Button>
+        <Button
+          colorScheme="teal"
+          color="text.900"
+          variant="ghost"
+          _hover={{ backgroundColor: "hover.900" }}
+          onClick={() => goto("/instructor/get-started")}
+        >
+          GoInstructorView
+        </Button>
+      </>
+    );
+  }
+  function ExperimentsHeader() {
+    return (
+      <>
+        <Button
+          colorScheme="teal"
+          color="text.900"
+          variant="ghost"
+          _hover={{ backgroundColor: "hover.900" }}
+          onClick={() => goto("/experiments/uploader")}
+        >
+          Uploader
+        </Button>
+        <Button
+          colorScheme="teal"
+          color="text.900"
+          variant="ghost"
+          _hover={{ backgroundColor: "hover.900" }}
+          onClick={() => goto("/experiments/ex-graphql")}
+        >
+          Graphql
+        </Button>
+        <Button
+          colorScheme="teal"
+          color="text.900"
+          variant="ghost"
+          _hover={{ backgroundColor: "hover.900" }}
+          onClick={closeServer}
+        >
+          Close Server
+        </Button>
+      </>
+    );
+  }
+  function AuthCommonHeader() {
+    return (
+      <>
+        <Button
+          colorScheme="teal"
+          color="text.900"
+          variant="ghost"
+          _hover={{ backgroundColor: "hover.900" }}
+          onClick={() => goto("/auth-user/user-profile")}
+        >
+          Profile
+        </Button>
+        <Button
+          colorScheme="teal"
+          color="text.900"
+          variant="ghost"
+          _hover={{ backgroundColor: "hover.900" }}
+          onClick={logout}
+        >
+          Logout
+        </Button>
+      </>
+    );
+  }
+  function NotAuthHeader() {
+    return (
+      <>
+        <Button
+          colorScheme="teal"
+          color="text.900"
+          variant="ghost"
+          _hover={{ backgroundColor: "hover.900" }}
+          onClick={() => goto("/auth-user/login")}
+        >
+          Login
+        </Button>
+        <Button
+          colorScheme="teal"
+          color="text.900"
+          variant="ghost"
+          _hover={{ backgroundColor: "hover.900" }}
+          onClick={() => goto("/auth-user/signup")}
+        >
+          Signup
+        </Button>
+      </>
+    );
+  }
   return (
     <Flex
       w="100%"
@@ -110,139 +283,34 @@ export default function Header(props) {
       <Flex wrap={"wrap"}>
         {isAuthenticated ? (
           <>
-            <Button
-              colorScheme="teal"
-              color="text.900"
-              variant="ghost"
-              _hover={{ backgroundColor: "hover.900" }}
-              onClick={() => goto("/instructor/create-course")}
-            >
-              Create course
-            </Button>
-            <Button
-              colorScheme="teal"
-              color="text.900"
-              variant="ghost"
-              _hover={{ backgroundColor: "hover.900" }}
-              onClick={() => goto("/instructor/course-edit")}
-            >
-              Course edit
-            </Button>
-            <Button
-              colorScheme="teal"
-              color="text.900"
-              variant="ghost"
-              _hover={{ backgroundColor: "hover.900" }}
-              onClick={() => goto("/student/course-info")}
-            >
-              Course info
-            </Button>
-            <Button
-              colorScheme="teal"
-              color="text.900"
-              variant="ghost"
-              _hover={{ backgroundColor: "hover.900" }}
-              onClick={() => goto("/view-course")}
-            >
-              View course
-            </Button>
-            <Button
-              colorScheme="teal"
-              color="text.900"
-              variant="ghost"
-              _hover={{ backgroundColor: "hover.900" }}
-              onClick={() => goto("/instructor/get-started")}
-            >
-              Instructor get Started
-            </Button>
-            <Button
-              colorScheme="teal"
-              color="text.900"
-              variant="ghost"
-              _hover={{ backgroundColor: "hover.900" }}
-              onClick={() => goto("/instructor/my-creations")}
-            >
-              Instructor Creations
-            </Button>
-            <Button
-              colorScheme="teal"
-              color="text.900"
-              variant="ghost"
-              _hover={{ backgroundColor: "hover.900" }}
-              onClick={() => goto("/student/my-learnings")}
-            >
-              My Learning
-            </Button>
-            {/* <Button
-              colorScheme="teal"
-              color="text.900"
-              variant="ghost"
-              _hover={{ backgroundColor: "hover.900" }}
-              onClick={() => goto("/experiments/uploader")}
-            >
-              Uploader
-            </Button>
-            <Button
-              colorScheme="teal"
-              color="text.900"
-              variant="ghost"
-              _hover={{ backgroundColor: "hover.900" }}
-              onClick={() => goto("/experiments/ex-graphql")}
-            >
-              Graphql
-            </Button> */}
-            {/* <Button colorScheme="teal" variant="ghost" onClick={closeServer}>
-          Close Server
-        </Button> */}
-            <Button
-              colorScheme="teal"
-              color="text.900"
-              variant="ghost"
-              _hover={{ backgroundColor: "hover.900" }}
-              onClick={() => goto("/auth-user/user-profile")}
-            >
-              Profile
-            </Button>
-            <Button
-              colorScheme="teal"
-              color="text.900"
-              variant="ghost"
-              _hover={{ backgroundColor: "hover.900" }}
-              onClick={logout}
-            >
-              Logout
-            </Button>
+            {isInsructor ? <InstructorHeader /> : <StudentHeader />}
+            {/* {isStudent ? (
+              <Button
+                colorScheme="teal"
+                color="text.900"
+                variant="ghost"
+                _hover={{ backgroundColor: "hover.900" }}
+                onClick={() => goto("/instructor/get-started")}
+              >
+                Instructor Mode
+              </Button>
+            ) : (
+              <Button
+                colorScheme="teal"
+                color="text.900"
+                variant="ghost"
+                _hover={{ backgroundColor: "hover.900" }}
+                onClick={() => goto("/student/my-learnings")}
+              >
+                Student Mode
+              </Button>
+            )} */}
+
+            {/* <ExperimentsHeader /> */}
+            <AuthCommonHeader />
           </>
         ) : (
-          <>
-            {/* <Button
-              colorScheme="teal"
-              color="text.900"
-              variant="ghost"
-              _hover={{ backgroundColor: "hover.900" }}
-              onClick={() => goto("/experiments/ex-graphql")}
-            >
-              Graphql
-            </Button> */}
-            <Button
-              colorScheme="teal"
-              color="text.900"
-              variant="ghost"
-              _hover={{ backgroundColor: "hover.900" }}
-              onClick={() => goto("/auth-user/login")}
-            >
-              Login
-            </Button>
-            <Button
-              colorScheme="teal"
-              color="text.900"
-              variant="ghost"
-              _hover={{ backgroundColor: "hover.900" }}
-              onClick={() => goto("/auth-user/signup")}
-            >
-              Signup
-            </Button>
-          </>
+          <NotAuthHeader />
         )}
       </Flex>
     </Flex>
