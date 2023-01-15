@@ -1,7 +1,7 @@
 import React from "react";
-import { Text, Avatar, Card, CardBody, HStack } from "@chakra-ui/react";
+import { Text, Avatar, HStack, VStack } from "@chakra-ui/react";
 
-const review = [
+const Discussions = [
   {
     review:
       "I am proud to say that after a few months of taking this course...I passed my exam and am now an AWS Certified Cloud Practitioner! This content was exactly what the CCP exam covered.",
@@ -20,7 +20,7 @@ const review = [
   {
     review:
       "I am proud to say that after a few months of taking this course...I passed my exam and am now an AWS Certified Cloud Practitioner! This content was exactly what the CCP exam covered.",
-    reviewer: "Will A",
+    reviewer: "Jhon Doe",
   },
   {
     review:
@@ -28,38 +28,31 @@ const review = [
     reviewer: "Will A",
   },
 ];
-export default function ReviewsComponent(props) {
+export default function QuestionAndAnswer(props) {
   return (
-    <HStack w="full" overflow={"auto"} py={2}>
-      {review.map((item, index) => {
+    <VStack alignItems="flex-start" spacing={6} pt={6}>
+      {Discussions.map((item, index) => {
         return (
-          <Card
-            minW={"200"}
+          <HStack
+            alignItems="center"
             key={index}
-            px={3}
-            py={4}
-            border="2px"
-            borderColor="whiteAlpha.300"
+            spacing={4}
+            onClick={() => {
+              console.log("test");
+            }}
           >
-            <CardBody>
-              <Text fontSize="md" fontWeight="medium" color="text.900">
-                {item.review}
-              </Text>
-              <HStack spacing={2} alignItems="center" mt={2}>
-                <Avatar
-                  name={item.reviewer}
-                  color="text.900"
-                  backgroundColor="primary.900"
-                  size="sm"
-                />
-                <Text fontSize="sm" color="text.900">
-                  {item.reviewer}
-                </Text>
-              </HStack>
-            </CardBody>
-          </Card>
+            <Avatar
+              name={item.reviewer}
+              color="text.900"
+              backgroundColor="primary.900"
+              size="md"
+            />
+            <Text fontWeight="normal" color="text.900" fontSize="sm">
+              {item.review}
+            </Text>
+          </HStack>
         );
       })}
-    </HStack>
+    </VStack>
   );
 }

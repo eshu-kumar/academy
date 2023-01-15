@@ -21,7 +21,12 @@ export default function Layout(props) {
   const router = useRouter();
   const auth = authStore();
   const url = router.asPath;
-  const publicPaths = ["/login", "/", "/signup", "/ex-graphql"];
+  const publicPaths = [
+    "/auth-user/login",
+    "/",
+    "/auth-user/signup",
+    "/experiments/ex-graphql",
+  ];
   const path = url.split("?")[0];
   useEffect(() => {
     auth.fetchData();

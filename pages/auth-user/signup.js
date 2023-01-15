@@ -13,7 +13,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import ToastBox from "../components/others/ToastBox";
+import ToastBox from "../../components/others/ToastBox";
 import cookies from "cookie";
 
 export default function SignUp() {
@@ -43,14 +43,15 @@ export default function SignUp() {
         <ToastBox message={response.message} isError={response.isError} />
       ),
     });
-    router.push("/user-profile");
+    router.push("/auth-user/user-profile");
   }
   return (
     <Flex bg="background.900" align="center" justify="center" h="70vh" w="100%">
       <VStack space={2}>
-        <Text fontSize={"3xl"} color="text.900">
+        <Text fontSize="lg" fontWeight="bold" color="text.900" textAlign="left">
           Create your account
         </Text>
+
         <Box
           px={8}
           py={6}

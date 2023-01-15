@@ -13,6 +13,7 @@ const colors = {
   },
   background: {
     900: "#000000",
+    700: "#1A1C21",
   },
   text: {
     900: "#FFFFFF",
@@ -20,6 +21,7 @@ const colors = {
   hover: {
     900: "#f60057",
   },
+  border: {},
 };
 
 const theme = extendTheme({ colors });

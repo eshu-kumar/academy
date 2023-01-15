@@ -1,43 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link, Text, VStack, HStack } from "@chakra-ui/react";
-import CardComponent from "../components/Card";
-import ReviewsComponent from "../components/others/Reviews";
+import CardHstack from "../components/Courses";
+import Reviews from "../components/Reviews";
 import { getCourseListService } from "../services/courseService";
 export default function Home() {
   const [courseList, setCourseList] = useState([]);
   const [userEmail, setUserEmail] = useState();
-  const info = [
-    {
-      courseName: "Build Responsive Real-World Websites with HTML and CSS",
-      authorName: "jhon doe",
-      rating: "4.5",
-      price: "100",
-    },
-    {
-      courseName: "The Complete Financial Analyst Course Year 2022",
-      authorName: "jhon doe",
-      rating: "4.2",
-      price: "100",
-    },
-    {
-      courseName: "The Complete 2023 Web Development Bootcamp",
-      authorName: "jhon doe",
-      rating: "4.4",
-      price: "100",
-    },
-    {
-      courseName: "The Complete 2023 Web Development Bootcamp",
-      authorName: "jhon doe",
-      rating: "4.1",
-      price: "100",
-    },
-    {
-      courseName: "Build Responsive Real-World Websites with HTML and CSS",
-      authorName: "jhon doe",
-      rating: "4",
-      price: "100",
-    },
-  ];
   useEffect(() => {
     async function getCourseList() {
       const response = await getCourseListService();
@@ -50,24 +18,6 @@ export default function Home() {
     getCourseList();
   }, []);
 
-  function CardHstack() {
-    return (
-      <HStack w="full" overflow={"auto"} spacing={3}>
-        {courseList.map((item, index) => {
-          return (
-            <CardComponent
-              courseName={item.coursename}
-              authorName={item.author}
-              imageUri={`http://localhost:4000/course/get-course?file=${item.file.toString()}&&userEmail=${userEmail.toString()}`}
-              rating={4.2}
-              price={item.price}
-              key={index}
-            />
-          );
-        })}
-      </HStack>
-    );
-  }
   return (
     <VStack
       alignItems={"center"}
@@ -102,7 +52,7 @@ export default function Home() {
       </VStack>
 
       <VStack w="full" mt={3} spacing={5}>
-        <CardHstack />
+        <CardHstack userEmail={userEmail} list={courseList} />
         <Text
           fontSize="xl"
           color="text.900"
@@ -111,7 +61,7 @@ export default function Home() {
         >
           What Students have to say
         </Text>
-        <ReviewsComponent />
+        <Reviews />
         <Text
           fontSize="xl"
           color="text.900"
@@ -120,7 +70,7 @@ export default function Home() {
         >
           What Students are Looking into
         </Text>
-        <CardHstack />
+        <CardHstack userEmail={userEmail} list={courseList} />
       </VStack>
     </VStack>
   );

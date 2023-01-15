@@ -1,24 +1,49 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Text, Button, Box, HStack, VStack } from "@chakra-ui/react";
-import Router, { useRouter } from "next/router";
-
-export default function TeacherProfilePage(props) {
+import { useRouter } from "next/router";
+import Courses from "../../components/Courses";
+import { getCourseListService } from "../../services/courseService";
+export default function MyCreations(props) {
+  const [courseList, setCourseList] = useState([]);
+  const [userEmail, setUserEmail] = useState();
+  const router = useRouter();
+  useEffect(() => {
+    async function getCourseList() {
+      const response = await getCourseListService();
+      if (!response.isError) {
+        setCourseList(response.courses);
+        setUserEmail(response.userEmail);
+      }
+      console.log("course list in index", response);
+    }
+    getCourseList();
+    console.log("course list ", courseList);
+  }, []);
   function redirectToCoursePage() {
-    Router.push("/CreateCourse");
+    router.push("../instructor/create-course");
   }
+
   return (
     <VStack
-      flex={1}
-      height="100%"
+      width="full"
       backgroundColor="background.900"
-      justifyContent="center"
-      px={5}
-      pt={10}
+      alignItems="center"
+      px={10}
+      py={10}
     >
       <Text color="text.900" fontWeight="bold" fontSize="2xl">
-        Welcome User name
+        Welcome
       </Text>
-      <HStack alignItems="center" justifyContent="space-between" spacing={20}>
+      <Text color="text.900" fontWeight="normal" fontSize="lg">
+        {userEmail}
+      </Text>
+      <HStack
+        marginY={10}
+        w="100%"
+        alignItems="center"
+        justifyContent="center"
+        spacing={10}
+      >
         <Text color="text.900" fontWeight="semibold" fontSize="lg">
           Create Your Course
         </Text>
@@ -26,36 +51,34 @@ export default function TeacherProfilePage(props) {
           type="submit"
           backgroundColor="primary.900"
           color="text.900"
-          width="full"
           _hover={{ backgroundColor: "primary.600" }}
           onClick={redirectToCoursePage}
         >
           New Course
         </Button>
       </HStack>
-      <Box borderWidth={1} borderColor="primary.900" p={4} width="60%">
-        <VStack>
-          <Text color="text.900" fontWeight="bold" fontSize="2xl">
-            Create an Engaging Course
-          </Text>
-          <Text
-            color="text.900"
-            fontWeight="normal"
-            fontSize="md"
-            textAlign="center"
-          >
-            Whether you have been teaching for years or are teaching for the
-            first time, you can make an engaging course. We have compiled
-            resources and best practices to help you get to the next level, no
-            matter where you are starting.
-          </Text>
-        </VStack>
-      </Box>
+
+      <VStack borderWidth={1} borderColor="primary.900" p={4}>
+        <Text color="text.900" fontWeight="bold" fontSize="2xl">
+          Create an Engaging Course
+        </Text>
+        <Text
+          color="text.900"
+          fontWeight="normal"
+          fontSize="md"
+          textAlign="center"
+        >
+          Whether you have been teaching for years or are teaching for the first
+          time, you can make an engaging course. We have compiled resources and
+          best practices to help you get to the next level, no matter where you
+          are starting.
+        </Text>
+      </VStack>
+
       <HStack
         alignItems="center"
         justifyContent="space-between"
         spacing={4}
-        px={10}
         pt={6}
         pb={12}
       >
@@ -63,7 +86,6 @@ export default function TeacherProfilePage(props) {
           borderWidth={1}
           borderColor="primary.900"
           p={4}
-          width="50%"
           justifyContent="center"
           alignItems="center"
         >
@@ -85,7 +107,7 @@ export default function TeacherProfilePage(props) {
             lectures engaging and easy to
           </Text>
         </Box>
-        <Box borderWidth={1} borderColor="primary.900" p={4} width="50%">
+        <Box borderWidth={1} borderColor="primary.900" p={4}>
           <Text
             color="text.900"
             fontWeight="bold"
@@ -108,6 +130,7 @@ export default function TeacherProfilePage(props) {
       <Text color="text.900" fontWeight="bold" fontSize="xl">
         My Active Courses
       </Text>
+      <Courses isInstructor={true} userEmail={userEmail} list={courseList} />
     </VStack>
   );
 }

@@ -11,11 +11,18 @@ import {
   Button,
   HStack,
 } from "@chakra-ui/react";
-
+import { useRouter } from "next/router";
 export default function CardComponent(item) {
+  const router = useRouter();
   return (
-    <Card minW={200} flex={1} border="2px" borderColor="whiteAlpha.300">
-      <CardBody w="full">
+    <Card
+      minW={200}
+      h="100%"
+      border="2px"
+      borderColor="whiteAlpha.300"
+      alignItems="stretch"
+    >
+      <CardBody h="100%" w="full" justifyContent="space-around">
         <Image
           w={"full"}
           h={200}
@@ -46,9 +53,16 @@ export default function CardComponent(item) {
             color="white"
             backgroundColor="primary.900"
             _hover={{ backgroundColor: "hover.900" }}
-            // onClick={onOpen}
+            onClick={() => {
+              router.push({
+                pathname: item.isInstructor
+                  ? "/instructor/course-edit"
+                  : "/student/course-info",
+                query: { _id: item._id },
+              });
+            }}
           >
-            View Course
+            See Details
           </Button>
         </CardFooter>
       ) : null}

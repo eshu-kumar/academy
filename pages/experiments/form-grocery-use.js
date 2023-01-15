@@ -2,7 +2,11 @@ import { Button, Flex } from "@chakra-ui/react";
 import { Formik, Form, useField } from "formik";
 import * as Yup from "yup";
 
-import { MyCheckbox, MyTextInput, MySelect } from "../components/FormGrocery";
+import {
+  MyCheckbox,
+  MyTextInput,
+  MySelect,
+} from "../../components/FormGrocery";
 function FormGroceryUse() {
   return (
     <Flex justifyContent={"center"} alignItems="center" w="full" minH="100vh">

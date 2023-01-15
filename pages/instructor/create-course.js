@@ -20,21 +20,18 @@ import {
 } from "@chakra-ui/react";
 //import { Formik, Field, Form } from "formik";
 import { useRouter } from "next/router";
-import { useEffect, useLayoutEffect, useState, memo, useRef } from "react";
-import ToastBox from "../components/others/ToastBox";
-import { useCustomToast } from "../utils/useCustomToast";
-import axios from "axios";
+import { useState, memo, useRef } from "react";
+import { useCustomToast } from "../../utils/useCustomToast";
 import FormData from "form-data";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
-import { createCourseService } from "../services/courseService";
+import { createCourseService } from "../../services/courseService";
 import {
-  MyCheckbox,
   MyTextInput,
   MySelect,
   MyFileInput,
   MyTextArea,
-} from "../components/FormGrocery";
+} from "../../components/FormGrocery";
 function CreateCourse() {
   const { showToast } = useCustomToast();
   const router = useRouter();
@@ -54,7 +51,7 @@ function CreateCourse() {
       console.log(response);
       showToast(response.isError, response.message);
       // setTimeout(() => {
-      //   router.push("/view-course");
+      //   router.push("../instructor/my-creations");
       // }, 2000);
     } else {
       console.log(response);
@@ -62,14 +59,7 @@ function CreateCourse() {
     }
   };
   return (
-    <Flex
-      justifyContent="space-around"
-      alignItems={"center"}
-      bg="gray.50"
-      minH="90vh"
-      w="full"
-      p={10}
-    >
+    <Flex bg="background.900" w="full" p={[4, 6, 8]}>
       <Formik
         style={{ width: "100%" }}
         initialValues={{
@@ -100,7 +90,7 @@ function CreateCourse() {
         }}
       >
         <Form style={{ width: "100%" }}>
-          <VStack spacing={3} w={"100%"} p={10} alignItems={"center"}>
+          <VStack spacing={3} w={"100%"} alignItems={"center"}>
             <MyTextInput
               label="Course Name"
               type="text"
@@ -151,8 +141,15 @@ function CreateCourse() {
               name="price"
             />
             <MyTextInput label="Author" type="text" id="author" name="author" />
-
-            <Button type="submit">Submit</Button>
+            <Button
+              type="submit"
+              backgroundColor="primary.900"
+              color="text.900"
+              px={6}
+              _hover={{ backgroundColor: "primary.600" }}
+            >
+              Submit
+            </Button>
           </VStack>
         </Form>
       </Formik>

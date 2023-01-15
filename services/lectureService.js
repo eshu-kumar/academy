@@ -1,9 +1,9 @@
 import axios from "axios";
-export async function createCourseService(formData) {
+export async function createLectureService(formData) {
   const token = await localStorage.getItem("token");
   try {
     let response = await axios.post(
-      `http://localhost:4000/course/create-course`,
+      `http://localhost:4000/lecture/create-lecture`,
       formData,
       {
         headers: {
@@ -18,11 +18,11 @@ export async function createCourseService(formData) {
     return { isError: true, error: error.message };
   }
 }
-export async function getCourseListService() {
+export async function getLectureListService() {
   const token = await localStorage.getItem("token");
   try {
     let response = await axios.post(
-      `http://localhost:4000/course/get-courses-list`,
+      `http://localhost:4000/lecture/get-lectures-list`,
       {
         body: {},
       },
@@ -39,11 +39,11 @@ export async function getCourseListService() {
     return { isError: true, error: error.message };
   }
 }
-export async function getCourseInfoService(_id) {
+export async function getLectureInfoService(_id) {
   const token = await localStorage.getItem("token");
   try {
     let response = await axios.post(
-      `http://localhost:4000/course/get-course-info`,
+      `http://localhost:4000/lecture/get-lecture-info`,
       {
         _id,
       },

@@ -115,9 +115,27 @@ export default function Header(props) {
               color="text.900"
               variant="ghost"
               _hover={{ backgroundColor: "hover.900" }}
-              onClick={() => goto("/create-course")}
+              onClick={() => goto("/instructor/create-course")}
             >
               Create course
+            </Button>
+            <Button
+              colorScheme="teal"
+              color="text.900"
+              variant="ghost"
+              _hover={{ backgroundColor: "hover.900" }}
+              onClick={() => goto("/instructor/course-edit")}
+            >
+              Course edit
+            </Button>
+            <Button
+              colorScheme="teal"
+              color="text.900"
+              variant="ghost"
+              _hover={{ backgroundColor: "hover.900" }}
+              onClick={() => goto("/student/course-info")}
+            >
+              Course info
             </Button>
             <Button
               colorScheme="teal"
@@ -133,7 +151,34 @@ export default function Header(props) {
               color="text.900"
               variant="ghost"
               _hover={{ backgroundColor: "hover.900" }}
-              onClick={() => goto("/uploader")}
+              onClick={() => goto("/instructor/get-started")}
+            >
+              Instructor get Started
+            </Button>
+            <Button
+              colorScheme="teal"
+              color="text.900"
+              variant="ghost"
+              _hover={{ backgroundColor: "hover.900" }}
+              onClick={() => goto("/instructor/my-creations")}
+            >
+              Instructor Creations
+            </Button>
+            <Button
+              colorScheme="teal"
+              color="text.900"
+              variant="ghost"
+              _hover={{ backgroundColor: "hover.900" }}
+              onClick={() => goto("/student/my-learnings")}
+            >
+              My Learning
+            </Button>
+            {/* <Button
+              colorScheme="teal"
+              color="text.900"
+              variant="ghost"
+              _hover={{ backgroundColor: "hover.900" }}
+              onClick={() => goto("/experiments/uploader")}
             >
               Uploader
             </Button>
@@ -142,10 +187,10 @@ export default function Header(props) {
               color="text.900"
               variant="ghost"
               _hover={{ backgroundColor: "hover.900" }}
-              onClick={() => goto("/ex-graphql")}
+              onClick={() => goto("/experiments/ex-graphql")}
             >
               Graphql
-            </Button>
+            </Button> */}
             {/* <Button colorScheme="teal" variant="ghost" onClick={closeServer}>
           Close Server
         </Button> */}
@@ -154,7 +199,7 @@ export default function Header(props) {
               color="text.900"
               variant="ghost"
               _hover={{ backgroundColor: "hover.900" }}
-              onClick={() => goto("/user-profile")}
+              onClick={() => goto("/auth-user/user-profile")}
             >
               Profile
             </Button>
@@ -170,21 +215,21 @@ export default function Header(props) {
           </>
         ) : (
           <>
-            <Button
+            {/* <Button
               colorScheme="teal"
               color="text.900"
               variant="ghost"
               _hover={{ backgroundColor: "hover.900" }}
-              onClick={() => goto("/ex-graphql")}
+              onClick={() => goto("/experiments/ex-graphql")}
             >
               Graphql
-            </Button>
+            </Button> */}
             <Button
               colorScheme="teal"
               color="text.900"
               variant="ghost"
               _hover={{ backgroundColor: "hover.900" }}
-              onClick={() => goto("/login")}
+              onClick={() => goto("/auth-user/login")}
             >
               Login
             </Button>
@@ -193,7 +238,7 @@ export default function Header(props) {
               color="text.900"
               variant="ghost"
               _hover={{ backgroundColor: "hover.900" }}
-              onClick={() => goto("/signup")}
+              onClick={() => goto("/auth-user/signup")}
             >
               Signup
             </Button>

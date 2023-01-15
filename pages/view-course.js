@@ -1,11 +1,5 @@
 import {
-  Box,
   Button,
-  Checkbox,
-  Flex,
-  FormControl,
-  FormLabel,
-  FormErrorMessage,
   Input,
   VStack,
   Text,
@@ -15,135 +9,187 @@ import {
   SimpleGrid,
   Image,
   chakra,
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel,
   Link,
+  Textarea,
 } from "@chakra-ui/react";
-import NextLink from "next/link";
-import ImageUploading from "react-images-uploading";
 import { useRouter } from "next/router";
+import { getCourseInfoService } from "../services/courseService";
+import Reviews from "../components/Reviews";
+import QuestionAndAnswer from "../components/Q&A";
+import Lectures from "../components/Lectures";
 import { useEffect, useLayoutEffect, useState, memo, useRef } from "react";
-import ToastBox from "../components/others/ToastBox";
 import dynamic from "next/dynamic";
 const ReactPlayer = dynamic(() => import("react-player/lazy"), { ssr: false });
 chakra(ReactPlayer);
-
 function ViewCourse() {
-  const toast = useToast();
   const router = useRouter();
-  const [courseList, setCourseList] = useState([]);
+  const { _id } = router.query;
   const [userEmail, setUserEmail] = useState("");
-  const [viewingCourse, setViewingCourse] = useState("");
+  const [viewing, setViewing] = useState("");
+  const [course, setCourse] = useState(null);
+  const [lectures, setLectures] = useState([]);
   const [defaultUrl, setDefaultUrl] = useState("");
-
   useEffect(() => {
-    async function getCoursesList() {
-      try {
-        const token = await localStorage.getItem("token");
-        if (!token) {
-          throw new Error("session expired");
-        }
-        let response = await fetch(
-          `http://localhost:4000/course/get-courses-list`,
-          {
-            method: "POST",
-            body: JSON.stringify({ token: token }),
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        response = await response.json();
-        setCourseList(response.data.courses);
-        setUserEmail(response.data.userEmail);
-        if (courseList.length > 0) setViewingCourse(courseList[0]);
-        if (response.isError) {
-          throw new Error(response.isError);
-        }
-        toast({
-          position: "bottom-left",
-          duration: 4000,
-          render: () => (
-            <ToastBox message={response.message} isError={response.isError} />
-          ),
-        });
-      } catch (error) {
-        toast({
-          position: "bottom-left",
-          duration: 4000,
-          render: () => <ToastBox message={"session expired"} isError={true} />,
-        });
-        //router.push("/");
+    async function getCourseInfo() {
+      const response = await getCourseInfoService(_id);
+      if (!response.isError) {
+        setCourse(response.course);
+        setLectures(response.lectures);
+        setUserEmail(response.userEmail);
       }
+      console.log("course in course info ", response);
     }
-    let result = getCoursesList();
+    getCourseInfo();
     setDefaultUrl(`https://www.youtube.com/watch?v=Oedp_e35Vmk`);
   }, []);
-
   return (
     <VStack
       spacing={10}
-      bg="gray.50"
+      bg="background.900"
       align="center"
       justify="center"
-      minH="90vh"
+      h="100%"
       w="100%"
     >
-      {/* <Text fontSize={"6xl"}>View courses</Text> */}
-      <HStack w="100%" justifyContent={"space-around"}>
-        <VStack w="25%" mx={10} align="left" spacing={2}>
-          <Text fontSize="3xl"> Courses </Text>
-          <VStack h="700" overflow={"auto"} alignItems="left" spacing={4}>
-            {courseList.length > 0 ? (
-              courseList.map((item, index) => {
-                return (
-                  <VStack
-                    p={4}
-                    borderRadius="md"
-                    align="left"
-                    key={index}
-                    spacing="1"
-                    bg="white"
-                  >
-                    <Text fontSize="lg" color="gray.800">
-                      {item.coursename}
-                    </Text>
-                    <Text color="gray.600">{`in category ${item.category}`}</Text>
-                    <Text color="gray.500">{`created by ${item.author}`}</Text>
-                    <Button
-                      mt={1}
-                      onClick={() => {
-                        setViewingCourse(item.file);
-                      }}
-                    >
-                      View course
-                    </Button>
-                  </VStack>
-                );
-              })
-            ) : (
-              <Link as={NextLink} href="/create-course">
-                <Text fontSize="lg" color="blue.600">
-                  No courses here click to create course
+      <VStack w="100%" px={4} pt={5}>
+        <Center h="600" w="full" bg="whiteAlpha.800">
+          {viewing != "" ? (
+            <ReactPlayer
+              width="100%"
+              height="100%"
+              controls
+              url={`http://localhost:4000/lecture/get-lecture?file=${viewing.toString()}&&userEmail=${userEmail.toString()}`}
+            />
+          ) : defaultUrl.length > 0 ? (
+            <ReactPlayer
+              width="100%"
+              height="100%"
+              controls
+              url="https://www.youtube.com/watch?v=Oedp_e35Vmk"
+            />
+          ) : null}
+        </Center>
+      </VStack>
+
+      <Tabs width="full" px={2}>
+        <TabList overflowX={"auto"}>
+          <Tab
+            borderTopRadius="md"
+            _selected={{ bg: "primary.900" }}
+            color="text.900"
+          >
+            Content
+          </Tab>
+          <Tab
+            borderTopRadius="md"
+            _selected={{ bg: "primary.900" }}
+            color="text.900"
+          >
+            Overview
+          </Tab>
+          <Tab
+            borderTopRadius="md"
+            _selected={{ bg: "primary.900" }}
+            color="text.900"
+          >
+            Announcements
+          </Tab>
+          <Tab
+            borderTopRadius="md"
+            _selected={{ bg: "primary.900" }}
+            color="text.900"
+          >
+            Reviews
+          </Tab>
+          <Tab
+            borderTopRadius="md"
+            _selected={{ bg: "primary.900" }}
+            color="text.900"
+          >
+            {" "}
+            Discussions
+          </Tab>
+        </TabList>
+
+        <TabPanels>
+          <TabPanel>
+            <Lectures
+              playble={true}
+              setViewing={setViewing}
+              lectures={lectures}
+            />
+          </TabPanel>
+          <TabPanel>
+            {course ? (
+              <VStack w="full" alignItems="left">
+                <Text color="text.900" fontWeight="medium" fontSize="4xl">
+                  Course Overview
                 </Text>
-              </Link>
-            )}
-          </VStack>
-        </VStack>
-        <VStack w="75%" mx={20} pr={20}>
-          <Center h="600" w="full" mx={40} bg="black">
-            {viewingCourse.length > 0 ? (
-              <ReactPlayer
-                width="100%"
-                height="100%"
-                mx={20}
-                controls
-                url={`http://localhost:4000/course/get-course?file=${viewingCourse.toString()}&&userEmail=${userEmail.toString()}`}
-              />
-            ) : defaultUrl.length > 0 ? (
-              <ReactPlayer width="100%" height="100%" url={defaultUrl} />
+                <Text color="text.900" fontWeight="medium" fontSize="xl">
+                  What You will Learn?
+                </Text>
+                <Text color="text.900" fontWeight="medium" fontSize="sm">
+                  {course.studentLearn}
+                </Text>
+                <Text color="text.900" fontWeight="medium" fontSize="xl">
+                  Requirements :
+                </Text>
+                <Text color="text.900" fontWeight="medium" fontSize="sm">
+                  {course.requirements}
+                </Text>
+                <Text color="text.900" fontWeight="medium" fontSize="xl">
+                  Description :
+                </Text>
+                <Text color="text.900" fontWeight="medium" fontSize="sm">
+                  {course.description}
+                </Text>
+              </VStack>
             ) : null}
-          </Center>
-        </VStack>
-      </HStack>
+          </TabPanel>
+          <TabPanel>
+            <Text color="text.900" fontWeight="semibold" fontSize="lg">
+              The latest update to the course will be updated shortly
+            </Text>
+          </TabPanel>
+          <TabPanel>
+            <Reviews />
+          </TabPanel>
+          <TabPanel>
+            <Text color="text.900" fontSize="lg" fontWeight="semibold">
+              Discussions
+            </Text>
+            <VStack w="full" alignItems="start" pt={5} spacing={5}>
+              <Textarea
+                placeholder="Discussions"
+                size="lg"
+                width="full"
+                color="text.900"
+                backgroundColor="background.700"
+                borderColor="whiteAlpha.600"
+                _hover={{ borderColor: "whiteAlpha.600" }}
+                _focus={{
+                  borderColor: "whiteAlpha.600",
+                }}
+              />
+              <Button
+                type="submit"
+                backgroundColor="primary.900"
+                color="text.900"
+                px={6}
+                _hover={{ backgroundColor: "primary.600" }}
+              >
+                Post
+              </Button>
+            </VStack>
+            <QuestionAndAnswer />
+          </TabPanel>
+        </TabPanels>
+      </Tabs>
     </VStack>
   );
 }

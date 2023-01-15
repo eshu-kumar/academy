@@ -18,8 +18,6 @@ import {
 import ImageUploading from "react-images-uploading";
 import { useRouter } from "next/router";
 import { useEffect, useLayoutEffect, useState, memo, useRef } from "react";
-import ToastBox from "../components/others/ToastBox";
-import FormData from "form-data";
 function Uploader() {
   console.log("in the uploader");
   const toast = useToast();

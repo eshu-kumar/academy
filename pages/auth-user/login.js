@@ -13,11 +13,11 @@ import {
   useToast,
   Spinner,
 } from "@chakra-ui/react";
-import ToastBox from "../components/others/ToastBox";
+import ToastBox from "../../components/others/ToastBox";
 
 import { useRouter } from "next/router";
 import cookies from "js-cookie";
-import { authStore } from "../store/authStore";
+import { authStore } from "../../store/authStore";
 export default function Login() {
   const toast = useToast();
   const router = useRouter();
@@ -50,7 +50,7 @@ export default function Login() {
             <ToastBox message={response.message} isError={response.isError} />
           ),
         });
-        router.replace("/user-profile");
+        router.replace("/auth-user/user-profile");
       } else {
         throw new Error(response.message);
       }
@@ -72,7 +72,7 @@ export default function Login() {
     >
       <VStack space={2}>
         <Text fontSize="lg" fontWeight="bold" color="text.900" textAlign="left">
-          Log in to your Ademy account
+          Log in to your Academy account
         </Text>
         <Box
           borderColor="whiteAlpha.400"

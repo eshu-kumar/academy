@@ -15,7 +15,7 @@ import {
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useEffect, useLayoutEffect, useState, memo } from "react";
-import ToastBox from "../components/others/ToastBox";
+import ToastBox from "../../components/others/ToastBox";
 import cookie from "cookie";
 import useSWRImmutable from "swr/immutable";
 
@@ -82,14 +82,15 @@ function UserProfile() {
   }
 
   return (
-    <VStack bg="gray.50" align="center" justify="center" minH="100vh" w="100%">
-      <Text fontSize={"6xl"}>User Profile page</Text>
-      <Text textAlign={"center"} fontSize={"2xl"} w={["60%", "70%", "100%"]}>
-        You will see this page only when you are logged in and have valid
-        session dd
-      </Text>
-      <Text fontSize={"xl"}>
-        User email is: {userObj && userObj.data ? userObj.data.email : ""}
+    <VStack
+      backgroundColor="background.900"
+      align="center"
+      justify="center"
+      minH="100vh"
+      w="100%"
+    >
+      <Text color="text.900" fontSize={"xl"}>
+        User Email : {userObj && userObj.data ? userObj.data.email : ""}
       </Text>
       {/* <Text fontSize={"2xl"}>User data reading file is: {data}</Text> */}
       <Center w="300" h="300" rounded={"full"}>
@@ -103,6 +104,9 @@ function UserProfile() {
       </Center>
       <Button
         onClick={() => {
+          //this was for testing that state variables reamin same while swr variable changes and re renders their part
+          //it means chnaging or refreshing data by mutate function of swr function chnages swr state variable and dependent
+          //ui of swr state variable not other things
           console.log("incrementing count ");
           setCount((count) => {
             return count + 1;
@@ -133,7 +137,7 @@ function UserProfile() {
 //   if (!token) {
 //     // Redirect the user to the login page
 //     context.res.writeHead(302, {
-//       Location: "/login",
+//       Location: "auth-user/login",
 //     });
 //     context.res.end();
 //   }
