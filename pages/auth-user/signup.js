@@ -1,179 +1,116 @@
-import { Formik, Field } from "formik";
-import {
-  Box,
-  Button,
-  Checkbox,
-  Flex,
-  FormControl,
-  FormLabel,
-  FormErrorMessage,
-  Input,
-  VStack,
-  Text,
-  useToast,
-} from "@chakra-ui/react";
+import { Box, Button, Flex, VStack, Text, Spinner } from "@chakra-ui/react";
+import { Formik, Form } from "formik";
+import * as Yup from "yup";
 import { useRouter } from "next/router";
-import ToastBox from "../../components/others/ToastBox";
-import cookies from "cookie";
+import { useCustomToast } from "../../utils/useCustomToast";
+import cookies from "js-cookie";
+import { signupService } from "../../services/authService";
+import { authStore } from "../../store/authStore";
+import { MyCheckbox, MyTextInput } from "../../components/FormGrocery";
 
 export default function SignUp() {
-  const toast = useToast();
+  const { showToast } = useCustomToast();
   const router = useRouter();
+  const { setAuthenticated } = authStore();
   async function handleSignUp(values) {
-    const user = { email: values.email, password: values.password };
-    let response = await fetch(`http://localhost:4000/user/signup`, {
-      method: "POST",
-      body: JSON.stringify(user),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    response = await response.json();
-    if (!response.isError)
-      await localStorage.setItem("token", response.data.token);
-    // Set the cookie
-    // Set the cookie
-    const token = response.data.token;
-    cookies.set("token", token);
-    console.log("cookie in client ", document.cookie);
-    toast({
-      position: "bottom-left",
-      duration: 4000,
-      render: () => (
-        <ToastBox message={response.message} isError={response.isError} />
-      ),
-    });
-    router.push("/auth-user/user-profile");
+    console.log("in handle login ", values);
+    const email = values.email;
+    const password = values.password;
+    const response = await signupService(email, password);
+    if (!response.isError) {
+      console.log(response);
+      const token = response.token;
+      await localStorage.setItem("token", token, { sameSite: "strict" });
+      // Set the cookie if need token at server for server side validation
+      //once its deployed on the server side add the secure to true it will besent by https only
+      // cookies.set("token", token);
+      // console.log("cookie in client ", document.cookie);
+      setAuthenticated();
+      showToast(response.isError, response.message);
+      router.replace("/auth-user/user-profile");
+    } else {
+      console.log(response);
+      showToast(response.isError, response.error);
+    }
   }
   return (
-    <Flex bg="background.900" align="center" justify="center" h="70vh" w="100%">
+    <Flex
+      w="full"
+      bg="background.900"
+      align="center"
+      justify="center"
+      minH="70vh"
+    >
       <VStack space={2}>
         <Text fontSize="lg" fontWeight="bold" color="text.900" textAlign="left">
           Create your account
         </Text>
 
         <Box
-          px={8}
-          py={6}
           rounded="md"
-          w={400}
+          p={[6, 8, 10]}
+          mx={2}
+          minW={[300, 400, 400]}
           borderColor="whiteAlpha.400"
           borderWidth={1}
         >
-          <Formik
-            initialValues={{
-              email: "",
-              password: "",
-              cpassword: "",
-              rememberMe: false,
-            }}
-            onSubmit={handleSignUp}
-          >
-            {({ handleSubmit, errors, touched }) => (
-              <form onSubmit={handleSubmit}>
-                <VStack spacing={4} align="flex-start">
-                  <FormControl isInvalid={!!errors.email && touched.email}>
-                    <FormLabel htmlFor="email" color="text.900">
-                      Email Address
-                    </FormLabel>
-                    <Field
-                      as={Input}
-                      id="email"
-                      name="email"
-                      type="email"
-                      borderWidth={1}
-                      borderColor="whiteAlpha.400"
-                      backgroundColor="#1A1C21"
-                      _hover={{ borderColor: "whiteAlpha.600" }}
-                      // _focus={{ borderColor: "whiteAlpha.300" }}
-                      validate={(value) => {
-                        let error;
-                        if (!value) {
-                          error = "Email Required";
-                        } else if (
-                          !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(
-                            value
-                          )
-                        ) {
-                          error = "Invalid email";
-                        }
-
-                        return error;
-                      }}
-                      variant="filled"
-                    />
-                    <FormErrorMessage>{errors.email}</FormErrorMessage>
-                  </FormControl>
-                  <FormControl
-                    isInvalid={!!errors.password && touched.password}
-                  >
-                    <FormLabel htmlFor="password" color="text.900">
-                      Password
-                    </FormLabel>
-                    <Field
-                      as={Input}
-                      id="password"
-                      name="password"
-                      type="password"
-                      backgroundColor="#1A1C21"
-                      borderWidth={1}
-                      borderColor="whiteAlpha.400"
-                      _hover={{ borderColor: "whiteAlpha.600" }}
-                      variant="filled"
-                      validate={(value) => {
-                        let error;
-
-                        if (value.length < 5) {
-                          error = "Password must contain at least 6 characters";
-                        }
-
-                        return error;
-                      }}
-                    />
-                    <FormErrorMessage>{errors.password}</FormErrorMessage>
-                  </FormControl>
-                  <FormControl
-                    isInvalid={!!errors.cpassword && touched.cpassword}
-                  >
-                    <FormLabel htmlFor="cpassword" color="text.900">
-                      Confirm Password
-                    </FormLabel>
-                    <Field
-                      as={Input}
-                      id="cpassword"
-                      name="cpassword"
-                      type="password"
-                      variant="filled"
-                      borderWidth={1}
-                      borderColor="whiteAlpha.400"
-                      backgroundColor="#1A1C21"
-                      _hover={{ borderColor: "whiteAlpha.600" }}
-                      validate={(value) => {
-                        let error;
-
-                        if (value.length < 5) {
-                          error =
-                            " Confirm password must contain at least 6 characters";
-                        }
-
-                        return error;
-                      }}
-                    />
-                    <FormErrorMessage>{errors.cpassword}</FormErrorMessage>
-                  </FormControl>
+          <VStack w="full" alignItems="left">
+            <Formik
+              style={{ width: "100%" }}
+              initialValues={{
+                email: "",
+                password: "",
+                cpassword: "",
+                rememberMe: false,
+              }}
+              validationSchema={Yup.object({
+                email: Yup.string()
+                  .email(6, "Must be greater than 6 characters")
+                  .required("Required"),
+                password: Yup.string()
+                  .min(6, "Must be greater than 6 characters")
+                  .required("Required"),
+                cpassword: Yup.string()
+                  .min(6, "Must be greater than 6 characters")
+                  .required("Required"),
+              })}
+              onSubmit={async (values, { setSubmitting }) => {
+                await handleSignUp(values);
+              }}
+            >
+              <Form style={{ width: "100%" }}>
+                <VStack spacing={3} w="full" alignItems={"center"}>
+                  <MyTextInput
+                    label="Email"
+                    id="email"
+                    name="email"
+                    type="email"
+                  />
+                  <MyTextInput
+                    label="Password"
+                    id="password"
+                    name="password"
+                    type="password"
+                  />
+                  <MyTextInput
+                    label="Confirm Password"
+                    id="cpassword"
+                    name="cpassword"
+                    type="password"
+                  />
                   <Button
                     type="submit"
                     backgroundColor="primary.900"
                     color="text.900"
-                    width="full"
+                    px={6}
                     _hover={{ backgroundColor: "primary.600" }}
                   >
                     SignUp
                   </Button>
                 </VStack>
-              </form>
-            )}
-          </Formik>
+              </Form>
+            </Formik>
+          </VStack>
         </Box>
       </VStack>
     </Flex>

@@ -13,7 +13,7 @@ import {
   Tab,
   TabPanel,
 } from "@chakra-ui/react";
-import Router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import { getCourseInfoService } from "../../services/courseService";
 import { createLectureService } from "../../services/lectureService";
 import Lectures from "../../components/Lectures";
