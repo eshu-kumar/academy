@@ -25,7 +25,7 @@ export default function Login() {
       // console.log("cookie in client ", document.cookie);
       setAuthenticated();
       showToast(response.isError, response.message);
-      router.replace("/auth-user/user-profile");
+      router.replace("/student/my-learnings");
     } else {
       console.log(response);
       showToast(response.isError, response.error);

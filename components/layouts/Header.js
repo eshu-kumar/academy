@@ -215,7 +215,7 @@ export default function Header(props) {
   function AuthCommonHeader() {
     return (
       <>
-        <Button
+        {/* <Button
           colorScheme="teal"
           color="text.900"
           variant="ghost"
@@ -223,7 +223,7 @@ export default function Header(props) {
           onClick={() => goto("/auth-user/user-profile")}
         >
           Profile
-        </Button>
+        </Button> */}
         <Button
           colorScheme="teal"
           color="text.900"
