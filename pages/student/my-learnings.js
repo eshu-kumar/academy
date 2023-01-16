@@ -12,9 +12,13 @@ import {
 } from "@chakra-ui/react";
 import { getCourseListService } from "../../services/courseService";
 import Courses from "../../components/Courses";
+import FullPageLoader from "../../components/FullPageLoader";
+import { FullConfiguration } from "swr/_internal";
 export default function MyLearnings(props) {
   const [courseList, setCourseList] = useState([]);
   const [userEmail, setUserEmail] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+  const [status, setStatus] = useState("Loading");
   useEffect(() => {
     async function getCourseList() {
       const response = await getCourseListService();
@@ -28,6 +32,7 @@ export default function MyLearnings(props) {
   }, []);
   return (
     <VStack p={[4, 6, 6]} spacing={2} w="full" bg="background.900" px={4}>
+      <FullPageLoader isLoading={true} status={status} />
       <Text
         color="text.900"
         fontWeight="bold"
