@@ -3,19 +3,21 @@ import { authUser } from "../services/authService";
 const authStore = create((set) => ({
   data: null,
   error: null,
-  isLoading: false,
+  isDone: false,
   isAuthenticated: false,
+  setIsDone: () => set((state) => ({ ...state, isDone: !state.isDone })),
+
   setAuthenticated: () =>
     set((state) => ({ ...state, isAuthenticated: !state.isAuthenticated })),
   async fetchData() {
-    set((state) => ({ ...state, isLoading: true }));
+    set((state) => ({ ...state }));
     const { isError, data, error } = await authUser();
     if (!isError) {
       set((state) => ({
         ...state,
         data,
         error,
-        isLoading: false,
+        isDone: true,
         isAuthenticated: true,
       }));
       console.log("data in store ", data);
@@ -23,7 +25,7 @@ const authStore = create((set) => ({
       set((state) => ({
         ...state,
         error,
-        isLoading: false,
+        isDone: true,
         isAuthenticated: false,
       }));
       console.log("data in error store", data);

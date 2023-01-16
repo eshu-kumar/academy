@@ -16,7 +16,9 @@ import { useRouter } from "next/router";
 import { getCourseInfoService } from "../../services/courseService";
 import Lectures from "../../components/Lectures";
 import Reviews from "../../components/Reviews";
+import { loaderStore } from "../../store/loaderStore";
 export default function CourseInfo(props) {
+  const loader = loaderStore();
   const [course, setCourse] = useState(null);
   const [lectures, setLectures] = useState([]);
   const [userEmail, setUserEmail] = useState();
@@ -24,7 +26,10 @@ export default function CourseInfo(props) {
   const { _id } = router.query;
   useEffect(() => {
     async function getCourseInfo() {
+      loader.setIsLoading(true);
+      loader.setStatus("Fetching course details...");
       const response = await getCourseInfoService(_id);
+      loader.setIsLoading(false);
       if (!response.isError) {
         setCourse(response.course);
         setLectures(response.lectures);

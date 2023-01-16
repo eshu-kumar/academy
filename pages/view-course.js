@@ -19,6 +19,7 @@ import {
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { getCourseInfoService } from "../services/courseService";
+import { loaderStore } from "../store/loaderStore";
 import Reviews from "../components/Reviews";
 import QuestionAndAnswer from "../components/Q&A";
 import Lectures from "../components/Lectures";
@@ -28,6 +29,7 @@ const ReactPlayer = dynamic(() => import("react-player/lazy"), { ssr: false });
 chakra(ReactPlayer);
 function ViewCourse() {
   const router = useRouter();
+  const loader = loaderStore();
   const { _id } = router.query;
   const [userEmail, setUserEmail] = useState("");
   const [viewing, setViewing] = useState("");
@@ -36,7 +38,10 @@ function ViewCourse() {
   const [defaultUrl, setDefaultUrl] = useState("");
   useEffect(() => {
     async function getCourseInfo() {
+      loader.setIsLoading(true);
+      loader.setStatus("Fetching  courses details...");
       const response = await getCourseInfoService(_id);
+      loader.setIsLoading(false);
       if (!response.isError) {
         setCourse(response.course);
         setLectures(response.lectures);

@@ -29,17 +29,22 @@ import {
   MyFileInput,
   MyTextArea,
 } from "../../components/FormGrocery";
+import { loaderStore } from "../../store/loaderStore";
 export default function CourseEdit(props) {
   const [course, setCourse] = useState(null);
   const [lectures, setLectures] = useState([]);
   const [userEmail, setUserEmail] = useState();
+  const loader = loaderStore();
   const router = useRouter();
   const { _id } = router.query;
   const { showToast } = useCustomToast();
   const [file, setFile] = useState(null);
   useEffect(() => {
     async function getCourseInfo() {
+      loader.setStatus("Fetching course details...");
+      loader.setIsLoading(true);
       const response = await getCourseInfoService(_id);
+      loader.setIsLoading(false);
       if (!response.isError) {
         setCourse(response.course);
         setLectures(response.lectures);
@@ -55,7 +60,10 @@ export default function CourseEdit(props) {
     formData.append("description", values.description);
     formData.append("file", file);
     formData.append("courseId", course._id);
+    loader.setStatus("Uploading lecture details...");
+    loader.setIsLoading(true);
     const response = await createLectureService(formData);
+    loader.setIsLoading(false);
     if (!response.isError) {
       console.log(response);
       showToast(response.isError, response.message);

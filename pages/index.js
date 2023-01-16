@@ -3,12 +3,17 @@ import { Link, Text, VStack, HStack } from "@chakra-ui/react";
 import Courses from "../components/Courses";
 import Reviews from "../components/Reviews";
 import { getCourseListService } from "../services/courseService";
+import { loaderStore } from "../store/loaderStore";
 export default function Home() {
   const [courseList, setCourseList] = useState([]);
   const [userEmail, setUserEmail] = useState();
+  const loader = loaderStore();
   useEffect(() => {
     async function getCourseList() {
+      loader.setIsLoading(true);
+      loader.setStatus("Fetching  courses ...");
       const response = await getCourseListService();
+      loader.setIsLoading(false);
       if (!response.isError) {
         setCourseList(response.courses);
         setUserEmail(response.userEmail);

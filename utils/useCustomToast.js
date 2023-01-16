@@ -7,7 +7,7 @@ export function useCustomToast() {
     toast({
       title: message,
       status: !isError ? "success" : "error",
-      duration: 9000,
+      duration: 3000,
       isClosable: true,
     });
   }

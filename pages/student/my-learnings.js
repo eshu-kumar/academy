@@ -7,32 +7,38 @@ import {
   Box,
   VStack,
   HStack,
-  useEditable,
-  useFocusEffect,
 } from "@chakra-ui/react";
 import { getCourseListService } from "../../services/courseService";
 import Courses from "../../components/Courses";
-import FullPageLoader from "../../components/FullPageLoader";
-import { FullConfiguration } from "swr/_internal";
+import { loaderStore } from "../../store/loaderStore";
 export default function MyLearnings(props) {
+  const loader = loaderStore();
   const [courseList, setCourseList] = useState([]);
   const [userEmail, setUserEmail] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
-  const [status, setStatus] = useState("Loading");
+
   useEffect(() => {
     async function getCourseList() {
+      loader.setIsLoading(true);
+      loader.setStatus("Fetching your courses...");
       const response = await getCourseListService();
+      loader.setIsLoading(false);
       if (!response.isError) {
         setCourseList(response.courses);
         setUserEmail(response.userEmail);
       }
-      console.log("course list in index", response);
+      console.log("course list in my-learnings", response);
     }
     getCourseList();
   }, []);
   return (
-    <VStack p={[4, 6, 6]} spacing={2} w="full" bg="background.900" px={4}>
-      <FullPageLoader isLoading={true} status={status} />
+    <VStack
+      p={[4, 6, 6]}
+      minH={"70vh"}
+      spacing={2}
+      w="full"
+      bg="background.900"
+      px={4}
+    >
       <Text
         color="text.900"
         fontWeight="bold"
@@ -40,7 +46,7 @@ export default function MyLearnings(props) {
         textAlign="center"
         pt={6}
       >
-        Welcome Back {userEmail.split(".")[0]}
+        Welcome Back {userEmail.split("@")[0].split(".")[0]}
       </Text>
       <Box borderWidth={1} borderColor="primary.900" p={4} alignItems="center">
         <Text

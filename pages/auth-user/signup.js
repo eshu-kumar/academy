@@ -6,17 +6,22 @@ import { useCustomToast } from "../../utils/useCustomToast";
 import cookies from "js-cookie";
 import { signupService } from "../../services/authService";
 import { authStore } from "../../store/authStore";
+import { loaderStore } from "../../store/loaderStore";
 import { MyCheckbox, MyTextInput } from "../../components/FormGrocery";
 
 export default function SignUp() {
   const { showToast } = useCustomToast();
   const router = useRouter();
+  const loader = loaderStore();
   const { setAuthenticated } = authStore();
   async function handleSignUp(values) {
     console.log("in handle login ", values);
     const email = values.email;
     const password = values.password;
+    // loader.setStatus("Signing up...");
+    // loader.setIsLoading(true);
     const response = await signupService(email, password);
+    //loader.setIsLoading(false);
     if (!response.isError) {
       console.log(response);
       const token = response.token;

@@ -1,25 +1,16 @@
 import React from "react";
-import {
-  Flex,
-  Center,
-  Text,
-  Spinner,
-  Box,
-  Container,
-  Skeleton,
-  useToast,
-  VStack,
-} from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import Header from "./Header";
 import Footer from "./Footer";
 import { authStore } from "../../store/authStore";
+import { loaderStore } from "../../store/loaderStore";
 import { useRouter } from "next/router";
-import ToastBox from "../others/ToastBox";
 import { useEffect, useLayoutEffect, useState, memo } from "react";
+import FullPageLoader from "../FullPageLoader";
 export default function Layout(props) {
-  const toast = useToast();
   const router = useRouter();
   const auth = authStore();
+  const loader = loaderStore();
   const url = router.asPath;
   const publicPaths = [
     "/auth-user/login",
@@ -28,33 +19,28 @@ export default function Layout(props) {
     "/experiments/ex-graphql",
   ];
   const path = url.split("?")[0];
+  const isPublicPath = publicPaths.includes(path);
   useEffect(() => {
-    auth.fetchData();
+    console.log("auth store ", auth);
+    async function fetchDataWrapper() {
+      await auth.fetchData();
+    }
+    fetchDataWrapper();
   }, []);
-  //uncomment when want to show unauthorization toast
-  // useEffect(() => {
-  //   if (auth.error && !auth.isLoading) {
-  //     console.log("toast is being called");
-  //     toast({
-  //       position: "bottom-left",
-  //       duration: 4000,
-  //       render: () => <ToastBox message={auth.error} isError={auth.error} />,
-  //     });
-  //   }
-  // }, [auth.error]);
-
-  console.log("authstroe in layout ", auth);
+  if (!isPublicPath && auth.isDone && !auth.isAuthenticated) {
+    console.log("auth store in fetch data wrapper", auth);
+    console.log("loaderstore", loader);
+    router.push("/auth-user/login");
+  }
   return (
     <Flex w="full" direction="column" minH="100vh">
       <Header />
-      <Skeleton
-        minH="100%"
-        // isLoaded={auth.isAuthenticated || publicPaths.includes(path)}
-        isLoaded={true}
-      >
+      {auth.isAuthenticated || isPublicPath ? (
         <Flex>{props.children}</Flex>
-      </Skeleton>
-
+      ) : (
+        <FullPageLoader isOpen={true} status={"Authenticating..."} />
+      )}
+      <FullPageLoader isOpen={loader.isLoading} status={loader.status} />
       <Footer />
     </Flex>
   );

@@ -32,9 +32,11 @@ import {
   MyFileInput,
   MyTextArea,
 } from "../../components/FormGrocery";
+import { loaderStore } from "../../store/loaderStore";
 function CreateCourse() {
   const { showToast } = useCustomToast();
   const router = useRouter();
+  const loader = loaderStore();
   const [file, setFile] = useState(null);
   const handleSubmit = async (values) => {
     const formData = new FormData();
@@ -46,13 +48,16 @@ function CreateCourse() {
     formData.append("description", values.description);
     formData.append("price", values.price);
     formData.append("author", values.author);
+    loader.setStatus("Creating Course...");
+    loader.setIsLoading(true);
     const response = await createCourseService(formData);
+    loader.setIsLoading(false);
     if (!response.isError) {
       console.log(response);
       showToast(response.isError, response.message);
-      // setTimeout(() => {
-      //   router.push("../instructor/my-creations");
-      // }, 2000);
+      setTimeout(() => {
+        router.push("../instructor/my-creations");
+      }, 2000);
     } else {
       console.log(response);
       showToast(response.isError, response.error);

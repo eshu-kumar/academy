@@ -10,7 +10,7 @@ import {
   useToast,
   Spacer,
 } from "@chakra-ui/react";
-import ToastBox from "../others/ToastBox";
+import { useCustomToast } from "../../utils/useCustomToast";
 import { useRouter } from "next/router";
 import NextLink from "next/link";
 import cookies from "js-cookie";
@@ -18,22 +18,20 @@ import { authStore } from "../../store/authStore";
 export default function Header(props) {
   console.log("this is header");
   const { setAuthenticated, isAuthenticated } = authStore();
-  const toast = useToast();
+
+  const { showToast } = useCustomToast();
   const router = useRouter();
   const url = router.asPath;
   const path = url.split("?")[0];
   let isStudent = true;
   const isInsructor = path.includes("/instructor/");
   isStudent = path.includes("/student/");
-  console.log("url in header", url);
-  console.log("path is header", path);
-  console.log("isInstructor", isInsructor);
-  console.log("isStudent", isStudent);
   function goto(route) {
     router.push(route, undefined, { shallow: false });
   }
   async function logout() {
     console.log("logut clicked");
+    //REFACTOR TO AXIOS AND LOGOUT SERVICE
     try {
       const token = await localStorage.getItem("token");
       if (token) {
@@ -49,14 +47,8 @@ export default function Header(props) {
         if (response.isError) {
           throw new Error(response.isError);
         }
+        showToast(response.isError, response.message);
 
-        toast({
-          position: "bottom-left",
-          duration: 4000,
-          render: () => (
-            <ToastBox message={response.message} isError={response.isError} />
-          ),
-        });
         console.log("deleting the token");
         await localStorage.removeItem("token");
         cookies.remove("token");
@@ -67,11 +59,7 @@ export default function Header(props) {
       }
     } catch (error) {
       console.log("in the errro logout client", error);
-      toast({
-        position: "bottom-left",
-        duration: 4000,
-        render: () => <ToastBox message={error.message} isError={true} />,
-      });
+      showToast(true, error.message);
       router.push("/");
     }
   }
@@ -87,11 +75,7 @@ export default function Header(props) {
       });
     } catch (error) {
       console.log("in the errro close server client");
-      toast({
-        position: "bottom-left",
-        duration: 4000,
-        render: () => <ToastBox message={error.message} isError={true} />,
-      });
+      showToast(true, error.message);
       router.push("/");
     }
   }
@@ -105,7 +89,7 @@ export default function Header(props) {
           _hover={{ backgroundColor: "hover.900" }}
           onClick={() => goto("/instructor/my-creations")}
         >
-          InstructorCreations
+          My Creations
         </Button>
         <Button
           colorScheme="teal"
@@ -114,9 +98,9 @@ export default function Header(props) {
           _hover={{ backgroundColor: "hover.900" }}
           onClick={() => goto("/instructor/create-course")}
         >
-          CreateCourse
+          Create Course
         </Button>
-        <Button
+        {/* <Button
           colorScheme="teal"
           color="text.900"
           variant="ghost"
@@ -124,7 +108,7 @@ export default function Header(props) {
           onClick={() => goto("/instructor/course-edit")}
         >
           CourseEdit
-        </Button>
+        </Button> */}
         <Button
           colorScheme="teal"
           color="text.900"
@@ -132,7 +116,7 @@ export default function Header(props) {
           _hover={{ backgroundColor: "hover.900" }}
           onClick={() => goto("/student/my-learnings")}
         >
-          GoStudentView
+          Student View
         </Button>
       </>
     );
@@ -147,9 +131,9 @@ export default function Header(props) {
           _hover={{ backgroundColor: "hover.900" }}
           onClick={() => goto("/student/my-learnings")}
         >
-          MyLearning
+          My learnings
         </Button>
-        <Button
+        {/* <Button
           colorScheme="teal"
           color="text.900"
           variant="ghost"
@@ -157,8 +141,8 @@ export default function Header(props) {
           onClick={() => goto("/student/course-info")}
         >
           CourseInfo
-        </Button>
-        <Button
+        </Button> */}
+        {/* <Button
           colorScheme="teal"
           color="text.900"
           variant="ghost"
@@ -166,7 +150,7 @@ export default function Header(props) {
           onClick={() => goto("/view-course")}
         >
           ViewCourse
-        </Button>
+        </Button> */}
         <Button
           colorScheme="teal"
           color="text.900"
@@ -174,7 +158,7 @@ export default function Header(props) {
           _hover={{ backgroundColor: "hover.900" }}
           onClick={() => goto("/instructor/get-started")}
         >
-          GoInstructorView
+          Instructor View
         </Button>
       </>
     );

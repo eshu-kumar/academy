@@ -3,13 +3,18 @@ import { Text, Button, Box, HStack, VStack } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import Courses from "../../components/Courses";
 import { getCourseListService } from "../../services/courseService";
+import { loaderStore } from "../../store/loaderStore";
 export default function MyCreations(props) {
   const [courseList, setCourseList] = useState([]);
   const [userEmail, setUserEmail] = useState("");
   const router = useRouter();
+  const loader = loaderStore();
   useEffect(() => {
     async function getCourseList() {
+      loader.setStatus("Fetching my creations...");
+      loader.setIsLoading(true);
       const response = await getCourseListService();
+      loader.setIsLoading(false);
       if (!response.isError) {
         setCourseList(response.courses);
         setUserEmail(response.userEmail);
@@ -37,7 +42,7 @@ export default function MyCreations(props) {
         fontSize="2xl"
         textAlign="center"
       >
-        Welcome Back {userEmail.split(".")[0]}
+        Welcome Back {userEmail.split("@")[0].split(".")[0]}
       </Text>
       <HStack
         marginY={4}

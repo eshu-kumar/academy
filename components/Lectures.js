@@ -25,14 +25,15 @@ const defaultLectures = [
 ];
 export default function Lectures(props) {
   let lectures;
-  if (props.lectures) {
+  if (props.lectures || props.lectures.length != 0) {
     lectures = props.lectures;
   } else {
-    lectures = defaultLectures;
+    // want to show default lectures? then put default lectures instead of null
+    lectures = null;
   }
   return (
     <>
-      {lectures.length > 0 ? (
+      {lectures ? (
         <VStack width="full" alignItems="flex-start">
           {lectures.map((item, index) => {
             return (
