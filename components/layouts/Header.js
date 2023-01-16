@@ -107,7 +107,7 @@ export default function Header(props) {
           _hover={{ backgroundColor: "hover.900" }}
           onClick={() => goto("/instructor/course-edit")}
         >
-          CourseEdit
+          Course Edit
         </Button> */}
         <Button
           colorScheme="teal"
@@ -149,7 +149,7 @@ export default function Header(props) {
           _hover={{ backgroundColor: "hover.900" }}
           onClick={() => goto("/view-course")}
         >
-          ViewCourse
+          View Course
         </Button> */}
         <Button
           colorScheme="teal"
@@ -268,28 +268,6 @@ export default function Header(props) {
         {isAuthenticated ? (
           <>
             {isInsructor ? <InstructorHeader /> : <StudentHeader />}
-            {/* {isStudent ? (
-              <Button
-                colorScheme="teal"
-                color="text.900"
-                variant="ghost"
-                _hover={{ backgroundColor: "hover.900" }}
-                onClick={() => goto("/instructor/get-started")}
-              >
-                Instructor Mode
-              </Button>
-            ) : (
-              <Button
-                colorScheme="teal"
-                color="text.900"
-                variant="ghost"
-                _hover={{ backgroundColor: "hover.900" }}
-                onClick={() => goto("/student/my-learnings")}
-              >
-                Student Mode
-              </Button>
-            )} */}
-
             {/* <ExperimentsHeader /> */}
             <AuthCommonHeader />
           </>

@@ -30,6 +30,7 @@ import {
   MyTextArea,
 } from "../../components/FormGrocery";
 import { loaderStore } from "../../store/loaderStore";
+import CourseOverview from "../../components/CourseOverview";
 export default function CourseEdit(props) {
   const [course, setCourse] = useState(null);
   const [lectures, setLectures] = useState([]);
@@ -136,31 +137,7 @@ export default function CourseEdit(props) {
             </TabList>
             <TabPanels>
               <TabPanel>
-                {course ? (
-                  <VStack w="full" alignItems="left">
-                    <Text color="text.900" fontWeight="medium" fontSize="4xl">
-                      Course Overview
-                    </Text>
-                    <Text color="text.900" fontWeight="medium" fontSize="xl">
-                      What You will Learn?
-                    </Text>
-                    <Text color="text.900" fontWeight="medium" fontSize="sm">
-                      {course.studentLearn}
-                    </Text>
-                    <Text color="text.900" fontWeight="medium" fontSize="xl">
-                      Requirements :
-                    </Text>
-                    <Text color="text.900" fontWeight="medium" fontSize="sm">
-                      {course.requirements}
-                    </Text>
-                    <Text color="text.900" fontWeight="medium" fontSize="xl">
-                      Description :
-                    </Text>
-                    <Text color="text.900" fontWeight="medium" fontSize="sm">
-                      {course.description}
-                    </Text>
-                  </VStack>
-                ) : null}
+                {course ? <CourseOverview course={course} /> : null}
               </TabPanel>
               <TabPanel>
                 <Lectures userEmail={userEmail} lectures={lectures} />
