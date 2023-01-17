@@ -11,6 +11,7 @@ import {
   TabPanels,
   Tab,
   TabPanel,
+  Image,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 
@@ -21,7 +22,7 @@ const rewards = [
       "Publish the course you want, in the way you want, and always have control of your own content.",
   },
   {
-    primaryText: "Teach your way",
+    primaryText: "Contribute",
     secondaryText:
       " Teach what you know and help learners explore their interests, gain new skills, and advance their careers.",
   },
@@ -57,9 +58,17 @@ const facts = [
 
 export default function GetStarted(props) {
   const router = useRouter();
+  let uri =
+    "https://images.unsplash.com/photo-1484950763426-56b5bf172dbb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fGhkJTIwcGhvdG9zfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60";
   return (
-    <VStack w="full" backgroundColor="background.900" px={5}>
-      <VStack alignItems="left" justifyContent="center" pt={10}>
+    <VStack w="full" minH="70vh" backgroundColor="background.900">
+      <Image
+        w="full"
+        h={[250, 360, 400]}
+        alt={"get started on academy"}
+        src={uri}
+      />
+      <VStack px={5} alignItems="left" justifyContent="center" pt={4}>
         <Text
           textAlign={"center"}
           color="text.900"
@@ -100,6 +109,8 @@ export default function GetStarted(props) {
       <HStack
         pt={3}
         pb={7}
+        px={5}
+        spacing={4}
         alignItems="flex-start"
         justifyContent="space-evenly"
       >
@@ -109,7 +120,7 @@ export default function GetStarted(props) {
               <Text
                 color="text.900"
                 fontWeight="bold"
-                fontSize="lg"
+                fontSize="xl"
                 textAlign="center"
               >
                 {item.primaryText}
@@ -127,7 +138,7 @@ export default function GetStarted(props) {
         })}
       </HStack>
 
-      <HStack
+      {/* <HStack
         alignItems="center"
         justifyContent="space-evenly"
         // spacing={[4, 8, 12]}
@@ -150,7 +161,7 @@ export default function GetStarted(props) {
             </VStack>
           );
         })}
-      </HStack>
+      </HStack> */}
       <Text
         color="text.900"
         fontWeight="bold"
@@ -160,7 +171,7 @@ export default function GetStarted(props) {
       >
         How to begin
       </Text>
-      <Tabs>
+      <Tabs px={5}>
         <TabList justifyContent="center">
           <Tab color="text.900" fontWeight="bold" textAlign="center">
             Plan Your Curriculum
@@ -206,7 +217,7 @@ export default function GetStarted(props) {
           </TabPanel>
         </TabPanels>
       </Tabs>
-      <VStack alignItems="center" justifyContent="center" pt={10}>
+      <VStack px={5} alignItems="center" justifyContent="center" pt={10}>
         <Text
           color="text.900"
           fontWeight="bold"
@@ -235,7 +246,7 @@ export default function GetStarted(props) {
           Need more details before you start? Learn More
         </Link>
       </VStack>
-      <VStack alignItems="center" justifyContent="center" py={10}>
+      <VStack px={5} alignItems="center" justifyContent="center" py={10}>
         <Text
           color="text.900"
           fontWeight="bold"

@@ -46,7 +46,7 @@ export default function MyLearnings(props) {
         textAlign="center"
         pt={6}
       >
-        Welcome Back {userEmail.split("@")[0].split(".")[0]}
+        Welcome back {userEmail.split("@")[0].split(".")[0]}
       </Text>
       <Box borderWidth={1} borderColor="primary.900" p={4} alignItems="center">
         <Text
