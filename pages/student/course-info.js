@@ -18,6 +18,7 @@ import Lectures from "../../components/Lectures";
 import Reviews from "../../components/Reviews";
 import { loaderStore } from "../../store/loaderStore";
 import CourseOverview from "../../components/CourseOverview";
+import MyTooltip from "../../components/others/MyTooltip";
 export default function CourseInfo(props) {
   const loader = loaderStore();
   const [course, setCourse] = useState(null);
@@ -57,38 +58,43 @@ export default function CourseInfo(props) {
           />
           <VStack w="full" alignItems="flex-start" spacing={1} px={6} pt={2}>
             <HStack spacing={2} w="full" justifyContent="flex-end">
-              <Button
-                // variant='ghost'
-                color="white"
-                backgroundColor="primary.900"
-                _hover={{ backgroundColor: "hover.900" }}
-                onClick={() => {
-                  if (course && course._id) {
-                    router.push({
-                      pathname: "../view-course",
-                      query: { _id: course._id },
-                    });
-                  }
-                }}
-              >
-                Start Learning
-              </Button>
-              <Button
-                // variant='ghost'
-                color="white"
-                backgroundColor="primary.900"
-                _hover={{ backgroundColor: "hover.900" }}
-                onClick={() => {
-                  if (course && course._id) {
-                    router.push({
-                      pathname: "../student/my-learnings",
-                      query: { _id: course._id },
-                    });
-                  }
-                }}
-              >
-                Add
-              </Button>
+              <MyTooltip message="Congratulations in Trial version you can Watch this course for Free now!">
+                <Button
+                  // variant='ghost'
+                  color="white"
+                  backgroundColor="primary.900"
+                  _hover={{ backgroundColor: "hover.900" }}
+                  onClick={() => {
+                    if (course && course._id) {
+                      router.push({
+                        pathname: "../view-course",
+                        query: { _id: course._id },
+                      });
+                    }
+                  }}
+                >
+                  Watch Course
+                </Button>
+              </MyTooltip>
+
+              <MyTooltip message="Congratulations in Trial version you can Enroll this course for Free now!">
+                <Button
+                  // variant='ghost'
+                  color="white"
+                  backgroundColor="primary.900"
+                  _hover={{ backgroundColor: "hover.900" }}
+                  onClick={() => {
+                    if (course && course._id) {
+                      router.push({
+                        pathname: "../student/my-learnings",
+                        query: { _id: course._id },
+                      });
+                    }
+                  }}
+                >
+                  Enroll
+                </Button>
+              </MyTooltip>
             </HStack>
             <Tabs width="full" px={2}>
               <TabList overflowX={"auto"}>

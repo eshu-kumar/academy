@@ -105,7 +105,7 @@ export default function CourseEdit(props) {
                 }
               }}
             >
-              View Course
+              Watch Course
             </Button>
           </HStack>
           <Tabs width="full" px={2}>
