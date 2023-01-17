@@ -73,15 +73,17 @@ export default function CourseEdit(props) {
       showToast(response.isError, response.error);
     }
   };
+  let uri =
+    course && userEmail
+      ? `http://localhost:4000/lecture/get-lecture?file=${course.file.toString()}&&userEmail=${userEmail.toString()}`
+      : "https://images.unsplash.com/photo-1484950763426-56b5bf172dbb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fGhkJTIwcGhvdG9zfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60";
   return (
     <Flex minH="90vh" width="full" backgroundColor="background.900">
       <VStack w="full" alignItems="flex-start">
         <Image
           w={"full"}
           h={400}
-          src={
-            "https://images.unsplash.com/photo-1484950763426-56b5bf172dbb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fGhkJTIwcGhvdG9zfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60"
-          }
+          src={uri}
           alt="Green double couch with wooden legs"
           borderRadius="lg"
         />

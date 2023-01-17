@@ -32,10 +32,10 @@ function ViewCourse() {
   const loader = loaderStore();
   const { _id } = router.query;
   const [userEmail, setUserEmail] = useState("");
-  const [viewing, setViewing] = useState("");
+  const [viewing, setViewing] = useState(``);
   const [course, setCourse] = useState(null);
   const [lectures, setLectures] = useState([]);
-  const [defaultUrl, setDefaultUrl] = useState("");
+
   useEffect(() => {
     async function getCourseInfo() {
       loader.setIsLoading(true);
@@ -45,13 +45,20 @@ function ViewCourse() {
       if (!response.isError) {
         setCourse(response.course);
         setLectures(response.lectures);
+        if (response.lectures.length > 0) {
+          setViewing(response.lectures[0].file);
+          console.log("viewing lecture in view course");
+        }
         setUserEmail(response.userEmail);
       }
       console.log("course in course info ", response);
     }
     getCourseInfo();
-    setDefaultUrl(`https://www.youtube.com/watch?v=Oedp_e35Vmk`);
   }, []);
+  let uri =
+    viewing != ""
+      ? `http://localhost:4000/lecture/get-lecture?file=${viewing.toString()}&&userEmail=${userEmail.toString()}`
+      : `https://www.youtube.com/watch?v=hQAHSlTtcmY`;
   return (
     <VStack
       spacing={10}
@@ -63,21 +70,7 @@ function ViewCourse() {
     >
       <VStack w="100%" px={4} pt={5}>
         <Center h="600" w="full" bg="whiteAlpha.800">
-          {viewing != "" ? (
-            <ReactPlayer
-              width="100%"
-              height="100%"
-              controls
-              url={`http://localhost:4000/lecture/get-lecture?file=${viewing.toString()}&&userEmail=${userEmail.toString()}`}
-            />
-          ) : defaultUrl.length > 0 ? (
-            <ReactPlayer
-              width="100%"
-              height="100%"
-              controls
-              url="https://www.youtube.com/watch?v=Oedp_e35Vmk"
-            />
-          ) : null}
+          <ReactPlayer width="100%" height="100%" controls url={uri} />
         </Center>
       </VStack>
 
