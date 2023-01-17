@@ -34,6 +34,7 @@ import CourseOverview from "../../components/CourseOverview";
 export default function CourseEdit(props) {
   const [course, setCourse] = useState(null);
   const [lectures, setLectures] = useState([]);
+  const [courseInfoRefresh, setCourseInfoRefresh] = useState(false);
   const [userEmail, setUserEmail] = useState();
   const loader = loaderStore();
   const router = useRouter();
@@ -54,7 +55,7 @@ export default function CourseEdit(props) {
       console.log("course in course info ", response);
     }
     getCourseInfo();
-  }, []);
+  }, [courseInfoRefresh]);
   const handleSubmit = async (values) => {
     const formData = new FormData();
     formData.append("name", values.name);
@@ -68,6 +69,7 @@ export default function CourseEdit(props) {
     if (!response.isError) {
       console.log(response);
       showToast(response.isError, response.message);
+      setCourseInfoRefresh(!courseInfoRefresh);
     } else {
       console.log(response);
       showToast(response.isError, response.error);
