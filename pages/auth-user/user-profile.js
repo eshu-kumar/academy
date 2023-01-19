@@ -24,7 +24,7 @@ function UserProfile() {
     data: userObj,
     error: userError,
     mutate: mutateUser,
-  } = useSWRImmutable(`http://localhost:4000/user/user-profile`, fetcher, {
+  } = useSWRImmutable(`/api/authenticate`, fetcher, {
     refreshInterval: false,
   });
   console.log(userObj, userError, !userObj);
@@ -33,7 +33,7 @@ function UserProfile() {
     data: imgObj,
     error: imgError,
     mutate: mutateImg,
-  } = useSWRImmutable("http://localhost:4000/user/image", fetcher, {
+  } = useSWRImmutable("/api/authenticate", fetcher, {
     refreshInterval: false,
   });
   console.log(imgObj, imgError, !imgObj);

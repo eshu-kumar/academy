@@ -21,7 +21,7 @@ export default function Layout(props) {
   const path = url.split("?")[0];
   const isPublicPath = publicPaths.includes(path);
   useEffect(() => {
-    console.log("auth store ", auth);
+    console.log("auth store in layout useeffect", auth);
     async function fetchDataWrapper() {
       await auth.fetchData();
     }
@@ -29,7 +29,7 @@ export default function Layout(props) {
   }, []);
   if (!isPublicPath && auth.isDone && !auth.isAuthenticated) {
     console.log("auth store in fetch data wrapper", auth);
-    console.log("loaderstore", loader);
+    console.log("loaderstore in layout ", loader);
     router.push("/auth-user/login");
   }
   return (
