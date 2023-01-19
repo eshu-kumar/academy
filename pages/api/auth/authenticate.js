@@ -16,12 +16,12 @@ export default async function handler(req, res) {
     );
     // return response.data;
     console.log(
-      "response in next app and sending response.data",
+      "response in authenticate next app and sending response.data",
       response.data
     );
     res.send(response.data);
   } catch (error) {
-    console.log("error in login next api  post route  ", error);
+    console.log("error in authenticate next api  post route  ", error.message);
     res.status(404).send({ message: error.message, isError: true });
   }
 }

@@ -21,7 +21,7 @@ export default async function handler(req, res) {
     );
     res.send(response.data);
   } catch (error) {
-    console.log("error in login next api  post route  ", error);
+    console.log("error in login next api  post route  ", error.message);
     res.status(404).send({ message: error.message, isError: true });
   }
 }

@@ -14,9 +14,10 @@ export default async function handler(req, res) {
         },
       }
     );
+    console.log("response in api/auth/signup next app", response.data);
     res.send(response.data);
   } catch (error) {
-    console.log("error in login next api  post route  ", error);
+    console.log("error in signup next api  post route  ", error);
     res.status(404).send({ message: error.message, isError: true });
   }
 }
