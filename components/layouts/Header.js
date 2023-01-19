@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Flex,
   Center,
@@ -9,94 +9,94 @@ import {
   Link,
   useToast,
   Spacer,
-} from "@chakra-ui/react";
-import { useCustomToast } from "../../utils/useCustomToast";
-import { useRouter } from "next/router";
-import NextLink from "next/link";
-import cookies from "js-cookie";
-import { authStore } from "../../store/authStore";
+} from '@chakra-ui/react';
+import { useCustomToast } from '../../utils/useCustomToast';
+import { useRouter } from 'next/router';
+import NextLink from 'next/link';
+import cookies from 'js-cookie';
+import { authStore } from '../../store/authStore';
 export default function Header(props) {
-  console.log("this is header");
+  console.log('this is header');
   const { setAuthenticated, isAuthenticated } = authStore();
 
   const { showToast } = useCustomToast();
   const router = useRouter();
   const url = router.asPath;
-  const path = url.split("?")[0];
+  const path = url.split('?')[0];
   let isStudent = true;
-  const isInsructor = path.includes("/instructor/");
-  isStudent = path.includes("/student/");
+  const isInsructor = path.includes('/instructor/');
+  isStudent = path.includes('/student/');
   function goto(route) {
     router.push(route, undefined, { shallow: false });
   }
   async function logout() {
-    console.log("logut clicked");
+    console.log('logut clicked');
     //REFACTOR TO AXIOS AND LOGOUT SERVICE
     try {
-      const token = await localStorage.getItem("token");
+      const token = await localStorage.getItem('token');
       if (token) {
         let response = await fetch(`http://localhost:4000/user/logout`, {
-          method: "POST",
+          method: 'POST',
           body: JSON.stringify({ token: token }),
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
         });
         response = await response.json();
-        console.log(response + "in logout");
+        console.log(response + 'in logout');
         if (response.isError) {
           throw new Error(response.isError);
         }
         showToast(response.isError, response.message);
 
-        console.log("deleting the token");
-        await localStorage.removeItem("token");
-        cookies.remove("token");
+        console.log('deleting the token');
+        await localStorage.removeItem('token');
+        cookies.remove('token');
         setAuthenticated();
-        router.replace("/");
+        router.replace('/');
       } else {
-        throw new Error("session expired ");
+        throw new Error('session expired ');
       }
     } catch (error) {
-      console.log("in the errro logout client", error);
+      console.log('in the errro logout client', error);
       showToast(true, error.message);
-      router.push("/");
+      router.push('/');
     }
   }
   async function closeServer() {
     try {
       let response = await fetch(`http://localhost:4000/close-server`, {
-        method: "POST",
+        method: 'POST',
         //give actual token if you need authentication in future
-        body: JSON.stringify({ token: "" }),
+        body: JSON.stringify({ token: '' }),
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
       });
     } catch (error) {
-      console.log("in the errro close server client");
+      console.log('in the errro close server client');
       showToast(true, error.message);
-      router.push("/");
+      router.push('/');
     }
   }
   function InstructorHeader() {
     return (
       <>
         <Button
-          colorScheme="teal"
-          color="text.900"
-          variant="ghost"
-          _hover={{ backgroundColor: "hover.900" }}
-          onClick={() => goto("/instructor/my-creations")}
+          colorScheme='teal'
+          color='text.900'
+          variant='ghost'
+          _hover={{ backgroundColor: 'hover.900' }}
+          onClick={() => goto('/instructor/my-creations')}
         >
           My Creations
         </Button>
         <Button
-          colorScheme="teal"
-          color="text.900"
-          variant="ghost"
-          _hover={{ backgroundColor: "hover.900" }}
-          onClick={() => goto("/instructor/create-course")}
+          colorScheme='teal'
+          color='text.900'
+          variant='ghost'
+          _hover={{ backgroundColor: 'hover.900' }}
+          onClick={() => goto('/instructor/create-course')}
         >
           Create Course
         </Button>
@@ -110,11 +110,11 @@ export default function Header(props) {
           Course Edit
         </Button> */}
         <Button
-          colorScheme="teal"
-          color="text.900"
-          variant="ghost"
-          _hover={{ backgroundColor: "hover.900" }}
-          onClick={() => goto("/student/my-learnings")}
+          colorScheme='teal'
+          color='text.900'
+          variant='ghost'
+          _hover={{ backgroundColor: 'hover.900' }}
+          onClick={() => goto('/student/my-learnings')}
         >
           Student View
         </Button>
@@ -125,11 +125,11 @@ export default function Header(props) {
     return (
       <>
         <Button
-          colorScheme="teal"
-          color="text.900"
-          variant="ghost"
-          _hover={{ backgroundColor: "hover.900" }}
-          onClick={() => goto("/student/my-learnings")}
+          colorScheme='teal'
+          color='text.900'
+          variant='ghost'
+          _hover={{ backgroundColor: 'hover.900' }}
+          onClick={() => goto('/student/my-learnings')}
         >
           My learnings
         </Button>
@@ -152,11 +152,11 @@ export default function Header(props) {
           View Course
         </Button> */}
         <Button
-          colorScheme="teal"
-          color="text.900"
-          variant="ghost"
-          _hover={{ backgroundColor: "hover.900" }}
-          onClick={() => goto("/instructor/get-started")}
+          colorScheme='teal'
+          color='text.900'
+          variant='ghost'
+          _hover={{ backgroundColor: 'hover.900' }}
+          onClick={() => goto('/instructor/get-started')}
         >
           Instructor View
         </Button>
@@ -167,28 +167,28 @@ export default function Header(props) {
     return (
       <>
         <Button
-          colorScheme="teal"
-          color="text.900"
-          variant="ghost"
-          _hover={{ backgroundColor: "hover.900" }}
-          onClick={() => goto("/experiments/uploader")}
+          colorScheme='teal'
+          color='text.900'
+          variant='ghost'
+          _hover={{ backgroundColor: 'hover.900' }}
+          onClick={() => goto('/experiments/uploader')}
         >
           Uploader
         </Button>
         <Button
-          colorScheme="teal"
-          color="text.900"
-          variant="ghost"
-          _hover={{ backgroundColor: "hover.900" }}
-          onClick={() => goto("/experiments/ex-graphql")}
+          colorScheme='teal'
+          color='text.900'
+          variant='ghost'
+          _hover={{ backgroundColor: 'hover.900' }}
+          onClick={() => goto('/experiments/ex-graphql')}
         >
           Graphql
         </Button>
         <Button
-          colorScheme="teal"
-          color="text.900"
-          variant="ghost"
-          _hover={{ backgroundColor: "hover.900" }}
+          colorScheme='teal'
+          color='text.900'
+          variant='ghost'
+          _hover={{ backgroundColor: 'hover.900' }}
           onClick={closeServer}
         >
           Close Server
@@ -209,10 +209,10 @@ export default function Header(props) {
           Profile
         </Button> */}
         <Button
-          colorScheme="teal"
-          color="text.900"
-          variant="ghost"
-          _hover={{ backgroundColor: "hover.900" }}
+          colorScheme='teal'
+          color='text.900'
+          variant='ghost'
+          _hover={{ backgroundColor: 'hover.900' }}
           onClick={logout}
         >
           Logout
@@ -224,20 +224,20 @@ export default function Header(props) {
     return (
       <>
         <Button
-          colorScheme="teal"
-          color="text.900"
-          variant="ghost"
-          _hover={{ backgroundColor: "hover.900" }}
-          onClick={() => goto("/auth-user/login")}
+          colorScheme='teal'
+          color='text.900'
+          variant='ghost'
+          _hover={{ backgroundColor: 'hover.900' }}
+          onClick={() => goto('/auth-user/login')}
         >
           Login
         </Button>
         <Button
-          colorScheme="teal"
-          color="text.900"
-          variant="ghost"
-          _hover={{ backgroundColor: "hover.900" }}
-          onClick={() => goto("/auth-user/signup")}
+          colorScheme='teal'
+          color='text.900'
+          variant='ghost'
+          _hover={{ backgroundColor: 'hover.900' }}
+          onClick={() => goto('/auth-user/signup')}
         >
           Signup
         </Button>
@@ -246,25 +246,25 @@ export default function Header(props) {
   }
   return (
     <Flex
-      w="100%"
-      wrap={"wrap"}
+      w='100%'
+      wrap={'wrap'}
       borderBottomWidth={1}
-      justifyContent="space-between"
-      alignItems="center"
+      justifyContent='space-between'
+      alignItems='center'
       py={4}
-      px={8}
-      borderBottomColor="whiteAlpha.700"
-      backgroundColor="background.900"
+      px={10}
+      borderBottomColor='whiteAlpha.700'
+      backgroundColor='background.900'
     >
-      <Link mr={10} as={NextLink} href="/">
-        <Center w="100px">
-          <Text fontSize="3xl" color="text.900">
+      <Link as={NextLink} href='/'>
+        <Center w='150px'>
+          <Text fontSize='3xl' color='text.900'>
             Academy
           </Text>
         </Center>
       </Link>
       <Spacer />
-      <Flex wrap={"wrap"}>
+      <Flex wrap={'wrap'}>
         {isAuthenticated ? (
           <>
             {isInsructor ? <InstructorHeader /> : <StudentHeader />}
