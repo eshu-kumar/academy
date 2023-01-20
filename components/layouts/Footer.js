@@ -13,15 +13,8 @@ import {
 
 export default function Footer(props) {
   return (
-    <Flex
-      direction={'column'}
-      width='full'
-      bg='background.900'
-      px={5}
-      py={7}
-      pt={5}
-    >
-      <HStack alignItems='center' justifyContent='space-between' py={5}>
+    <Flex direction={'column'} width='full' bg='background.900' py={7} pt={5}>
+      <HStack alignItems='center' justifyContent='space-between' py={5} px={10}>
         <Text textColor='text.900'>
           Top companies choose <Link textColor='primary.900'>Academy</Link>{' '}
           Business to build in-demand career skills.
@@ -33,6 +26,7 @@ export default function Footer(props) {
         justifyContent='space-between'
         alignItems='start'
         py={5}
+        px={10}
       >
         <HStack spacing={[4, 8, 10]}>
           <VStack spacing={2} alignItems='start'>
@@ -78,7 +72,7 @@ export default function Footer(props) {
           </HStack>
         </Button>
       </HStack>
-      <HStack alignItems='center' justifyContent='space-between'>
+      <HStack alignItems='center' justifyContent='space-between' px={10}>
         <Text textColor='text.900'>ACADEMY</Text>
         <Text textColor='text.900'> © 2022 Ademy, Inc.</Text>
       </HStack>
