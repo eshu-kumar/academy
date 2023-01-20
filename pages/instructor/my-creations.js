@@ -158,6 +158,34 @@ export default function MyCreations(props) {
           Trending Courses
         </Text>
         <TrendingCourses />
+        <VStack spacing={3} pt={5}>
+          <Text
+            color='text.900'
+            fontSize='3xl'
+            fontWeight='bold'
+            textAlign='center'
+          >
+            Become an instructor today
+          </Text>
+          <Text
+            color='text.900'
+            fontSize='lg'
+            fontWeight='semibold'
+            textAlign='center'
+          >
+            Join one of the world’s largest online learning marketplaces.
+          </Text>
+          <Button
+            type='submit'
+            backgroundColor='primary.900'
+            color='text.900'
+            width={['60%', '70%', '30%']}
+            _hover={{ backgroundColor: 'primary.600' }}
+            onClick={redirectToCoursePage}
+          >
+            Get Started
+          </Button>
+        </VStack>
       </VStack>
     </VStack>
   );
