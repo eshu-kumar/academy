@@ -32,7 +32,7 @@ export default function SignUp() {
       // console.log("cookie in client ", document.cookie);
       setAuthenticated();
       showToast(response.isError, response.message);
-      router.replace("/student/my-learnings");
+      router.push("/student/my-learnings");
     } else {
       console.log(response);
       showToast(response.isError, response.error);

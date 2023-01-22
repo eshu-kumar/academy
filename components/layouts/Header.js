@@ -51,9 +51,9 @@ export default function Header(props) {
 
         console.log("deleting the token");
         await localStorage.removeItem("token");
-        cookies.remove("token");
+        // cookies.remove("token");
         setAuthenticated();
-        router.replace("/");
+        router.push("/");
       } else {
         throw new Error("session expired ");
       }
