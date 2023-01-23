@@ -14,6 +14,7 @@ import {
   Image,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
+import Reviews from "../../components/Reviews";
 
 const rewards = [
   {
@@ -74,6 +75,8 @@ export default function GetStarted(props) {
           color="text.900"
           fontWeight="bold"
           fontSize="3xl"
+          textDecoration="underline"
+          textDecorationColor="primary.900"
         >
           Come teach with us
         </Text>
@@ -93,6 +96,8 @@ export default function GetStarted(props) {
           onClick={() => {
             router.push("../instructor/my-creations");
           }}
+          textDecoration="underline"
+          textDecorationColor="primary.900"
         >
           Get Startd
         </Button>
@@ -103,6 +108,8 @@ export default function GetStarted(props) {
         fontSize="3xl"
         textAlign="center"
         pt={10}
+        textDecoration="underline"
+        textDecorationColor="primary.900"
       >
         So many reasons to start
       </Text>
@@ -122,6 +129,8 @@ export default function GetStarted(props) {
                 fontWeight="bold"
                 fontSize="xl"
                 textAlign="center"
+                textDecoration="underline"
+                textDecorationColor="primary.900"
               >
                 {item.primaryText}
               </Text>
@@ -137,37 +146,26 @@ export default function GetStarted(props) {
           );
         })}
       </HStack>
-
-      {/* <HStack
-        alignItems="center"
-        justifyContent="space-evenly"
-        // spacing={[4, 8, 12]}
-        width="100%"
-        borderColor="primary.900"
-        borderWidth={1}
-        px={5}
-        py={3}
-        flexWrap={"wrap"}
+      <Text
+        color="text.900"
+        fontWeight="bold"
+        fontSize="3xl"
+        textAlign="center"
+        textDecoration="underline"
+        textDecorationColor="primary.900"
       >
-        {facts.map((item, index) => {
-          return (
-            <VStack key={index} alignItems="center">
-              <Text color="text.900" fontWeight="bold" fontSize="lg">
-                {item.number}
-              </Text>
-              <Text color="text.900" fontWeight="normal" fontSize="md">
-                {item.supportText}
-              </Text>
-            </VStack>
-          );
-        })}
-      </HStack> */}
+        What Other Teachers have to say
+      </Text>
+      <Reviews isTeacher={true} />
+
       <Text
         color="text.900"
         fontWeight="bold"
         fontSize="3xl"
         textAlign="center"
         pt={10}
+        textDecoration="underline"
+        textDecorationColor="primary.900"
       >
         How to begin
       </Text>
@@ -223,6 +221,8 @@ export default function GetStarted(props) {
           fontWeight="bold"
           fontSize="3xl"
           textAlign="center"
+          textDecoration="underline"
+          textDecorationColor="primary.900"
         >
           You won’t have to do it alone
         </Text>
@@ -252,6 +252,8 @@ export default function GetStarted(props) {
           fontWeight="bold"
           fontSize="2xl"
           textAlign="center"
+          textDecoration="underline"
+          textDecorationColor="primary.900"
         >
           Become an instructor today
         </Text>

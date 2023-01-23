@@ -45,11 +45,25 @@ export default function MyLearnings(props) {
           Learning that gets you skills for your present and for future
         </Text>
       </Box>
-      <Text color="text.900" fontWeight="bold" fontSize="2xl" textAlign="start">
+      <Text
+        color="text.900"
+        fontWeight="bold"
+        fontSize="2xl"
+        textAlign="start"
+        textDecoration="underline"
+        textDecorationColor="primary.900"
+      >
         My Active Courses
       </Text>
       <Courses list={courseList} isBought={true} />
-      <Text color="text.900" fontWeight="bold" fontSize="3xl" textAlign="start">
+      <Text
+        color="text.900"
+        fontWeight="bold"
+        fontSize="3xl"
+        textAlign="start"
+        textDecoration="underline"
+        textDecorationColor="primary.900"
+      >
         What To Learn Next
       </Text>
       <Text
@@ -57,6 +71,8 @@ export default function MyLearnings(props) {
         fontWeight="semibold"
         fontSize="2xl"
         textAlign="start"
+        textDecoration="underline"
+        textDecorationColor="primary.900"
       >
         Students Are Also Viewing
       </Text>

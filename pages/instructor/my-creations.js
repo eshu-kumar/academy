@@ -53,7 +53,13 @@ export default function MyCreations(props) {
           justifyContent="center"
           spacing={10}
         >
-          <Text color="text.900" fontWeight="semibold" fontSize="lg">
+          <Text
+            color="text.900"
+            fontWeight="semibold"
+            fontSize="lg"
+            textDecoration="underline"
+            textDecorationColor="primary.900"
+          >
             Create Your Course
           </Text>
           <Button
@@ -66,12 +72,24 @@ export default function MyCreations(props) {
             New Course
           </Button>
         </HStack>
-        <Text color="text.900" fontWeight="bold" fontSize="xl">
+        <Text
+          color="text.900"
+          fontWeight="bold"
+          fontSize="xl"
+          textDecoration="underline"
+          textDecorationColor="primary.900"
+        >
           My Active Courses
         </Text>
         <Courses isInstructor={true} list={courseList} />
         <VStack marginTop={4} borderWidth={1} borderColor="primary.900" p={4}>
-          <Text color="text.900" fontWeight="bold" fontSize="2xl">
+          <Text
+            color="text.900"
+            fontWeight="bold"
+            fontSize="2xl"
+            textDecoration="underline"
+            textDecorationColor="primary.900"
+          >
             Create an Engaging Course
           </Text>
           <Text
@@ -105,6 +123,8 @@ export default function MyCreations(props) {
               fontWeight="bold"
               fontSize="xl"
               textAlign="center"
+              textDecoration="underline"
+              textDecorationColor="primary.900"
             >
               Get Started with Video
             </Text>
@@ -124,6 +144,8 @@ export default function MyCreations(props) {
               fontWeight="bold"
               fontSize="xl"
               textAlign="center"
+              textDecoration="underline"
+              textDecorationColor="primary.900"
             >
               Build Your Audience
             </Text>
