@@ -12,26 +12,13 @@ import { useRouter } from "next/router";
 import Courses from "../../components/Courses";
 import { getCourseListService } from "../../services/courseService";
 import { loaderStore } from "../../store/loaderStore";
+import { authStore } from "../../store/authStore";
+import { authenticateServerService } from "../../services/authService";
 export default function MyCreations(props) {
-  const [courseList, setCourseList] = useState([]);
-  const [userEmail, setUserEmail] = useState("");
+  const auth = authStore();
+  console.log("props in my learning", props);
+  const { courseList } = props;
   const router = useRouter();
-  const loader = loaderStore();
-  useEffect(() => {
-    async function getCourseList() {
-      loader.setStatus("Fetching my creations...");
-      loader.setIsLoading(true);
-      const response = await getCourseListService();
-      loader.setIsLoading(false);
-      if (!response.isError) {
-        setCourseList(response.courses);
-        setUserEmail(response.userEmail);
-      }
-      console.log("course list in index", response);
-    }
-    getCourseList();
-    console.log("course list ", courseList);
-  }, []);
   function redirectToCoursePage() {
     router.push("../instructor/create-course");
   }
@@ -56,7 +43,8 @@ export default function MyCreations(props) {
           fontSize="2xl"
           textAlign="center"
         >
-          Welcome back {userEmail.split("@")[0].split(".")[0]}
+          Welcome back{" "}
+          {auth.email ? auth.email.split("@")[0].split(".")[0] : ""}
         </Text>
         <HStack
           marginY={4}
@@ -81,7 +69,7 @@ export default function MyCreations(props) {
         <Text color="text.900" fontWeight="bold" fontSize="xl">
           My Active Courses
         </Text>
-        <Courses isInstructor={true} userEmail={userEmail} list={courseList} />
+        <Courses isInstructor={true} list={courseList} />
         <VStack marginTop={4} borderWidth={1} borderColor="primary.900" p={4}>
           <Text color="text.900" fontWeight="bold" fontSize="2xl">
             Create an Engaging Course
@@ -153,4 +141,20 @@ export default function MyCreations(props) {
       </VStack>
     </VStack>
   );
+}
+export async function getServerSideProps(context) {
+  const user = await authenticateServerService(context.req);
+  console.log("user in serversideprops", user);
+  if (user.isError) {
+    // Redirect to a "not found" page
+    return { redirect: { destination: "/404", permanent: false } };
+  }
+  const response = await getCourseListService("myCreations", user.email);
+  console.log("courselist in serverside props", response);
+  const courseList = response.courses;
+  return {
+    props: {
+      courseList,
+    },
+  };
 }

@@ -20,15 +20,18 @@ import {
 import { useRouter } from "next/router";
 import { getCourseInfoService } from "../services/courseService";
 import { loaderStore } from "../store/loaderStore";
+import { authStore } from "../store/authStore";
 import Reviews from "../components/Reviews";
 import QuestionAndAnswer from "../components/Q&A";
 import Lectures from "../components/Lectures";
 import { useEffect, useLayoutEffect, useState, memo, useRef } from "react";
 import dynamic from "next/dynamic";
+import { authenticateServerService } from "../services/authService";
 const ReactPlayer = dynamic(() => import("react-player/lazy"), { ssr: false });
 chakra(ReactPlayer);
 function ViewCourse() {
   const router = useRouter();
+  const auth = authStore();
   const loader = loaderStore();
   const { _id } = router.query;
   const [userEmail, setUserEmail] = useState("");
@@ -57,7 +60,7 @@ function ViewCourse() {
   }, []);
   let uri =
     viewing != ""
-      ? `http://localhost:4000/lecture/get-lecture?file=${viewing.toString()}&&userEmail=${userEmail.toString()}`
+      ? `http://localhost:4000/lecture/get-lecture?file=${viewing.toString()}&&userEmail=${auth.email.toString()}`
       : `https://www.youtube.com/watch?v=hQAHSlTtcmY`;
   return (
     <VStack
@@ -193,3 +196,17 @@ function ViewCourse() {
 }
 
 export default memo(ViewCourse);
+export async function getServerSideProps(context) {
+  const user = await authenticateServerService(context.req);
+  console.log("user in serversideprops", user);
+  if (user.isError) {
+    // Redirect to a "not found" page
+    return { redirect: { destination: "/404", permanent: false } };
+  }
+
+  return {
+    props: {
+      user,
+    },
+  };
+}

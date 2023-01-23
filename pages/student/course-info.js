@@ -17,34 +17,33 @@ import { getCourseInfoService } from "../../services/courseService";
 import Lectures from "../../components/Lectures";
 import Reviews from "../../components/Reviews";
 import { loaderStore } from "../../store/loaderStore";
+import { authStore } from "../../store/authStore";
 import CourseOverview from "../../components/CourseOverview";
 import MyTooltip from "../../components/others/MyTooltip";
 export default function CourseInfo(props) {
-  const loader = loaderStore();
-  const [course, setCourse] = useState(null);
-  const [lectures, setLectures] = useState([]);
-  const [userEmail, setUserEmail] = useState();
+  const auth = authStore();
   const router = useRouter();
-  const { _id } = router.query;
-  useEffect(() => {
-    async function getCourseInfo() {
-      loader.setIsLoading(true);
-      loader.setStatus("Fetching course details...");
-      const response = await getCourseInfoService(_id);
-      loader.setIsLoading(false);
-      if (!response.isError) {
-        setCourse(response.course);
-        setLectures(response.lectures);
-        setUserEmail(response.userEmail);
-      }
-      console.log("course in course info ", response);
-    }
-    getCourseInfo();
-  }, []);
-  let uri =
-    course && userEmail
-      ? `http://localhost:4000/lecture/get-lecture?file=${course.file.toString()}&&userEmail=${userEmail.toString()}`
-      : "https://images.unsplash.com/photo-1484950763426-56b5bf172dbb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fGhkJTIwcGhvdG9zfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60";
+  console.log("props in courseinfo", props);
+  const { course, lectures } = props;
+  //write logic for code refresh on add lecture and how to merge server side data and client side data
+  // useEffect(() => {
+  //   async function getCourseInfo() {
+  //     loader.setStatus("Fetching course details...");
+  //     loader.setIsLoading(true);
+  //     const response = await getCourseInfoService(_id);
+  //     loader.setIsLoading(false);
+  //     if (!response.isError) {
+  //       setCourse(response.course);
+  //       setLectures(response.lectures);
+
+  //     }
+  //     console.log("course in course info ", response);
+  //   }
+  //   getCourseInfo();
+  // }, [courseInfoRefresh]);
+  let uri = course
+    ? `http://localhost:4000/course/get-course?file=${course.file.toString()}`
+    : "https://images.unsplash.com/photo-1484950763426-56b5bf172dbb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fGhkJTIwcGhvdG9zfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60";
   if (course)
     return (
       <Flex minH="90vh" width="full" backgroundColor="background.900">
@@ -125,7 +124,7 @@ export default function CourseInfo(props) {
                   {course ? <CourseOverview course={course} /> : null}
                 </TabPanel>
                 <TabPanel>
-                  <Lectures userEmail={userEmail} lectures={lectures} />
+                  <Lectures userEmail={auth.email} lectures={lectures} />
                 </TabPanel>
                 <TabPanel>
                   <Reviews />
@@ -136,4 +135,18 @@ export default function CourseInfo(props) {
         </VStack>
       </Flex>
     );
+}
+export async function getServerSideProps(context) {
+  console.log("context", context.query);
+  const _id = context.query._id;
+  const response = await getCourseInfoService(_id);
+  const course = response.course;
+  const lectures = response.lectures;
+
+  return {
+    props: {
+      course,
+      lectures,
+    },
+  };
 }

@@ -5,12 +5,7 @@ export default async function handler(req, res) {
     return;
   }
   console.log("req in api/auth/authenticate next app", req.body);
-  const cookies = cookie.parse(req.headers.cookie || "");
 
-  // Get the visitor name set in the cookie
-  const token = cookies.token;
-  console.log("cookie is ", cookies);
-  console.log("cookie token is ", token);
   try {
     let response = await axios.post(
       `http://localhost:4000/user/authenticate`,

@@ -11,25 +11,12 @@ import {
 import { getCourseListService } from "../../services/courseService";
 import Courses from "../../components/Courses";
 import { loaderStore } from "../../store/loaderStore";
+import { authStore } from "../../store/authStore";
+import { authenticateServerService } from "../../services/authService";
 export default function MyLearnings(props) {
-  const loader = loaderStore();
-  const [courseList, setCourseList] = useState([]);
-  const [userEmail, setUserEmail] = useState("");
-
-  useEffect(() => {
-    async function getCourseList() {
-      loader.setIsLoading(true);
-      loader.setStatus("Fetching your courses...");
-      const response = await getCourseListService();
-      loader.setIsLoading(false);
-      if (!response.isError) {
-        setCourseList(response.courses);
-        setUserEmail(response.userEmail);
-      }
-      console.log("course list in my-learnings", response);
-    }
-    getCourseList();
-  }, []);
+  const auth = authStore();
+  console.log("props in my learning", props);
+  const { courseList } = props;
   return (
     <VStack
       p={[4, 6, 6]}
@@ -46,7 +33,7 @@ export default function MyLearnings(props) {
         textAlign="center"
         pt={6}
       >
-        Welcome back {userEmail.split("@")[0].split(".")[0]}
+        Welcome back {auth.email ? auth.email.split("@")[0].split(".")[0] : ""}
       </Text>
       <Box borderWidth={1} borderColor="primary.900" p={4} alignItems="center">
         <Text
@@ -61,7 +48,7 @@ export default function MyLearnings(props) {
       <Text color="text.900" fontWeight="bold" fontSize="2xl" textAlign="start">
         My Active Courses
       </Text>
-      <Courses userEmail={userEmail} list={courseList} isBought={true} />
+      <Courses list={courseList} isBought={true} />
       <Text color="text.900" fontWeight="bold" fontSize="3xl" textAlign="start">
         What To Learn Next
       </Text>
@@ -73,7 +60,23 @@ export default function MyLearnings(props) {
       >
         Students Are Also Viewing
       </Text>
-      <Courses userEmail={userEmail} list={courseList} />
+      <Courses list={courseList} />
     </VStack>
   );
+}
+export async function getServerSideProps(context) {
+  const user = await authenticateServerService(context.req);
+  console.log("user in serversideprops", user);
+  if (user.isError) {
+    // Redirect to a "not found" page
+    return { redirect: { destination: "/404", permanent: false } };
+  }
+  const response = await getCourseListService("myLearnings", user.email);
+  console.log("courselist in serverside props", response);
+  const courseList = response.courses;
+  return {
+    props: {
+      courseList,
+    },
+  };
 }
