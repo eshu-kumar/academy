@@ -37,6 +37,9 @@ export async function loginService(email, password) {
         },
       }
     );
+    await localStorage.setItem("token", response.data.token, {
+      sameSite: "strict",
+    });
     return response.data;
   } catch (error) {
     console.log("error", error);
@@ -57,9 +60,36 @@ export async function signupService(email, password) {
         },
       }
     );
+    await localStorage.setItem("token", response.data.token, {
+      sameSite: "strict",
+    });
     return response.data;
   } catch (error) {
     console.log("error", error);
+    return { isError: true, error: error.message };
+  }
+}
+export async function logoutService() {
+  const token = await localStorage.getItem("token");
+  console.log("in the logout user function ");
+  try {
+    let response = await axios.post(
+      `/api/auth/logout`,
+      { token: token },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    await localStorage.removeItem("token");
+    return response.data;
+  } catch (error) {
+    console.log(
+      "error message in logoutService function of authservice",
+      error
+    );
+    console.log("error in logoutService function of authservice", error);
     return { isError: true, error: error.message };
   }
 }

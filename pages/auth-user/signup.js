@@ -24,12 +24,6 @@ export default function SignUp() {
     //loader.setIsLoading(false);
     if (!response.isError) {
       console.log(response);
-      const token = response.token;
-      await localStorage.setItem("token", token, { sameSite: "strict" });
-      // Set the cookie if need token at server for server side validation
-      //once its deployed on the server side add the secure to true it will besent by https only
-      // cookies.set("token", token);
-      // console.log("cookie in client ", document.cookie);
       setAuthenticated();
       showToast(response.isError, response.message);
       router.push("/student/my-learnings");

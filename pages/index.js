@@ -27,6 +27,7 @@ export default function Home() {
     <VStack
       alignItems={"center"}
       w="full"
+      minH="70vh"
       backgroundColor="background.900"
       spacing={5}
       pt={5}

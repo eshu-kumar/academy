@@ -15,6 +15,7 @@ import { useRouter } from "next/router";
 import NextLink from "next/link";
 import cookies from "js-cookie";
 import { authStore } from "../../store/authStore";
+import { logoutService } from "../../services/authService";
 export default function Header(props) {
   console.log("this is header");
   const { setAuthenticated, isAuthenticated } = authStore();
@@ -31,37 +32,21 @@ export default function Header(props) {
   }
   async function logout() {
     console.log("logut clicked");
-    //REFACTOR TO AXIOS AND LOGOUT SERVICE
-    try {
-      const token = await localStorage.getItem("token");
-      if (token) {
-        let response = await fetch(`http://localhost:4000/user/logout`, {
-          method: "POST",
-          body: JSON.stringify({ token: token }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        response = await response.json();
-        console.log(response + "in logout");
-        if (response.isError) {
-          throw new Error(response.isError);
-        }
-        showToast(response.isError, response.message);
-
-        console.log("deleting the token");
-        await localStorage.removeItem("token");
-        // cookies.remove("token");
-        setAuthenticated();
-        router.push("/");
-      } else {
-        throw new Error("session expired ");
-      }
-    } catch (error) {
-      console.log("in the errro logout client", error);
-      showToast(true, error.message);
-      router.push("/");
+    const response = await logoutService();
+    if (!response.isError) {
+      setAuthenticated();
+      console.log("in header logout success function", response);
+      console.log(
+        "in header isauthenticated success function",
+        isAuthenticated
+      );
+      showToast(response.isError, response.message);
+    } else {
+      console.log("in header logout error function", response);
+      console.log("in header isauthenticated errro function", isAuthenticated);
+      showToast(response.isError, response.error);
     }
+    router.push("/");
   }
   async function closeServer() {
     try {
