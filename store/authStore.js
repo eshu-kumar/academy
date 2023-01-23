@@ -1,7 +1,7 @@
 import create from "zustand";
-import { authUser } from "../services/authService";
+import { authenticateService } from "../services/authService";
 const authStore = create((set) => ({
-  data: null,
+  email: null,
   error: null,
   isDone: false,
   isAuthenticated: false,
@@ -11,24 +11,31 @@ const authStore = create((set) => ({
     set((state) => ({ ...state, isAuthenticated: !state.isAuthenticated })),
   async fetchData() {
     set((state) => ({ ...state }));
-    const { isError, data, error } = await authUser();
-    if (!isError) {
+    const response = await authenticateService();
+    if (!response.isError) {
       set((state) => ({
         ...state,
-        data,
-        error,
+        email: response.email,
+        error: null,
         isDone: true,
         isAuthenticated: true,
       }));
-      console.log("data in store ", data);
+      console.log(
+        "response in auth store, returned via auth service ",
+        response
+      );
     } else {
       set((state) => ({
         ...state,
-        error,
+        error: response.message,
+        email: null,
         isDone: true,
         isAuthenticated: false,
       }));
-      console.log("data in error store", data);
+      console.log(
+        " got error in auth store , returned via auth service ",
+        response
+      );
     }
   },
 }));

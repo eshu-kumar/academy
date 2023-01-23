@@ -17,7 +17,7 @@ import { useRouter } from "next/router";
 import { getCourseInfoService } from "../../services/courseService";
 import { createLectureService } from "../../services/lectureService";
 import Lectures from "../../components/Lectures";
-import ReviewsComponentCourse from "../../components/Reviews";
+import Reviews from "../../components/Reviews";
 import FormData from "form-data";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
@@ -30,32 +30,25 @@ import {
   MyTextArea,
 } from "../../components/FormGrocery";
 import { loaderStore } from "../../store/loaderStore";
+import { authStore } from "../../store/authStore";
 import CourseOverview from "../../components/CourseOverview";
+import { authenticateServerService } from "../../services/authService";
 export default function CourseEdit(props) {
-  const [course, setCourse] = useState(null);
-  const [lectures, setLectures] = useState([]);
+  const auth = authStore();
+  const router = useRouter();
+  console.log("props in courseinfo", props);
+  const { course, lectures } = props;
+  let uri = course
+    ? `http://localhost:4000/course/get-course?file=${course.file.toString()}`
+    : "https://images.unsplash.com/photo-1484950763426-56b5bf172dbb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fGhkJTIwcGhvdG9zfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60";
+
   const [courseInfoRefresh, setCourseInfoRefresh] = useState(false);
   const [userEmail, setUserEmail] = useState();
   const loader = loaderStore();
-  const router = useRouter();
+
   const { _id } = router.query;
   const { showToast } = useCustomToast();
   const [file, setFile] = useState(null);
-  useEffect(() => {
-    async function getCourseInfo() {
-      loader.setStatus("Fetching course details...");
-      loader.setIsLoading(true);
-      const response = await getCourseInfoService(_id);
-      loader.setIsLoading(false);
-      if (!response.isError) {
-        setCourse(response.course);
-        setLectures(response.lectures);
-        setUserEmail(response.userEmail);
-      }
-      console.log("course in course info ", response);
-    }
-    getCourseInfo();
-  }, [courseInfoRefresh]);
   const handleSubmit = async (values) => {
     const formData = new FormData();
     formData.append("name", values.name);
@@ -75,10 +68,6 @@ export default function CourseEdit(props) {
       showToast(response.isError, response.error);
     }
   };
-  let uri =
-    course && userEmail
-      ? `http://localhost:4000/lecture/get-lecture?file=${course.file.toString()}&&userEmail=${userEmail.toString()}`
-      : "https://images.unsplash.com/photo-1484950763426-56b5bf172dbb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fGhkJTIwcGhvdG9zfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60";
   return (
     <Flex minH="90vh" width="full" backgroundColor="background.900">
       <VStack w="full" alignItems="flex-start">
@@ -217,4 +206,24 @@ export default function CourseEdit(props) {
       </VStack>
     </Flex>
   );
+}
+export async function getServerSideProps(context) {
+  const user = await authenticateServerService(context.req);
+  console.log("user in serversideprops", user);
+  if (user.isError) {
+    // Redirect to a "not found" page
+    return { redirect: { destination: "/404", permanent: false } };
+  }
+  console.log("context", context.query);
+  const _id = context.query._id;
+  const response = await getCourseInfoService(_id);
+  const course = response.course;
+  const lectures = response.lectures;
+
+  return {
+    props: {
+      course,
+      lectures,
+    },
+  };
 }

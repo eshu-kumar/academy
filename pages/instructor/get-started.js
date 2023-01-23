@@ -55,7 +55,7 @@ const facts = [
     supportText: "Enterprise customers",
   },
 ];
-
+import { authenticateServerService } from "../../services/authService";
 export default function GetStarted(props) {
   const router = useRouter();
   let uri =
@@ -277,4 +277,18 @@ export default function GetStarted(props) {
       </VStack>
     </VStack>
   );
+}
+export async function getServerSideProps(context) {
+  const user = await authenticateServerService(context.req);
+  console.log("user in serversideprops", user);
+  if (user.isError) {
+    // Redirect to a "not found" page
+    return { redirect: { destination: "/404", permanent: false } };
+  }
+
+  return {
+    props: {
+      user,
+    },
+  };
 }

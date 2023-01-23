@@ -4,29 +4,14 @@ import Courses from "../components/Courses";
 import Reviews from "../components/Reviews";
 import { getCourseListService } from "../services/courseService";
 import { loaderStore } from "../store/loaderStore";
-export default function Home() {
-  const [courseList, setCourseList] = useState([]);
-  const [userEmail, setUserEmail] = useState();
-  const loader = loaderStore();
-  useEffect(() => {
-    async function getCourseList() {
-      loader.setIsLoading(true);
-      loader.setStatus("Fetching  courses ...");
-      const response = await getCourseListService();
-      loader.setIsLoading(false);
-      if (!response.isError) {
-        setCourseList(response.courses);
-        setUserEmail(response.userEmail);
-      }
-      console.log("course list in index", response);
-    }
-    getCourseList();
-  }, []);
-
+export default function Home(props) {
+  console.log("server side props in index", props);
+  const { courseList } = props;
   return (
     <VStack
       alignItems={"center"}
       w="full"
+      minH="70vh"
       backgroundColor="background.900"
       spacing={5}
       pt={5}
@@ -57,7 +42,7 @@ export default function Home() {
       </VStack>
 
       <VStack w="full" mt={3} spacing={5}>
-        <Courses userEmail={userEmail} list={courseList} />
+        <Courses list={courseList} />
         <Text
           fontSize="xl"
           color="text.900"
@@ -75,8 +60,18 @@ export default function Home() {
         >
           What Students are Looking into
         </Text>
-        <Courses userEmail={userEmail} list={courseList} />
+        <Courses list={courseList} />
       </VStack>
     </VStack>
   );
+}
+export async function getStaticProps() {
+  const response = await getCourseListService("all");
+  const courseList = response.courses;
+
+  return {
+    props: {
+      courseList,
+    },
+  };
 }

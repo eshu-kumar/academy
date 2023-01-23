@@ -26,6 +26,7 @@ import FormData from "form-data";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { createCourseService } from "../../services/courseService";
+import { authenticateServerService } from "../../services/authService";
 import {
   MyTextInput,
   MySelect,
@@ -163,3 +164,17 @@ function CreateCourse() {
 }
 
 export default memo(CreateCourse);
+export async function getServerSideProps(context) {
+  const user = await authenticateServerService(context.req);
+  console.log("user in serversideprops", user);
+  if (user.isError) {
+    // Redirect to a "not found" page
+    return { redirect: { destination: "/404", permanent: false } };
+  }
+
+  return {
+    props: {
+      user,
+    },
+  };
+}

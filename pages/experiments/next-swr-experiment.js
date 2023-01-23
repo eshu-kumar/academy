@@ -18,7 +18,8 @@ import { useEffect, useLayoutEffect, useState, memo } from "react";
 import ToastBox from "../../components/others/ToastBox";
 import cookie from "cookie";
 import useSWRImmutable from "swr/immutable";
-
+//PREVIOUS USER-PROFILE ROUTE HAS BEEN CHANGES THIS PAGE WILL WORK WHEN YOU UPDATE FETCH FUNCTIONS ACCRODING TO AXIOS AND
+//AND PINT TO /API/AUTHENTICATE THAT WILL RETURN EMAIL
 function UserProfile() {
   const toast = useToast();
   console.log("the user profile component");
@@ -42,7 +43,7 @@ function UserProfile() {
     data: userObj,
     error: userError,
     mutate: mutateUser,
-  } = useSWRImmutable(`http://localhost:4000/user/user-profile`, fetcher, {
+  } = useSWRImmutable(`/api/authenticate`, fetcher, {
     refreshInterval: false,
   });
   console.log(userObj, userError, !userObj);

@@ -61,10 +61,9 @@ export default function Courses(props) {
           justifyContent={["left", "left", list.length < 4 ? "center" : "left"]}
         >
           {list.map((item, index) => {
-            const uri =
-              item.file && props.userEmail
-                ? `http://localhost:4000/course/get-course?file=${item.file.toString()}&&userEmail=${props.userEmail.toString()}`
-                : "https://images.unsplash.com/photo-1541411438265-4cb4687110f2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8aGQlMjBwaG90b3N8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60";
+            const uri = item.file
+              ? `http://localhost:4000/course/get-course?file=${item.file.toString()}`
+              : "https://images.unsplash.com/photo-1541411438265-4cb4687110f2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8aGQlMjBwaG90b3N8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60";
             return (
               <CourseCard
                 _id={item._id}
