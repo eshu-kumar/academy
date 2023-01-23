@@ -4,6 +4,7 @@ import Courses from "../components/Courses";
 import Reviews from "../components/Reviews";
 import { getCourseListService } from "../services/courseService";
 import { loaderStore } from "../store/loaderStore";
+import FAQ from "../components/FAQ";
 export default function Home(props) {
   console.log("server side props in index", props);
   const { courseList } = props;
@@ -24,6 +25,8 @@ export default function Home(props) {
           fontWeight="extrabold"
           fontSize="2xl"
           color="text.900"
+          textDecoration="underline"
+          textDecorationColor="primary.900"
         >
           Learn{" "}
           <Link color="primary.900" textDecoration="none">
@@ -44,23 +47,35 @@ export default function Home(props) {
       <VStack w="full" mt={3} spacing={5}>
         <Courses list={courseList} />
         <Text
-          fontSize="xl"
+          fontSize="2xl"
           color="text.900"
           fontWeight="medium"
-          textAlign="left"
+          textDecoration="underline"
+          textDecorationColor="primary.900"
         >
           What Students have to say
         </Text>
-        <Reviews />
+        <Reviews isStudent={true} />
         <Text
-          fontSize="xl"
+          fontSize="2xl"
           color="text.900"
           fontWeight="medium"
-          textAlign="left"
+          textDecoration="underline"
+          textDecorationColor="primary.900"
         >
           What Students are Looking into
         </Text>
         <Courses list={courseList} />
+        <Text
+          fontSize="2xl"
+          color="text.900"
+          fontWeight="medium"
+          textDecoration="underline"
+          textDecorationColor="primary.900"
+        >
+          Frequently Asked Questions
+        </Text>
+        <FAQ />
       </VStack>
     </VStack>
   );
