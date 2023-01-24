@@ -35,7 +35,7 @@ function ViewCourse() {
   const loader = loaderStore();
   const { _id } = router.query;
   const [userEmail, setUserEmail] = useState("");
-  const [viewing, setViewing] = useState(``);
+  const [viewing, setViewing] = useState("");
   const [course, setCourse] = useState(null);
   const [lectures, setLectures] = useState([]);
 
@@ -59,8 +59,8 @@ function ViewCourse() {
     getCourseInfo();
   }, []);
   let uri =
-    viewing != ""
-      ? `http://localhost:3000/api/file/get-file?file=${viewing.toString()}&&userEmail=${auth.email.toString()}`
+    viewing !== ""
+      ? `http://localhost:3000/api/file/get-file?file=${viewing}&&userEmail=${auth.email}`
       : `https://www.youtube.com/watch?v=hQAHSlTtcmY`;
   console.log("uri", uri);
   return (
