@@ -42,7 +42,7 @@ export async function authenticateServerService(req) {
       "error message in authenticateService function of authservice",
       error.message
     );
-    console.log("error in authenticateService function of authservice", error);
+    // console.log("error in authenticateService function of authservice", error);
     return { isError: true, message: error.message };
   }
 }

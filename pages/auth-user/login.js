@@ -7,6 +7,7 @@ import cookies from "js-cookie";
 import { loginService } from "../../services/authService";
 import { authStore } from "../../store/authStore";
 import { loaderStore } from "../../store/loaderStore";
+import { authenticateServerService } from "../../services/authService";
 import { MyCheckbox, MyTextInput } from "../../components/FormGrocery";
 export default function Login() {
   const { showToast } = useCustomToast();
@@ -102,4 +103,20 @@ export default function Login() {
       </VStack>
     </VStack>
   );
+}
+export async function getServerSideProps(context) {
+  const user = await authenticateServerService(context.req);
+  console.log("user in serversideprops", user);
+  if (!user.isError) {
+    // Redirect to a "not found" page
+    return {
+      redirect: { destination: "/student/my-learnings", permanent: false },
+    };
+  }
+
+  return {
+    props: {
+      user,
+    },
+  };
 }

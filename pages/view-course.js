@@ -60,8 +60,9 @@ function ViewCourse() {
   }, []);
   let uri =
     viewing != ""
-      ? `http://localhost:4000/lecture/get-lecture?file=${viewing.toString()}&&userEmail=${auth.email.toString()}`
+      ? `http://localhost:3000/api/file/get-file?file=${viewing.toString()}&&userEmail=${auth.email.toString()}`
       : `https://www.youtube.com/watch?v=hQAHSlTtcmY`;
+  console.log("uri", uri);
   return (
     <VStack
       spacing={10}
@@ -201,7 +202,7 @@ export async function getServerSideProps(context) {
   console.log("user in serversideprops", user);
   if (user.isError) {
     // Redirect to a "not found" page
-    return { redirect: { destination: "/404", permanent: false } };
+    return { redirect: { destination: "/auth-user/login", permanent: false } };
   }
 
   return {

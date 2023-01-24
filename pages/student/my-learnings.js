@@ -85,7 +85,7 @@ export async function getServerSideProps(context) {
   console.log("user in serversideprops", user);
   if (user.isError) {
     // Redirect to a "not found" page
-    return { redirect: { destination: "/404", permanent: false } };
+    return { redirect: { destination: "/auth-user/login", permanent: false } };
   }
   const response = await getCourseListService("myLearnings", user.email);
   console.log("courselist in serverside props", response);
