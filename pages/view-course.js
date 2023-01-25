@@ -19,6 +19,7 @@ import {
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { getCourseInfoService } from "../services/courseService";
+import { createCommentService } from "../services/commentService";
 import { loaderStore } from "../store/loaderStore";
 import { authStore } from "../store/authStore";
 import Reviews from "../components/Reviews";
@@ -27,18 +28,37 @@ import Lectures from "../components/Lectures";
 import { useEffect, useLayoutEffect, useState, memo, useRef } from "react";
 import dynamic from "next/dynamic";
 import { authenticateServerService } from "../services/authService";
+import { useCustomToast } from "../utils/useCustomToast";
 const ReactPlayer = dynamic(() => import("react-player/lazy"), { ssr: false });
+import { Formik, Form } from "formik";
+import * as Yup from "yup";
+import {
+  MyCheckbox,
+  MyTextInput,
+  MySelect,
+  MyFileInput,
+  MyTextArea,
+} from "../components/FormGrocery";
 chakra(ReactPlayer);
 function ViewCourse(props) {
+  const { showToast } = useCustomToast();
   const { course, lectures } = props;
   const [viewing, setViewing] = useState(
     lectures.length > 0 ? lectures[0].file : ""
   );
+  const loader = loaderStore();
   let uri =
     viewing !== ""
       ? `http://localhost:3000/api/file/get-file?file=${viewing}&&userEmail=${props.user.email}`
       : `https://www.youtube.com/watch?v=hQAHSlTtcmY`;
   console.log("uri", uri);
+  const handleSubmit = async (values) => {
+    const comment = { commentor: props.user.email, comment: values.comment };
+
+    const response = await createCommentService(comment);
+
+    console.log(response);
+  };
   return (
     <VStack
       spacing={10}
@@ -142,27 +162,42 @@ function ViewCourse(props) {
               Discussions
             </Text>
             <VStack w="full" alignItems="start" pt={5} spacing={5}>
-              <Textarea
-                placeholder="Discussions"
-                size="lg"
-                width="full"
-                color="text.900"
-                backgroundColor="background.700"
-                borderColor="whiteAlpha.600"
-                _hover={{ borderColor: "whiteAlpha.600" }}
-                _focus={{
-                  borderColor: "whiteAlpha.600",
+              <Formik
+                style={{ width: "100%" }}
+                initialValues={{
+                  comment: "",
                 }}
-              />
-              <Button
-                type="submit"
-                backgroundColor="primary.900"
-                color="text.900"
-                px={6}
-                _hover={{ backgroundColor: "primary.600" }}
+                validationSchema={Yup.object({
+                  comment: Yup.string()
+                    .min(8, "Must be greater than 8 characters")
+                    .required("Required"),
+                })}
+                onSubmit={async (values, { setSubmitting }) => {
+                  console.log(values);
+                  await handleSubmit(values);
+                }}
               >
-                Post
-              </Button>
+                <Form style={{ width: "100%" }}>
+                  <VStack spacing={3} w="full" alignItems={"center"}>
+                    <MyTextArea
+                      label="Comment"
+                      type="text"
+                      id="comment"
+                      name="comment"
+                    />
+
+                    <Button
+                      type="submit"
+                      backgroundColor="primary.900"
+                      color="text.900"
+                      px={6}
+                      _hover={{ backgroundColor: "primary.600" }}
+                    >
+                      Post
+                    </Button>
+                  </VStack>
+                </Form>
+              </Formik>
             </VStack>
             <QuestionAndAnswer />
           </TabPanel>
