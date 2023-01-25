@@ -140,6 +140,9 @@ export async function getServerSideProps(context) {
   console.log("context", context.query);
   const _id = context.query._id;
   const response = await getCourseInfoService(_id);
+  if (response.isError) {
+    return { redirect: { destination: "/auth-user/login", permanent: false } };
+  }
   const course = response.course;
   const lectures = response.lectures;
 

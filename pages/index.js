@@ -82,6 +82,9 @@ export default function Home(props) {
 }
 export async function getStaticProps() {
   const response = await getCourseListService("all");
+  if (response.isError) {
+    return { redirect: { destination: "/auth-user/login", permanent: false } };
+  }
   const courseList = response.courses;
 
   return {

@@ -29,38 +29,14 @@ import dynamic from "next/dynamic";
 import { authenticateServerService } from "../services/authService";
 const ReactPlayer = dynamic(() => import("react-player/lazy"), { ssr: false });
 chakra(ReactPlayer);
-function ViewCourse() {
-  const router = useRouter();
-  const auth = authStore();
-  const loader = loaderStore();
-  const { _id } = router.query;
-  const [userEmail, setUserEmail] = useState("");
-  const [viewing, setViewing] = useState("");
-  const [course, setCourse] = useState(null);
-  const [lectures, setLectures] = useState([]);
-
-  useEffect(() => {
-    async function getCourseInfo() {
-      loader.setIsLoading(true);
-      loader.setStatus("Fetching  courses details...");
-      const response = await getCourseInfoService(_id);
-      loader.setIsLoading(false);
-      if (!response.isError) {
-        setCourse(response.course);
-        setLectures(response.lectures);
-        if (response.lectures.length > 0) {
-          setViewing(response.lectures[0].file);
-          console.log("viewing lecture in view course");
-        }
-        setUserEmail(response.userEmail);
-      }
-      console.log("course in course info ", response);
-    }
-    getCourseInfo();
-  }, []);
+function ViewCourse(props) {
+  const { course, lectures } = props;
+  const [viewing, setViewing] = useState(
+    lectures.length > 0 ? lectures[0].file : ""
+  );
   let uri =
     viewing !== ""
-      ? `http://localhost:3000/api/file/get-file?file=${viewing}&&userEmail=${auth.email}`
+      ? `http://localhost:3000/api/file/get-file?file=${viewing}&&userEmail=${props.user.email}`
       : `https://www.youtube.com/watch?v=hQAHSlTtcmY`;
   console.log("uri", uri);
   return (
@@ -204,10 +180,16 @@ export async function getServerSideProps(context) {
     // Redirect to a "not found" page
     return { redirect: { destination: "/auth-user/login", permanent: false } };
   }
+  const _id = context.query._id;
+  const response = await getCourseInfoService(_id);
+  const course = response.course;
+  const lectures = response.lectures;
 
   return {
     props: {
       user,
+      course,
+      lectures,
     },
   };
 }
