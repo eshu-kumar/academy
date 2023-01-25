@@ -21,53 +21,75 @@ export default function ExGraphql() {
   const toast = useToast();
   const router = useRouter();
   async function handleSignUp(values) {
-    let gquery = values.gquery.replace(/[\r\n]/gm, "");
-    //gquery example if you want to yse it from textarea input uncomment and  paste below string in input
+    let gquery, variables;
+    //comment all the below gquery definitions and this input value will work if the value is there in input
+    gquery = values.gquery.replace(/[\r\n]/gm, "");
+
+    //QUERY FROM INPUT FOR VARYING FIELD NAMES
+    //gquery example if you want to use it from textarea input uncomment and  paste below string in input
+
     // {
     //   getFriends {
-    //       firstName,
+    //    firstName,
     //    lastName
     //   }
     //   }
 
-    console.log(gquery);
+    //ADDSERIES QUERY
+
+    // gquery = `mutation addSeries($series: SeriesInput) {
+    //     addSeries(series:$series) {
+    //       seriesName ,
+    //       year ,
+    //       rating
+    //       }
+
+    // }
+    //  `;
+    // variables = {
+    //   series: {
+    //     seriesName: "House of dragon",
+    //     year: 2022,
+    //     rating: "ONE",
+    //   },
+    // };
+
+    //ADDFRIEND QUERY
+
+    // gquery = ` mutation addFriend($friend: FriendInput) {
+    //     addFriend(friend:$friend) {
+    //         firstName
+    //         lastName
+    //        age
+    //       }
+
+    // }
+    // `;
+    // variables = {
+    //   friend: {
+    //     firstName: "Eliot",
+    //     lastName: "Alderson",
+    //     age: 30,
+    //   },
+    // };
+
     console.log("gquery is ", gquery);
+
     const token = await localStorage.getItem("token");
     let response = await fetch(`http://localhost:4000/graphql`, {
       method: "POST",
       headers: {
-        Authorization: `Bearer tokenvaluewillcomehere`,
         "Content-Type": "application/json",
         token: token,
       },
       body: JSON.stringify({
-        // query: ` mutation addFriend($friend: FriendInput) {
-        //     addFriend(friend:$friend) {
-        //         firstName
-        //         lastName
-        //        age
-        //       }
-
-        // }
-        // `,
-        query: `${gquery}`,
+        query: gquery,
         // operationName: "addFriend",
-        variables: {
-          friend: {
-            firstName: "Aka",
-            lastName: "jadon",
-            age: 47,
-          },
-          series: {
-            seriesName: "ot",
-            year: 2018,
-            rating: "TWO",
-          },
-        },
+        variables,
       }),
     });
     response = await response.json();
-    console.log("response graphql", response);
+    console.log("response OF  graphql request ", response);
 
     // toast({
     //   position: "bottom-left",
@@ -101,15 +123,6 @@ export default function ExGraphql() {
                   <FormControl isInvalid={!!errors.gquery && touched.gquery}>
                     <FormLabel htmlFor="gquery">Graphql query</FormLabel>
                     <Field
-                      //   as={(value) => {
-                      //     return (
-                      //       <Textarea
-                      //         size="lg"
-                      //         h={400}
-                      //         w="full"
-                      //       />
-                      //     );
-                      //   }}
                       as={Textarea}
                       id="gquery"
                       name="gquery"
@@ -117,11 +130,9 @@ export default function ExGraphql() {
                       variant="filled"
                       validate={(value) => {
                         let error;
-
                         if (value.length == 0) {
                           error = " graph ql query must be present ";
                         }
-
                         return error;
                       }}
                     />
