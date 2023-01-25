@@ -19,6 +19,7 @@ export async function createCourseService(formData) {
   }
 }
 export async function getCourseListService(type, owner) {
+  //MAKE SURE YOU DO NOT SEND ORGINAL FILE NAMES HERE
   let query = { type };
   if (type !== "all") {
     query["owner"] = owner;

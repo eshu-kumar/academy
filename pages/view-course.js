@@ -19,7 +19,10 @@ import {
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { getCourseInfoService } from "../services/courseService";
-import { createCommentService } from "../services/commentService";
+import {
+  createCommentService,
+  getCommentListService,
+} from "../services/commentService";
 import { loaderStore } from "../store/loaderStore";
 import { authStore } from "../store/authStore";
 import Reviews from "../components/Reviews";
@@ -41,11 +44,13 @@ import {
 } from "../components/FormGrocery";
 chakra(ReactPlayer);
 function ViewCourse(props) {
+  console.log("props of view course", props);
   const { showToast } = useCustomToast();
   const { course, lectures } = props;
   const [viewing, setViewing] = useState(
     lectures.length > 0 ? lectures[0].file : ""
   );
+  const [comments, setComments] = useState(props.comments);
   const loader = loaderStore();
   let uri =
     viewing !== ""
@@ -53,11 +58,17 @@ function ViewCourse(props) {
       : `https://www.youtube.com/watch?v=hQAHSlTtcmY`;
   console.log("uri", uri);
   const handleSubmit = async (values) => {
-    const comment = { commentor: props.user.email, comment: values.comment };
-
-    const response = await createCommentService(comment);
-
-    console.log(response);
+    const commentObj = { commentor: props.user.email, comment: values.comment };
+    loader.setStatus("Posting  comment...");
+    loader.setIsLoading(true);
+    const response = await createCommentService(commentObj);
+    loader.setIsLoading(false);
+    //NEED TO ADD LOGIC FOR REFRESH OF COMMENTS ONCE THE COMMENT ADDED
+    if (!response.isError) {
+      showToast(response.isError, response.message);
+    } else {
+      showToast(response.isError, response.error);
+    }
   };
   return (
     <VStack
@@ -199,7 +210,7 @@ function ViewCourse(props) {
                 </Form>
               </Formik>
             </VStack>
-            <QuestionAndAnswer />
+            <QuestionAndAnswer comments={comments} />
           </TabPanel>
         </TabPanels>
       </Tabs>
@@ -219,12 +230,14 @@ export async function getServerSideProps(context) {
   const response = await getCourseInfoService(_id);
   const course = response.course;
   const lectures = response.lectures;
+  const commentsResponse = await getCommentListService(context.req);
 
   return {
     props: {
       user,
       course,
       lectures,
+      comments: commentsResponse.comments,
     },
   };
 }

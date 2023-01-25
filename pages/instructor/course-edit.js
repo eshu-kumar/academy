@@ -62,6 +62,7 @@ export default function CourseEdit(props) {
     if (!response.isError) {
       console.log(response);
       showToast(response.isError, response.message);
+      //NEED TO ADD LOGIC FOR REFRESH OF LECTURES ONCE THE LECTURE ADDED BELOW LINE NOT DOING ACTUAL WORK
       setCourseInfoRefresh(!courseInfoRefresh);
     } else {
       console.log(response);
