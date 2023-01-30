@@ -57,15 +57,24 @@ const teachersReview = [
 ];
 
 export default function Reviews(props) {
-  const reviews = props.isTeacher ? teachersReview : studentReview;
+  let orgReviews;
+  if (props.reviews && props.reviews.length > 0) {
+    orgReviews = props.reviews;
+  } else {
+    orgReviews = studentReview;
+  }
+  console.log("student reviews", props.reviews);
+
+  const reviews = props.isTeacher ? teachersReview : orgReviews;
   return (
     <HStack w="full" alignItems="stretch" overflow={"auto"} py={2}>
       {/* {isTrue === true */}
       {reviews.map((item, index) => {
         return (
           <Card
-            //minW={"200"}
-            minH="200"
+            minW={"250"}
+            h="100%"
+            alignItems="stretch"
             key={index}
             px={3}
             py={4}

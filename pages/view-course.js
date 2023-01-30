@@ -23,6 +23,10 @@ import {
   createCommentService,
   getCommentListService,
 } from "../services/commentService";
+import {
+  createReviewService,
+  getReviewListService,
+} from "../services/reviewService";
 import { loaderStore } from "../store/loaderStore";
 import { authStore } from "../store/authStore";
 import Reviews from "../components/Reviews";
@@ -51,6 +55,7 @@ function ViewCourse(props) {
     lectures.length > 0 ? lectures[0].file : ""
   );
   const [comments, setComments] = useState(props.comments);
+  const [reviews, setReviews] = useState(props.reviews);
   const loader = loaderStore();
   let uri =
     viewing !== ""
@@ -59,9 +64,22 @@ function ViewCourse(props) {
   console.log("uri", uri);
   const handleSubmit = async (values) => {
     const commentObj = { commentor: props.user.email, comment: values.comment };
-    loader.setStatus("Posting  comment...");
+    loader.setStatus("Adding  comment...");
     loader.setIsLoading(true);
     const response = await createCommentService(commentObj);
+    loader.setIsLoading(false);
+    //NEED TO ADD LOGIC FOR REFRESH OF COMMENTS ONCE THE COMMENT ADDED
+    if (!response.isError) {
+      showToast(response.isError, response.message);
+    } else {
+      showToast(response.isError, response.error);
+    }
+  };
+  const handleReviewSubmit = async (values) => {
+    const commentObj = { reviewer: props.user.email, review: values.review };
+    loader.setStatus("Adding  review...");
+    loader.setIsLoading(true);
+    const response = await createReviewService(commentObj);
     loader.setIsLoading(false);
     //NEED TO ADD LOGIC FOR REFRESH OF COMMENTS ONCE THE COMMENT ADDED
     if (!response.isError) {
@@ -166,12 +184,48 @@ function ViewCourse(props) {
             </Text>
           </TabPanel>
           <TabPanel>
-            <Reviews />
+            <VStack w="full" alignItems="start" pt={5} spacing={5}>
+              <Formik
+                style={{ width: "100%" }}
+                initialValues={{
+                  review: "",
+                }}
+                validationSchema={Yup.object({
+                  review: Yup.string()
+                    .min(8, "Must be greater than 8 characters")
+                    .required("Required"),
+                })}
+                onSubmit={async (values, { setSubmitting }) => {
+                  console.log(values);
+                  await handleReviewSubmit(values);
+                }}
+              >
+                <Form style={{ width: "100%" }}>
+                  <VStack spacing={3} w="full" alignItems={"center"}>
+                    <MyTextArea
+                      label="
+                      Add Review"
+                      type="text"
+                      id="review"
+                      name="review"
+                    />
+
+                    <Button
+                      type="submit"
+                      backgroundColor="primary.900"
+                      color="text.900"
+                      px={6}
+                      _hover={{ backgroundColor: "primary.600" }}
+                    >
+                      Add Review
+                    </Button>
+                  </VStack>
+                </Form>
+              </Formik>
+            </VStack>
+            <Reviews reviews={reviews} />
           </TabPanel>
           <TabPanel>
-            <Text color="text.900" fontSize="lg" fontWeight="semibold">
-              Discussions
-            </Text>
             <VStack w="full" alignItems="start" pt={5} spacing={5}>
               <Formik
                 style={{ width: "100%" }}
@@ -204,7 +258,7 @@ function ViewCourse(props) {
                       px={6}
                       _hover={{ backgroundColor: "primary.600" }}
                     >
-                      Post
+                      Add comment
                     </Button>
                   </VStack>
                 </Form>
@@ -231,6 +285,7 @@ export async function getServerSideProps(context) {
   const course = response.course;
   const lectures = response.lectures;
   const commentsResponse = await getCommentListService(context.req);
+  const reviewsResponse = await getReviewListService(context.req);
 
   return {
     props: {
@@ -238,6 +293,7 @@ export async function getServerSideProps(context) {
       course,
       lectures,
       comments: commentsResponse.comments,
+      reviews: reviewsResponse.reviews,
     },
   };
 }
