@@ -30,7 +30,13 @@ const Discussions = [
 ];
 export default function QuestionAndAnswer(props) {
   return (
-    <VStack alignItems="flex-start" spacing={6} pt={6}>
+    <VStack
+      maxH={600}
+      overflowY="auto"
+      alignItems="flex-start"
+      spacing={6}
+      pt={6}
+    >
       {props.comments.map((item, index) => {
         return (
           <HStack
