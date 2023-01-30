@@ -23,7 +23,7 @@ import MyTooltip from "../../components/others/MyTooltip";
 export default function CourseInfo(props) {
   const auth = authStore();
   const router = useRouter();
-  console.log("props in courseinfo", props);
+  //console.log("props in courseinfo", props);
   const { course, lectures } = props;
   //write logic for code refresh on add lecture and how to merge server side data and client side data
   // useEffect(() => {

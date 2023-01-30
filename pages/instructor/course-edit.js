@@ -36,7 +36,7 @@ import { authenticateServerService } from "../../services/authService";
 export default function CourseEdit(props) {
   const auth = authStore();
   const router = useRouter();
-  console.log("props in courseinfo", props);
+  //console.log("props in courseinfo", props);
   const { course, lectures } = props;
   let uri = course
     ? `http://localhost:4000/course/get-course?file=${course.file.toString()}`

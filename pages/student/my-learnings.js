@@ -15,7 +15,7 @@ import { authStore } from "../../store/authStore";
 import { authenticateServerService } from "../../services/authService";
 export default function MyLearnings(props) {
   const auth = authStore();
-  console.log("props in my learning", props);
+  //console.log("props in my learning", props);
   const { courseList } = props;
   return (
     <VStack
@@ -88,7 +88,7 @@ export async function getServerSideProps(context) {
     return { redirect: { destination: "/auth-user/login", permanent: false } };
   }
   const response = await getCourseListService("myLearnings", user.email);
-  console.log("courselist in serverside props", response);
+  //console.log("courselist in serverside props", response);
   const courseList = response.courses;
   return {
     props: {
