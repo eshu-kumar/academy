@@ -39,7 +39,7 @@ const defaultList = [
   },
 ];
 export default function Courses(props) {
-  console.log("props in card hstack", props);
+  //console.log("props in card hstack", props);
   let list;
 
   if (!props.list || props.list.length == 0) {

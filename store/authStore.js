@@ -3,9 +3,8 @@ import { authenticateService } from "../services/authService";
 const authStore = create((set) => ({
   email: null,
   error: null,
-  isDone: false,
+
   isAuthenticated: false,
-  setIsDone: () => set((state) => ({ ...state, isDone: !state.isDone })),
 
   setAuthenticated: () =>
     set((state) => ({ ...state, isAuthenticated: !state.isAuthenticated })),
@@ -17,7 +16,7 @@ const authStore = create((set) => ({
         ...state,
         email: response.email,
         error: null,
-        isDone: true,
+
         isAuthenticated: true,
       }));
       console.log(
@@ -29,7 +28,7 @@ const authStore = create((set) => ({
         ...state,
         error: response.message,
         email: null,
-        isDone: true,
+
         isAuthenticated: false,
       }));
       console.log(

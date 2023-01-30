@@ -19,7 +19,7 @@ import { logoutService } from "../../services/authService";
 export default function Header(props) {
   console.log("this is header");
   const { setAuthenticated, isAuthenticated } = authStore();
-
+  console.log("is authenticated in header ", isAuthenticated);
   const { showToast } = useCustomToast();
   const router = useRouter();
   const url = router.asPath;

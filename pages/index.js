@@ -6,7 +6,7 @@ import { getCourseListService } from "../services/courseService";
 import { loaderStore } from "../store/loaderStore";
 import FAQ from "../components/FAQ";
 export default function Home(props) {
-  console.log("server side props in index", props);
+  //console.log("server side props in index", props);
   const { courseList } = props;
   return (
     <VStack

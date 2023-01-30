@@ -23,22 +23,15 @@ export default function Layout(props) {
   const isPublicPath = publicPaths.includes(path);
   useEffect(() => {
     console.log("auth store in layout useeffect", auth);
+    console.log("running the useeffect of layout ");
     async function fetchDataWrapper() {
       await auth.fetchData();
     }
     fetchDataWrapper();
   }, []);
-  // if (!isPublicPath) {
-  //   Router.push("/auth-user/login");
-  // }
   return (
     <Flex w="full" direction="column" minH="100vh">
       <Header />
-      {/* {auth.isAuthenticated || isPublicPath ? (
-        <Flex>{props.children}</Flex>
-      ) : (
-        <FullPageLoader isOpen={true} status={"Authenticating..."} />
-      )} */}
       <Flex>{props.children}</Flex>
       <FullPageLoader isOpen={loader.isLoading} status={loader.status} />
       <Footer />
