@@ -2,7 +2,7 @@ import { Box, Button, VStack, Avatar, Text, HStack } from "@chakra-ui/react";
 import { Formik, Form } from "formik";
 import { useRouter } from "next/router";
 import * as Yup from "yup";
-import { MyCheckbox, MyTextInput } from "../../components/FormGrocery";
+import { MyTextInput } from "../../components/FormGrocery";
 
 export default function EditProfilePage(props) {
   function handleChange() {
@@ -50,9 +50,7 @@ export default function EditProfilePage(props) {
                 name: Yup.string()
                   .min(3, "Must be greater than 3 characters")
                   .required("Required"),
-                profession: Yup.string()
-                  //   .min(3, 'Must be greater than 3 characters')
-                  .required("Required"),
+                profession: Yup.string().required("Required"),
                 about: Yup.string()
                   .min(10, "Must be greater than 10 characters")
                   .required("Required"),
@@ -66,7 +64,6 @@ export default function EditProfilePage(props) {
               })}
               onSubmit={async (values, { setSubmitting }) => {
                 console.log(values);
-                // await handleLogin(values);
               }}
             >
               <Form style={{ width: "100%" }}>
@@ -98,7 +95,6 @@ export default function EditProfilePage(props) {
                     name="about"
                     type="text"
                   />
-
                   <Button
                     type="submit"
                     backgroundColor="primary.900"

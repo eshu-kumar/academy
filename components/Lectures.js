@@ -1,5 +1,14 @@
 import React from "react";
-import { Text, HStack, VStack, Center } from "@chakra-ui/react";
+import {
+  Text,
+  VStack,
+  Box,
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+  AccordionIcon,
+} from "@chakra-ui/react";
 import MyTooltip from "./others/MyTooltip";
 const defaultLectures = [
   {
@@ -45,31 +54,37 @@ export default function Lectures(props) {
                     : "Buy or add the course  and go to view course to watch the lecture "
                 }
               >
-                <HStack
-                  alignItems="center"
-                  spacing={4}
-                  borderWidth={1}
-                  borderColor="primary.900"
-                  _hover={{ backgroundColor: "whiteAlpha.300" }}
-                  borderRadius="md"
-                  p={5}
-                  width="full"
-                  onClick={() => {
-                    console.log(" lecture clicked ", item._id && item._id);
-                    if (props.playble && props.setViewing) {
-                      props.setViewing(item.file);
-                    } else {
-                      console.log("please buy the course");
-                    }
-                  }}
-                >
-                  <Text fontWeight="semibold" color="text.900" fontSize="sm">
-                    {item.name}
-                  </Text>
-                  <Text fontWeight="semibold" color="text.900" fontSize="sm">
-                    {item.description}
-                  </Text>
-                </HStack>
+                <Box width={["100%", "90%", "80%"]} px={[0, 5]} py={2}>
+                  <Accordion bgColor="background.900" key={index} allowToggle>
+                    <AccordionItem>
+                      <h2>
+                        <AccordionButton
+                          color="primary.900"
+                          _expanded={{
+                            bg: "primary.900",
+                            color: "white",
+                            fontWeight: "semibold",
+                          }}
+                        >
+                          <Box
+                            as="span"
+                            flex="1"
+                            textAlign="left"
+                            color="text.900"
+                            fontWeight="semibold"
+                            fontSize="lg"
+                          >
+                            {item.name}
+                          </Box>
+                          <AccordionIcon />
+                        </AccordionButton>
+                      </h2>
+                      <AccordionPanel py={4} color="text.900">
+                        {item.description}
+                      </AccordionPanel>
+                    </AccordionItem>
+                  </Accordion>
+                </Box>
               </MyTooltip>
             );
           })}
