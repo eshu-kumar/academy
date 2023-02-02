@@ -29,6 +29,7 @@ const Discussions = [
   },
 ];
 export default function QuestionAndAnswer(props) {
+  console.log("props", props);
   return (
     <VStack
       maxH={600}

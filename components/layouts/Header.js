@@ -151,7 +151,7 @@ export default function Header(props) {
   function ExperimentsHeader() {
     return (
       <>
-        <Button
+        {/* <Button
           colorScheme="teal"
           color="text.900"
           variant="ghost"
@@ -177,6 +177,24 @@ export default function Header(props) {
           onClick={closeServer}
         >
           Close Server
+        </Button> */}
+        <Button
+          colorScheme="teal"
+          color="text.900"
+          variant="ghost"
+          _hover={{ backgroundColor: "hover.900" }}
+          onClick={() => goto("/experiments/start-stream")}
+        >
+          Start Stream
+        </Button>
+        <Button
+          colorScheme="teal"
+          color="text.900"
+          variant="ghost"
+          _hover={{ backgroundColor: "hover.900" }}
+          onClick={() => goto("/experiments/view-stream")}
+        >
+          View Stream
         </Button>
       </>
     );
@@ -208,6 +226,7 @@ export default function Header(props) {
   function NotAuthHeader() {
     return (
       <>
+        <ExperimentsHeader />
         <Button
           colorScheme="teal"
           color="text.900"
