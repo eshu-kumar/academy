@@ -13,12 +13,7 @@ import {
   Container,
   shouldForwardProp,
 } from "@chakra-ui/react";
-import {
-  motion,
-  useTime,
-  useTransform,
-  isValidMotionProp,
-} from "framer-motion";
+import { motion, isValidMotionProp } from "framer-motion";
 import { useRouter } from "next/router";
 
 const ChakraBox = chakra(motion.div, {
