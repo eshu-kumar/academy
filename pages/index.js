@@ -39,7 +39,11 @@ export default function Home(props) {
             textDecorationColor="primary.900"
           >
             Learn{" "}
-            <Link color="primary.900" textDecoration="none">
+            <Link
+              color="primary.900"
+              textDecoration="none"
+              href="https://chakra-ui.com"
+            >
               in-demand{" "}
             </Link>{" "}
             professional skills
