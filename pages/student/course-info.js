@@ -55,12 +55,12 @@ export default function CourseInfo(props) {
             src={uri}
             alt="Green double couch with wooden legs"
             borderRadius="lg"
+            loading="lazy"
           />
           <VStack w="full" alignItems="flex-start" spacing={1} px={6} pt={2}>
             <HStack spacing={2} w="full" justifyContent="flex-end">
               <MyTooltip message="Congratulations in Trial version you can Watch this course for Free now!">
                 <Button
-                  // variant='ghost'
                   color="white"
                   backgroundColor="primary.900"
                   _hover={{ backgroundColor: "hover.900" }}
@@ -79,7 +79,6 @@ export default function CourseInfo(props) {
 
               <MyTooltip message="Congratulations in Trial version you can Enroll this course for Free now!">
                 <Button
-                  // variant='ghost'
                   color="white"
                   backgroundColor="primary.900"
                   _hover={{ backgroundColor: "hover.900" }}
