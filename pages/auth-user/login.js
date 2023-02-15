@@ -1,4 +1,4 @@
-import { Button, Flex, VStack, Image, Heading, Stack } from "@chakra-ui/react";
+import { Box, Button, Flex, VStack, Text, Spinner } from "@chakra-ui/react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { useRouter } from "next/router";
@@ -8,8 +8,7 @@ import { loginService } from "../../services/authService";
 import { authStore } from "../../store/authStore";
 import { loaderStore } from "../../store/loaderStore";
 import { authenticateServerService } from "../../services/authService";
-import { MyTextInput } from "../../components/FormGrocery";
-
+import { MyCheckbox, MyTextInput } from "../../components/FormGrocery";
 export default function Login() {
   const { showToast } = useCustomToast();
   const router = useRouter();
@@ -39,14 +38,20 @@ export default function Login() {
       minH="70vh"
       align="center"
       justify="center"
-      px={10}
     >
-      <Stack direction={{ base: "column", md: "row" }}>
-        <Flex flex={1} align={"center"} justify={"center"}>
-          <Stack spacing={4} w={"full"} maxW={"md"}>
-            <Heading fontSize={"2xl"} color="text.900">
-              Sign in to your account
-            </Heading>
+      <VStack space={2}>
+        <Text fontSize="lg" fontWeight="bold" color="text.900" textAlign="left">
+          Log in to your Academy account
+        </Text>
+        <Box
+          borderColor="whiteAlpha.400"
+          borderWidth={1}
+          p={[6, 8, 10]}
+          mx={2}
+          minW={[300, 400, 400]}
+          rounded="md"
+        >
+          <VStack w="full" alignItems="left">
             <Formik
               style={{ width: "100%" }}
               initialValues={{
@@ -81,33 +86,21 @@ export default function Login() {
                     name="password"
                     type="password"
                   />
+                  <Button
+                    type="submit"
+                    backgroundColor="primary.900"
+                    color="text.900"
+                    px={6}
+                    _hover={{ backgroundColor: "primary.600" }}
+                  >
+                    Login
+                  </Button>
                 </VStack>
               </Form>
             </Formik>
-            <Stack spacing={6}>
-              <Button
-                type="submit"
-                backgroundColor="primary.900"
-                color="text.900"
-                _hover={{ backgroundColor: "primary.600" }}
-              >
-                Login
-              </Button>
-            </Stack>
-          </Stack>
-        </Flex>
-        <Flex flex={1} display={{ sm: "none", md: "flex" }}>
-          <Image
-            alt={"Login Image"}
-            objectFit={"cover"}
-            bor
-            src={
-              "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1352&q=80"
-            }
-            loading="lazy"
-          />
-        </Flex>
-      </Stack>
+          </VStack>
+        </Box>
+      </VStack>
     </VStack>
   );
 }
@@ -120,6 +113,7 @@ export async function getServerSideProps(context) {
       redirect: { destination: "/student/my-learnings", permanent: false },
     };
   }
+
   return {
     props: {
       user,

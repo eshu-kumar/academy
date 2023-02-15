@@ -51,7 +51,7 @@ const reviews = [
 export default function WithSpeechBubbles() {
   return (
     <Box>
-      <Container width="100%" py={16} as={Stack}>
+      <Container width="100%" py={16}>
         <Stack
           direction={{ base: "column", md: "row" }}
           spacing={{ base: 10, md: 4, lg: 10 }}
@@ -76,21 +76,26 @@ export default function WithSpeechBubbles() {
                     borderRightWidth: 16,
                     borderTop: "solid",
                     borderTopWidth: 16,
+
                     pos: "absolute",
                     bottom: "-16px",
                     left: "50%",
                     transform: "translateX(-50%)",
                   }}
                 >
-                  <Heading>{item.heading}</Heading>
-                  <Text textAlign={"center"} fontSize={"sm"}>
+                  <Heading color="text.900">{item.heading}</Heading>
+                  <Text textAlign={"center"} fontSize={"sm"} color="text.900">
                     {item.content}
                   </Text>
                 </Stack>
                 <Flex align={"center"} mt={8} direction={"column"}>
                   <Avatar src={item.image} mb={2} />
-                  <Text fontWeight={600}>{item.name}</Text>
-                  <Text fontSize={"sm"}>{item.position}</Text>
+                  <Text fontWeight={600} color="text.900">
+                    {item.name}
+                  </Text>
+                  <Text fontSize={"sm"} color="text.900">
+                    {item.position}
+                  </Text>
                 </Flex>
               </VStack>
             );
