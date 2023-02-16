@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Link, Text, VStack, HStack, Box } from "@chakra-ui/react";
 import Courses from "../components/Courses";
 import Reviews from "../components/Reviews";
-import Testimonial from "../pages/experiments/testimonial";
 import { getCourseListService } from "../services/courseService";
 import { loaderStore } from "../store/loaderStore";
 import FAQ from "../components/FAQ";
