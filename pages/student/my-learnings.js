@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Flex, Text, VStack, Container } from "@chakra-ui/react";
+import {
+  Flex,
+  Text,
+  VStack,
+  Container,
+  Stack,
+  Button,
+  useBreakpointValue,
+} from "@chakra-ui/react";
 import { getCourseListService } from "../../services/courseService";
 import Courses from "../../components/Courses";
 import { loaderStore } from "../../store/loaderStore";
@@ -32,29 +40,46 @@ export default function MyLearnings(props) {
       w="full"
       bg="background.900"
     >
-      <Flex alignItems="center" flexDirection="row">
-        <Image
-          width="1300"
-          height="0"
-          alt={"get started on academy"}
-          src="/StudentLanding4.jpg"
-          fit
-          loading="lazy"
-        />
-        <Container position="absolute" width={["40%", "50%", "80%"]}>
-          <Text
-            color="text.900"
-            fontSize="4xl"
-            fontWeight="bold"
-            as="mark"
-            background="primary.900"
-          >
-            Never Stop Learning
-          </Text>
-          <Text color="text.900" fontWeight="semibold" fontSize="lg">
-            Learning that gets you skills for your present and for future
-          </Text>
-        </Container>
+      <Flex
+        w="full"
+        h="50vh"
+        backgroundImage={
+          "url(https://images.unsplash.com/photo-1600267175161-cfaa711b4a81?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80)"
+        }
+        backgroundSize={"cover"}
+        backgroundPosition={"center center"}
+        loading="lazy"
+      >
+        <VStack
+          w={"full"}
+          justify={"center"}
+          px={useBreakpointValue({ base: 4, md: 8 })}
+          bgGradient={"linear(to-r, blackAlpha.600, transparent)"}
+        >
+          <Stack maxW={"2xl"} align={"flex-start"} spacing={6}>
+            <Text
+              color={"white"}
+              fontWeight={700}
+              lineHeight={1.2}
+              fontSize={useBreakpointValue({ base: "3xl", md: "4xl" })}
+            >
+              Never Stop Learning
+            </Text>
+            <Text color="text.900" fontWeight="semibold" fontSize="lg">
+              Learning that gets you skills for your present and for future
+            </Text>
+            <Stack direction={"row"}>
+              <Button
+                bg="primary.900"
+                rounded={"full"}
+                color={"white"}
+                _hover={{ bg: "primary.600" }}
+              >
+                Show me more
+              </Button>
+            </Stack>
+          </Stack>
+        </VStack>
       </Flex>
       <Text color="text.900" fontWeight="bold" fontSize="2xl" textAlign="start">
         My Active Courses

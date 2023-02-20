@@ -4,12 +4,11 @@ import {
   Button,
   Box,
   HStack,
-  Link,
   VStack,
-  Container,
   Flex,
+  Stack,
   chakra,
-  Center,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 import Image from "next/image";
 import Reviews from "../../components/Reviews.js";
@@ -39,18 +38,24 @@ export default function GetStarted(props) {
   const router = useRouter();
 
   return (
-    <VStack width="full" height="100%" backgroundColor="background.900" px={16}>
-      <Flex alignItems="center" flexDirection="row">
-        <Image
-          width="1300"
-          height="0"
-          alt={"get started on academy"}
-          src="/teacher2.jpg"
-          fit
-          loading="lazy"
-        />
-        <Container position="absolute" width={["40%", "50%", "80%"]}>
-          <VStack alignItems="flex-start" spacing={2}>
+    <VStack width="full" height="100%" backgroundColor="background.900">
+      <Flex
+        w="full"
+        h="50vh"
+        backgroundImage={
+          "url(https://images.unsplash.com/photo-1600267175161-cfaa711b4a81?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80)"
+        }
+        backgroundSize={"cover"}
+        backgroundPosition={"center center"}
+        loading="lazy"
+      >
+        <VStack
+          w={"full"}
+          justify={"center"}
+          px={useBreakpointValue({ base: 4, md: 8 })}
+          bgGradient={"linear(to-r, blackAlpha.600, transparent)"}
+        >
+          <Stack maxW={"2xl"} align={"flex-start"} spacing={6}>
             <Text
               color="text.900"
               fontSize={["lg", "2xl", "3xl"]}
@@ -59,32 +64,34 @@ export default function GetStarted(props) {
               Teach new skills online
             </Text>
             <Text
-              color="text.900"
-              fontSize={["sm", "md", "lg"]}
-              fontWeight={["normal", "semibold", "semibold"]}
+              color={"white"}
+              fontWeight="normal"
+              lineHeight={1.2}
+              fontSize={useBreakpointValue({ base: "3xl", md: "4xl" })}
             >
               If kids can be super engaged in video games, there’s a way for
               them to be super engaged in education as well.
             </Text>
-            <Button
-              backgroundColor="primary.900"
-              color="text.900"
-              _hover={{ backgroundColor: "primary.600" }}
-              onClick={() => {
-                router.push("../instructor/my-creations");
-              }}
-            >
-              Get Started
-            </Button>
-          </VStack>
-        </Container>
+            <Stack direction={"row"}>
+              <Button
+                backgroundColor="primary.900"
+                color="text.900"
+                _hover={{ backgroundColor: "primary.600" }}
+                onClick={() => {
+                  router.push("../instructor/my-creations");
+                }}
+              >
+                Get Started
+              </Button>
+            </Stack>
+          </Stack>
+        </VStack>
       </Flex>
       <Box
         justifyContent="center"
         alignItems="center"
         textAlign="center"
         py={20}
-        zIndex={1111111}
       >
         <Text color="text.900" fontWeight="bold" fontSize="3xl">
           So many reasons to start
