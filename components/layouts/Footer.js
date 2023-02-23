@@ -51,7 +51,7 @@ export default function Footer(props) {
               Help And Support
             </Link>
             <Link textColor="text.900" fontSize="sm">
-              Affliate
+              NewsLetter
             </Link>
             <Link textColor="text.900" fontSize="sm">
               Investors

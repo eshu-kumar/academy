@@ -1,4 +1,12 @@
-import { Box, Button, Flex, VStack, Text, Spinner } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  VStack,
+  Text,
+  Spinner,
+  Center,
+} from "@chakra-ui/react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { useRouter } from "next/router";
@@ -7,6 +15,7 @@ import cookies from "js-cookie";
 import { loginService } from "../../services/authService";
 import { authStore } from "../../store/authStore";
 import { loaderStore } from "../../store/loaderStore";
+import { FcGoogle } from "react-icons/fc";
 import { authenticateServerService } from "../../services/authService";
 import { MyCheckbox, MyTextInput } from "../../components/FormGrocery";
 export default function Login() {
@@ -100,6 +109,16 @@ export default function Login() {
             </Formik>
           </VStack>
         </Box>
+        <Button
+          w={"full"}
+          maxW={"md"}
+          colorScheme={"messenger"}
+          leftIcon={<FcGoogle />}
+        >
+          <Center>
+            <Text color="text.900">Sign in with Google</Text>
+          </Center>
+        </Button>
       </VStack>
     </VStack>
   );
