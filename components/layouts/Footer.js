@@ -36,35 +36,35 @@ export default function Footer(props) {
       >
         <HStack spacing={[4, 8, 10]}>
           <VStack spacing={2} alignItems="start">
-            <Link textColor="text.900" fontSize="sm">
+            <Link textColor="text.900" fontSize="sm" href="#">
               Academy Business
             </Link>
-            <Link textColor="text.900" fontSize="sm">
+            <Link textColor="text.900" fontSize="sm" href="#">
               Teach on Academy
             </Link>
-            <Link textColor="text.900" fontSize="sm">
+            <Link textColor="text.900" fontSize="sm" href="#">
               Contact Us
             </Link>
           </VStack>
           <VStack spacing={2} alignItems="start">
-            <Link textColor="text.900" fontSize="sm">
+            <Link textColor="text.900" fontSize="sm" href="#">
               Help And Support
             </Link>
             <Link textColor="text.900" fontSize="sm">
               NewsLetter
             </Link>
-            <Link textColor="text.900" fontSize="sm">
+            <Link textColor="text.900" fontSize="sm" href="#">
               Investors
             </Link>
           </VStack>
           <VStack spacing={2} alignItems="start">
-            <Link textColor="text.900" fontSize="sm">
+            <Link textColor="text.900" fontSize="sm" href="#">
               Terms
             </Link>
-            <Link textColor="text.900" fontSize="sm">
+            <Link textColor="text.900" fontSize="sm" href="#">
               Privacy Policy
             </Link>
-            <Link textColor="text.900" fontSize="sm">
+            <Link textColor="text.900" fontSize="sm" href="#">
               Cookiee Policy
             </Link>
           </VStack>
