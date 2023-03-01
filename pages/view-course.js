@@ -19,46 +19,75 @@ import {
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { getCourseInfoService } from "../services/courseService";
+import {
+  createCommentService,
+  getCommentListService,
+} from "../services/commentService";
+import {
+  createReviewService,
+  getReviewListService,
+} from "../services/reviewService";
 import { loaderStore } from "../store/loaderStore";
+import { authStore } from "../store/authStore";
 import Reviews from "../components/Reviews";
 import QuestionAndAnswer from "../components/Q&A";
 import Lectures from "../components/Lectures";
 import { useEffect, useLayoutEffect, useState, memo, useRef } from "react";
 import dynamic from "next/dynamic";
+import { authenticateServerService } from "../services/authService";
+import { useCustomToast } from "../utils/useCustomToast";
 const ReactPlayer = dynamic(() => import("react-player/lazy"), { ssr: false });
+import { Formik, Form } from "formik";
+import * as Yup from "yup";
+import {
+  MyCheckbox,
+  MyTextInput,
+  MySelect,
+  MyFileInput,
+  MyTextArea,
+} from "../components/FormGrocery";
 chakra(ReactPlayer);
-function ViewCourse() {
-  const router = useRouter();
+function ViewCourse(props) {
+  console.log("props of view course", props);
+  const { showToast } = useCustomToast();
+  const { course, lectures } = props;
+  const [viewing, setViewing] = useState(
+    lectures.length > 0 ? lectures[0].file : ""
+  );
+  const [comments, setComments] = useState(props.comments);
+  const [reviews, setReviews] = useState(props.reviews);
   const loader = loaderStore();
-  const { _id } = router.query;
-  const [userEmail, setUserEmail] = useState("");
-  const [viewing, setViewing] = useState(``);
-  const [course, setCourse] = useState(null);
-  const [lectures, setLectures] = useState([]);
-
-  useEffect(() => {
-    async function getCourseInfo() {
-      loader.setIsLoading(true);
-      loader.setStatus("Fetching  courses details...");
-      const response = await getCourseInfoService(_id);
-      loader.setIsLoading(false);
-      if (!response.isError) {
-        setCourse(response.course);
-        setLectures(response.lectures);
-        if (response.lectures.length > 0) {
-          setViewing(response.lectures[0].file);
-          console.log("viewing lecture in view course");
-        }
-        setUserEmail(response.userEmail);
-      }
-      console.log("course in course info ", response);
-    }
-    getCourseInfo();
-  }, []);
   let uri =
-    viewing != ""
-      ? `http://localhost:4000/lecture/get-lecture?file=${viewing.toString()}&&userEmail=${userEmail.toString()}`
+    viewing !== ""
+      ? `http://localhost:3000/api/file/get-file?file=${viewing}&&userEmail=${props.user.email}`
       : `https://www.youtube.com/watch?v=hQAHSlTtcmY`;
+  console.log("uri", uri);
+  const handleSubmit = async (values) => {
+    const commentObj = { commentor: props.user.email, comment: values.comment };
+    loader.setStatus("Adding  comment...");
+    loader.setIsLoading(true);
+    const response = await createCommentService(commentObj);
+    loader.setIsLoading(false);
+    //NEED TO ADD LOGIC FOR REFRESH OF COMMENTS ONCE THE COMMENT ADDED
+    if (!response.isError) {
+      showToast(response.isError, response.message);
+    } else {
+      showToast(response.isError, response.error);
+    }
+  };
+  const handleReviewSubmit = async (values) => {
+    const commentObj = { reviewer: props.user.email, review: values.review };
+    loader.setStatus("Adding  review...");
+    loader.setIsLoading(true);
+    const response = await createReviewService(commentObj);
+    loader.setIsLoading(false);
+    //NEED TO ADD LOGIC FOR REFRESH OF COMMENTS ONCE THE COMMENT ADDED
+    if (!response.isError) {
+      showToast(response.isError, response.message);
+    } else {
+      showToast(response.isError, response.error);
+    }
+  };
   return (
     <VStack
       spacing={10}
@@ -155,36 +184,87 @@ function ViewCourse() {
             </Text>
           </TabPanel>
           <TabPanel>
-            <Reviews />
+            <VStack w="full" alignItems="start" pt={5} spacing={5}>
+              <Formik
+                style={{ width: "100%" }}
+                initialValues={{
+                  review: "",
+                }}
+                validationSchema={Yup.object({
+                  review: Yup.string()
+                    .min(8, "Must be greater than 8 characters")
+                    .required("Required"),
+                })}
+                onSubmit={async (values, { setSubmitting }) => {
+                  console.log(values);
+                  await handleReviewSubmit(values);
+                }}
+              >
+                <Form style={{ width: "100%" }}>
+                  <VStack spacing={3} w="full" alignItems={"center"}>
+                    <MyTextArea
+                      label="
+                      Add Review"
+                      type="text"
+                      id="review"
+                      name="review"
+                    />
+
+                    <Button
+                      type="submit"
+                      backgroundColor="primary.900"
+                      color="text.900"
+                      px={6}
+                      _hover={{ backgroundColor: "primary.600" }}
+                    >
+                      Add Review
+                    </Button>
+                  </VStack>
+                </Form>
+              </Formik>
+            </VStack>
+            <Reviews reviews={reviews} />
           </TabPanel>
           <TabPanel>
-            <Text color="text.900" fontSize="lg" fontWeight="semibold">
-              Discussions
-            </Text>
             <VStack w="full" alignItems="start" pt={5} spacing={5}>
-              <Textarea
-                placeholder="Discussions"
-                size="lg"
-                width="full"
-                color="text.900"
-                backgroundColor="background.700"
-                borderColor="whiteAlpha.600"
-                _hover={{ borderColor: "whiteAlpha.600" }}
-                _focus={{
-                  borderColor: "whiteAlpha.600",
+              <Formik
+                style={{ width: "100%" }}
+                initialValues={{
+                  comment: "",
                 }}
-              />
-              <Button
-                type="submit"
-                backgroundColor="primary.900"
-                color="text.900"
-                px={6}
-                _hover={{ backgroundColor: "primary.600" }}
+                validationSchema={Yup.object({
+                  comment: Yup.string()
+                    .min(8, "Must be greater than 8 characters")
+                    .required("Required"),
+                })}
+                onSubmit={async (values, { setSubmitting }) => {
+                  console.log(values);
+                  await handleSubmit(values);
+                }}
               >
-                Post
-              </Button>
+                <Form style={{ width: "100%" }}>
+                  <VStack spacing={3} w="full" alignItems={"center"}>
+                    <MyTextArea
+                      label="Comment"
+                      type="text"
+                      id="comment"
+                      name="comment"
+                    />
+
+                    <Button
+                      type="submit"
+                      backgroundColor="primary.900"
+                      color="text.900"
+                      px={6}
+                      _hover={{ backgroundColor: "primary.600" }}
+                    >
+                      Add comment
+                    </Button>
+                  </VStack>
+                </Form>
+              </Formik>
             </VStack>
-            <QuestionAndAnswer />
+            <QuestionAndAnswer comments={comments} />
           </TabPanel>
         </TabPanels>
       </Tabs>
@@ -193,3 +273,27 @@ function ViewCourse() {
 }
 
 export default memo(ViewCourse);
+export async function getServerSideProps(context) {
+  const user = await authenticateServerService(context.req);
+  console.log("user in serversideprops", user);
+  if (user.isError) {
+    // Redirect to a "not found" page
+    return { redirect: { destination: "/auth-user/login", permanent: false } };
+  }
+  const _id = context.query._id;
+  const response = await getCourseInfoService(_id);
+  const course = response.course;
+  const lectures = response.lectures;
+  const commentsResponse = await getCommentListService(context.req);
+  const reviewsResponse = await getReviewListService(context.req);
+
+  return {
+    props: {
+      user,
+      course,
+      lectures,
+      comments: commentsResponse.comments,
+      reviews: reviewsResponse.reviews,
+    },
+  };
+}

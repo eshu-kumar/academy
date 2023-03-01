@@ -18,18 +18,19 @@ export async function createCourseService(formData) {
     return { isError: true, error: error.message };
   }
 }
-export async function getCourseListService() {
-  const token = await localStorage.getItem("token");
+export async function getCourseListService(type, owner) {
+  //MAKE SURE YOU DO NOT SEND ORGINAL FILE NAMES HERE
+  let query = { type };
+  if (type !== "all") {
+    query["owner"] = owner;
+  }
   try {
     let response = await axios.post(
       `http://localhost:4000/course/get-courses-list`,
-      {
-        body: {},
-      },
+      { query },
       {
         headers: {
           "Content-Type": "application/json",
-          token: token,
         },
       }
     );
@@ -40,7 +41,6 @@ export async function getCourseListService() {
   }
 }
 export async function getCourseInfoService(_id) {
-  const token = await localStorage.getItem("token");
   try {
     let response = await axios.post(
       `http://localhost:4000/course/get-course-info`,
@@ -50,7 +50,6 @@ export async function getCourseInfoService(_id) {
       {
         headers: {
           "Content-Type": "application/json",
-          token: token,
         },
       }
     );

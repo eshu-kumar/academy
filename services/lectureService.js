@@ -19,6 +19,7 @@ export async function createLectureService(formData) {
   }
 }
 export async function getLectureListService() {
+  //MAKE SURE YOU DO NOT SEND ORGINAL FILE NAMES HERE
   const token = await localStorage.getItem("token");
   try {
     let response = await axios.post(

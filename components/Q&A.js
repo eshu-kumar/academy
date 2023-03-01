@@ -29,9 +29,16 @@ const Discussions = [
   },
 ];
 export default function QuestionAndAnswer(props) {
+  console.log("props", props);
   return (
-    <VStack alignItems="flex-start" spacing={6} pt={6}>
-      {Discussions.map((item, index) => {
+    <VStack
+      maxH={600}
+      overflowY="auto"
+      alignItems="flex-start"
+      spacing={6}
+      pt={6}
+    >
+      {props.comments.map((item, index) => {
         return (
           <HStack
             alignItems="center"
@@ -42,13 +49,13 @@ export default function QuestionAndAnswer(props) {
             }}
           >
             <Avatar
-              name={item.reviewer}
+              name={item.commentor}
               color="text.900"
               backgroundColor="primary.900"
               size="md"
             />
             <Text fontWeight="normal" color="text.900" fontSize="sm">
-              {item.review}
+              {item.comment}
             </Text>
           </HStack>
         );

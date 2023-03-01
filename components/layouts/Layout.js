@@ -4,7 +4,7 @@ import Header from "./Header";
 import Footer from "./Footer";
 import { authStore } from "../../store/authStore";
 import { loaderStore } from "../../store/loaderStore";
-import { useRouter } from "next/router";
+import Router, { useRouter } from "next/router";
 import { useEffect, useLayoutEffect, useState, memo } from "react";
 import FullPageLoader from "../FullPageLoader";
 export default function Layout(props) {
@@ -14,6 +14,7 @@ export default function Layout(props) {
   const url = router.asPath;
   const publicPaths = [
     "/auth-user/login",
+    "/student/course-info",
     "/",
     "/auth-user/signup",
     "/experiments/ex-graphql",
@@ -21,25 +22,17 @@ export default function Layout(props) {
   const path = url.split("?")[0];
   const isPublicPath = publicPaths.includes(path);
   useEffect(() => {
-    console.log("auth store ", auth);
+    console.log("auth store in layout useeffect", auth);
+    console.log("running the useeffect of layout ");
     async function fetchDataWrapper() {
       await auth.fetchData();
     }
     fetchDataWrapper();
   }, []);
-  if (!isPublicPath && auth.isDone && !auth.isAuthenticated) {
-    console.log("auth store in fetch data wrapper", auth);
-    console.log("loaderstore", loader);
-    router.push("/auth-user/login");
-  }
   return (
     <Flex w="full" direction="column" minH="100vh">
       <Header />
-      {auth.isAuthenticated || isPublicPath ? (
-        <Flex>{props.children}</Flex>
-      ) : (
-        <FullPageLoader isOpen={true} status={"Authenticating..."} />
-      )}
+      <Flex>{props.children}</Flex>
       <FullPageLoader isOpen={loader.isLoading} status={loader.status} />
       <Footer />
     </Flex>

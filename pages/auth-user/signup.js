@@ -7,6 +7,7 @@ import cookies from "js-cookie";
 import { signupService } from "../../services/authService";
 import { authStore } from "../../store/authStore";
 import { loaderStore } from "../../store/loaderStore";
+import { authenticateServerService } from "../../services/authService";
 import { MyCheckbox, MyTextInput } from "../../components/FormGrocery";
 
 export default function SignUp() {
@@ -24,15 +25,9 @@ export default function SignUp() {
     //loader.setIsLoading(false);
     if (!response.isError) {
       console.log(response);
-      const token = response.token;
-      await localStorage.setItem("token", token, { sameSite: "strict" });
-      // Set the cookie if need token at server for server side validation
-      //once its deployed on the server side add the secure to true it will besent by https only
-      // cookies.set("token", token);
-      // console.log("cookie in client ", document.cookie);
       setAuthenticated();
       showToast(response.isError, response.message);
-      router.replace("/student/my-learnings");
+      router.push("/student/my-learnings");
     } else {
       console.log(response);
       showToast(response.isError, response.error);
@@ -120,4 +115,20 @@ export default function SignUp() {
       </VStack>
     </Flex>
   );
+}
+export async function getServerSideProps(context) {
+  const user = await authenticateServerService(context.req);
+  console.log("user in serversideprops", user);
+  if (!user.isError) {
+    // Redirect to a "not found" page
+    return {
+      redirect: { destination: "/student/my-learnings", permanent: false },
+    };
+  }
+
+  return {
+    props: {
+      user,
+    },
+  };
 }
