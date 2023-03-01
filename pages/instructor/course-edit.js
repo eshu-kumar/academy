@@ -19,7 +19,7 @@ import Lectures from "../../components/Lectures";
 
 import FormData from "form-data";
 import { Formik, Form } from "formik";
-import { NextSeo } from "next-seo";
+// import { NextSeo } from "next-seo";
 import * as Yup from "yup";
 import { useCustomToast } from "../../utils/useCustomToast";
 import {
@@ -81,7 +81,7 @@ export default function CourseEdit(props) {
   };
   return (
     <>
-      <NextSeo {...SEO} />
+      {/* <NextSeo {...SEO} /> */}
       <Flex minH="90vh" width="full" backgroundColor="background.900">
         <VStack w="full" alignItems="flex-start">
           <Image

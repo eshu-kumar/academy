@@ -2,8 +2,8 @@
 import { ChakraProvider } from "@chakra-ui/react";
 // 1. Import the extendTheme function
 import { extendTheme } from "@chakra-ui/react";
-import { DefaultSeo, NextSeo } from "next-seo";
-import seo from "../next-seo.config";
+// import { DefaultSeo, NextSeo } from "next-seo";
+// import seo from "../next-seo.config";
 import Head from "next/head";
 import Layout from "../components/layouts/Layout";
 // 2. Extend the theme to include custom colors, fonts, etc
@@ -38,7 +38,7 @@ function MyApp({ Component, pageProps }) {
           key="canonical"
         />
       </Head>
-      <DefaultSeo {...seo} />
+      {/* <DefaultSeo {...seo} /> */}
       <ChakraProvider theme={theme}>
         <Layout>
           <Component {...pageProps} />

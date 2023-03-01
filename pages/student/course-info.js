@@ -16,7 +16,7 @@ import { getCourseInfoService } from "../../services/courseService";
 import Lectures from "../../components/Lectures";
 import Reviews from "../../components/Reviews";
 import { loaderStore } from "../../store/loaderStore";
-import { NextSeo } from "next-seo";
+// import { NextSeo } from "next-seo";
 import { authStore } from "../../store/authStore";
 import CourseOverview from "../../components/CourseOverview";
 import MyTooltip from "../../components/others/MyTooltip";

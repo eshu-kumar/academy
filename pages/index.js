@@ -62,7 +62,6 @@ export default function Home(props) {
           </Stack>
         </VStack>
       </Flex>
-
       <VStack w="full" mt={3} spacing={5}>
         <Courses list={props.courseList} />
         <Text
