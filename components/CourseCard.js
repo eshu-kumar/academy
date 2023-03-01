@@ -45,8 +45,7 @@ export default function CourseCard(item) {
             rounded={"lg"}
             height={180}
             objectFit={"cover"}
-            // src={item.imageUri}
-            src={IMAGE}
+            src={item.imageUri}
             alt="Image of the course"
             onMouseOver={() => {
               console.log("xcvbhnjmk");
