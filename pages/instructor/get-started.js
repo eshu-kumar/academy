@@ -139,7 +139,7 @@ export default function GetStarted(props) {
           })}
         </HStack>
       </Box>
-      <Text
+      {/* <Text
         color="text.900"
         fontWeight="bold"
         fontSize="3xl"
@@ -147,7 +147,7 @@ export default function GetStarted(props) {
       >
         What Other Teachers have to say
       </Text>
-      <Reviews />
+      <Reviews /> */}
       <VStack
         px={5}
         alignItems="center"
