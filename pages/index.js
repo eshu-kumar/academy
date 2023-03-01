@@ -116,7 +116,7 @@ export default function Home() {
         </Text>
         <FrequentlyAskedQuestion />
       </VStack>
-    </>
+    </VStack>
   );
 }
 export async function getStaticProps() {
