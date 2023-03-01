@@ -178,7 +178,6 @@ export default function Header(props) {
         >
           Close Server
         </Button>{" "}
-        */}
         <Button
           colorScheme="teal"
           color="text.900"
@@ -227,7 +226,7 @@ export default function Header(props) {
   function NotAuthHeader() {
     return (
       <>
-        <ExperimentsHeader />
+        {/* <ExperimentsHeader /> */}
         <Button
           colorScheme="teal"
           color="text.900"

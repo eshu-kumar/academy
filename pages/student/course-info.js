@@ -133,7 +133,7 @@ export default function CourseInfo(props) {
                   {course ? <CourseOverview course={course} /> : null}
                 </TabPanel>
                 <TabPanel>
-                  <Lectures userEmail={userEmail} lectures={lectures} />
+                  <Lectures lectures={lectures} />
                 </TabPanel>
                 <TabPanel>
                   <Reviews />

@@ -6,16 +6,17 @@ import {
   Button,
   Box,
   VStack,
-  HStack,
+  Stack,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 import { getCourseListService } from "../../services/courseService";
+
+import { authenticateServerService } from "../../services/authService";
 import Courses from "../../components/Courses";
 import { loaderStore } from "../../store/loaderStore";
 import Image from "next/image";
 import TrendingCourses from "../../components/TrendingCourses";
 export default function MyLearnings(props) {
-  const auth = authStore();
-  //console.log("props in my learning", props);
   const { courseList } = props;
   return (
     <VStack
@@ -69,7 +70,7 @@ export default function MyLearnings(props) {
       <Text color="text.900" fontWeight="bold" fontSize="2xl" textAlign="start">
         My Active Courses
       </Text>
-      <Courses userEmail={userEmail} list={courseList} isBought={true} />
+      <Courses list={courseList} isBought={true} />
       <Text color="text.900" fontWeight="bold" fontSize="3xl" textAlign="start">
         What To Learn Next
       </Text>

@@ -73,7 +73,7 @@ export default function Reviews(props) {
   if (props.reviews && props.reviews.length > 0) {
     orgReviews = props.reviews;
   } else {
-    orgReviews = studentReview;
+    orgReviews = review;
   }
   console.log("student reviews", props.reviews);
 

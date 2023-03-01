@@ -168,7 +168,7 @@ export default function MyCreations(props) {
         >
           My Active Courses
         </Text>
-        <Courses isInstructor={true} userEmail={userEmail} list={courseList} />
+        <Courses isInstructor={true} list={courseList} />
         <Text
           fontSize="2xl"
           color="text.900"
