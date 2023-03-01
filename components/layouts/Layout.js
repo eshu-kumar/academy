@@ -35,11 +35,9 @@ export default function Layout(props) {
   return (
     <Flex w="full" direction="column" minH="100vh">
       <Header />
-      {auth.isAuthenticated || isPublicPath ? (
-        <Flex>{props.children}</Flex>
-      ) : (
-        <FullPageLoader isOpen={true} status={"Authenticating..."} />
-      )}
+
+      <Flex>{props.children}</Flex>
+
       <FullPageLoader isOpen={loader.isLoading} status={loader.status} />
       <Footer />
     </Flex>

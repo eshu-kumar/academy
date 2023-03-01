@@ -14,26 +14,7 @@ import { loaderStore } from "../store/loaderStore";
 import FrequentlyAskedQuestion from "../components/others/FaQ";
 import TrendingCourses from "../components/TrendingCourses";
 import Image from "next/image";
-export default function Home() {
-  const [courseList, setCourseList] = useState([]);
-  const [userEmail, setUserEmail] = useState();
-  const loader = loaderStore();
-
-  useEffect(() => {
-    async function getCourseList() {
-      loader.setIsLoading(true);
-      loader.setStatus("Fetching  courses ...");
-      const response = await getCourseListService();
-      loader.setIsLoading(false);
-      if (!response.isError) {
-        setCourseList(response.courses);
-        setUserEmail(response.userEmail);
-      }
-      console.log("course list in index", response);
-    }
-    getCourseList();
-  }, []);
-
+export default function Home(props) {
   return (
     <VStack
       alignItems={"center"}
@@ -83,7 +64,7 @@ export default function Home() {
       </Flex>
 
       <VStack w="full" mt={3} spacing={5}>
-        {/* <Courses userEmail={userEmail} list={courseList} /> */}
+        <Courses list={props.courseList} />
         <Text
           fontSize="2xl"
           color="text.900"
