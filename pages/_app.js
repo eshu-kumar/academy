@@ -2,6 +2,9 @@
 import { ChakraProvider } from "@chakra-ui/react";
 // 1. Import the extendTheme function
 import { extendTheme } from "@chakra-ui/react";
+import { DefaultSeo, NextSeo } from "next-seo";
+import seo from "../next-seo.config";
+import Head from "next/head";
 import Layout from "../components/layouts/Layout";
 // 2. Extend the theme to include custom colors, fonts, etc
 const colors = {
@@ -27,11 +30,21 @@ const colors = {
 const theme = extendTheme({ colors });
 function MyApp({ Component, pageProps }) {
   return (
-    <ChakraProvider theme={theme}>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
-    </ChakraProvider>
+    <>
+      <Head>
+        <link
+          rel="canonical"
+          href="https://example.com/blog/original-post"
+          key="canonical"
+        />
+      </Head>
+      <DefaultSeo {...seo} />
+      <ChakraProvider theme={theme}>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </ChakraProvider>
+    </>
   );
 }
 
