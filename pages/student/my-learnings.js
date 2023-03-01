@@ -1,94 +1,93 @@
-import React from "react";
-import { Text, Box, VStack } from "@chakra-ui/react";
+import React, { useState, useEffect } from "react";
+import {
+  Flex,
+  Center,
+  Text,
+  Button,
+  Box,
+  VStack,
+  HStack,
+} from "@chakra-ui/react";
 import { getCourseListService } from "../../services/courseService";
 import Courses from "../../components/Courses";
-import { NextSeo } from "next-seo";
-import { authStore } from "../../store/authStore";
-import { authenticateServerService } from "../../services/authService";
-const SEO = {
-  title: "MY learning page",
-  description:
-    "Welcome to your learning page here you will see all your active courses that you bought",
-  openGraph: {
-    title: "MY learning page",
-    description:
-      "Welcome to your learning page here you will see all your active courses that you bought",
-  },
-};
+import { loaderStore } from "../../store/loaderStore";
+import Image from "next/image";
+import TrendingCourses from "../../components/TrendingCourses";
 export default function MyLearnings(props) {
   const auth = authStore();
   //console.log("props in my learning", props);
   const { courseList } = props;
   return (
-    <>
-      <NextSeo {...SEO} />
-      <VStack
-        p={[4, 6, 6]}
-        minH={"70vh"}
-        spacing={2}
+    <VStack
+      p={[4, 6, 6]}
+      minH={"70vh"}
+      spacing={2}
+      w="full"
+      bg="background.900"
+    >
+      <Flex
         w="full"
-        bg="background.900"
-        px={4}
+        h="50vh"
+        backgroundImage={
+          "url(https://images.unsplash.com/photo-1600267175161-cfaa711b4a81?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80)"
+        }
+        backgroundSize={"cover"}
+        backgroundPosition={"center center"}
+        loading="lazy"
       >
-        <Text
-          color="text.900"
-          fontWeight="bold"
-          fontSize="2xl"
-          textAlign="center"
-          pt={6}
+        <VStack
+          w={"full"}
+          justify={"center"}
+          px={useBreakpointValue({ base: 4, md: 8 })}
+          bgGradient={"linear(to-r, blackAlpha.600, transparent)"}
         >
-          Welcome back{" "}
-          {auth.email ? auth.email.split("@")[0].split(".")[0] : ""}
-        </Text>
-        <Box
-          borderWidth={1}
-          borderColor="primary.900"
-          p={4}
-          alignItems="center"
-        >
-          <Text
-            textAlign="center"
-            color="text.900"
-            fontWeight="semibold"
-            fontSize="lg"
-          >
-            Learning that gets you skills for your present and for future
-          </Text>
-        </Box>
-        <Text
-          color="text.900"
-          fontWeight="bold"
-          fontSize="2xl"
-          textAlign="start"
-          textDecoration="underline"
-          textDecorationColor="primary.900"
-        >
-          My Active Courses
-        </Text>
-        <Courses list={courseList} isBought={true} />
-        <Text
-          color="text.900"
-          fontWeight="bold"
-          fontSize="3xl"
-          textAlign="start"
-          textDecoration="underline"
-          textDecorationColor="primary.900"
-        >
-          What To Learn Next
-        </Text>
-        <Text
-          color="text.900"
-          fontWeight="semibold"
-          fontSize="2xl"
-          textAlign="start"
-          textDecoration="underline"
-          textDecorationColor="primary.900"
-        >
-          Students Are Also Viewing
-        </Text>
-        <Courses list={courseList} />
-      </VStack>
-    </>
+          <Stack maxW={"2xl"} align={"flex-start"} spacing={6}>
+            <Text
+              color={"white"}
+              fontWeight={700}
+              lineHeight={1.2}
+              fontSize={useBreakpointValue({ base: "3xl", md: "4xl" })}
+            >
+              Never Stop Learning
+            </Text>
+            <Text color="text.900" fontWeight="semibold" fontSize="lg">
+              Learning that gets you skills for your present and for future
+            </Text>
+            <Stack direction={"row"}>
+              <Button
+                bg="primary.900"
+                rounded={"full"}
+                color={"white"}
+                _hover={{ bg: "primary.600" }}
+              >
+                Show me more
+              </Button>
+            </Stack>
+          </Stack>
+        </VStack>
+      </Flex>
+      <Text color="text.900" fontWeight="bold" fontSize="2xl" textAlign="start">
+        My Active Courses
+      </Text>
+      <Courses userEmail={userEmail} list={courseList} isBought={true} />
+      <Text color="text.900" fontWeight="bold" fontSize="3xl" textAlign="start">
+        What To Learn Next
+      </Text>
+      <TrendingCourses />
+      <Text
+        color="text.900"
+        fontWeight="semibold"
+        fontSize="2xl"
+        textAlign="start"
+      >
+        Students Are Also Viewing
+      </Text>
+      {/* <Courses userEmail={userEmail} list={courseList} /> */}
+      <Text color="text.900" fontWeight="bold" fontSize="3xl" textAlign="start">
+        Trending Courses
+      </Text>
+      <TrendingCourses />
+    </VStack>
   );
 }
 export async function getServerSideProps(context) {

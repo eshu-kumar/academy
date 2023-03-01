@@ -1,20 +1,14 @@
 import {
   Button,
-  Input,
   VStack,
   Text,
-  useToast,
   Center,
-  HStack,
-  SimpleGrid,
-  Image,
   chakra,
   Tabs,
   TabList,
   TabPanels,
   Tab,
   TabPanel,
-  Link,
   Textarea,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
