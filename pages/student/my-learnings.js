@@ -14,8 +14,9 @@ import { getCourseListService } from "../../services/courseService";
 import { authenticateServerService } from "../../services/authService";
 import Courses from "../../components/Courses";
 import { loaderStore } from "../../store/loaderStore";
+import Reviews from "../../components/Reviews";
 import Image from "next/image";
-import TrendingCourses from "../../components/TrendingCourses";
+
 export default function MyLearnings(props) {
   const { courseList } = props;
   return (
@@ -87,7 +88,8 @@ export default function MyLearnings(props) {
       >
         What To Learn Next
       </Text>
-      <TrendingCourses />
+
+      <Courses list={props.courseList} />
       <Text
         color="text.900"
         fontWeight="semibold"
@@ -96,20 +98,10 @@ export default function MyLearnings(props) {
         textDecoration="underline"
         textDecorationColor="primary.900"
       >
-        Students Are Also Viewing
+        What Other Students have to say
       </Text>
+      <Reviews />
       {/* <Courses userEmail={userEmail} list={courseList} /> */}
-      <Text
-        color="text.900"
-        fontWeight="bold"
-        fontSize="3xl"
-        textAlign="start"
-        textDecoration="underline"
-        textDecorationColor="primary.900"
-      >
-        Trending Courses
-      </Text>
-      <TrendingCourses />
     </VStack>
   );
 }

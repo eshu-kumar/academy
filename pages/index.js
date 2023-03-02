@@ -12,8 +12,6 @@ import Reviews from "../components/Reviews";
 import { getCourseListService } from "../services/courseService";
 import { loaderStore } from "../store/loaderStore";
 import FrequentlyAskedQuestion from "../components/others/FaQ";
-import TrendingCourses from "../components/TrendingCourses";
-import Image from "next/image";
 export default function Home(props) {
   return (
     <VStack
@@ -73,7 +71,7 @@ export default function Home(props) {
         >
           Trending Courses
         </Text>
-        <TrendingCourses />
+        <Courses list={props.courseList} />
         <Text
           fontSize="2xl"
           color="text.900"

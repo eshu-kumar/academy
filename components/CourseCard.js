@@ -138,6 +138,7 @@ export default function CourseCard(item) {
                 >
                   Course info
                 </Button>
+
                 {/* <Button
                   backgroundColor="primary.900"
                   _hover={{ backgroundColor: "hover.900" }}

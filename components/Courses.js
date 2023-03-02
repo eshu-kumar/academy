@@ -5,6 +5,7 @@ const defaultList = [
   {
     coursename: "Build Responsive Real-World Websites with HTML and CSS",
     author: "jhon doe",
+    description: " Build Responsive Real-World Websites with HTML and CSS",
     rating: "4.5",
     isActive: true,
     price: "100",
@@ -12,6 +13,7 @@ const defaultList = [
   {
     coursename: "The Complete Financial Analyst Course Year 2022",
     authorName: "jhon doe",
+    description: " Build Responsive Real-World Websites with HTML and CSS",
     rating: "4.2",
     isActive: false,
     price: "100",
@@ -19,6 +21,7 @@ const defaultList = [
   {
     coursename: "The Complete 2023 Web Development Bootcamp",
     author: "jhon doe",
+    description: " Build Responsive Real-World Websites with HTML and CSS",
     rating: "4.4",
     isActive: true,
     price: "100",
@@ -26,6 +29,7 @@ const defaultList = [
   {
     coursename: "The Complete 2023 Web Development Bootcamp",
     author: "jhon doe",
+    description: " Build Responsive Real-World Websites with HTML and CSS",
     rating: "4.1",
     isActive: true,
     price: "100",
@@ -33,6 +37,7 @@ const defaultList = [
   {
     coursename: "Build Responsive Real-World Websites with HTML and CSS",
     author: "jhon doe",
+    description: " Build Responsive Real-World Websites with HTML and CSS",
     rating: "4",
     isActive: true,
     price: "100",
@@ -68,9 +73,10 @@ export default function Courses(props) {
               <CourseCard
                 _id={item._id}
                 isInstructor={props.isInstructor}
+                isStudent={props.isStudent}
                 courseName={item.coursename}
                 authorName={item.author}
-                Created={item.created}
+                created={item.created}
                 description={item.description}
                 imageUri={uri}
                 rating={4.2}

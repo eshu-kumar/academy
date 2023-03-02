@@ -17,6 +17,7 @@ import TrendingCourses from "../../components/TrendingCourses";
 import { getCourseListService } from "../../services/courseService";
 // import { NextSeo } from "next-seo";
 import { authStore } from "../../store/authStore";
+import Reviews from "../../components/Reviews";
 import { authenticateServerService } from "../../services/authService";
 const SEO = {
   title: "MY learning page",
@@ -179,20 +180,22 @@ export default function MyCreations(props) {
           My Active Courses
         </Text>
         <Courses isInstructor={true} list={courseList} />
+
         <Text
-          fontSize="2xl"
           color="text.900"
-          fontWeight="medium"
+          fontWeight="semibold"
+          fontSize="2xl"
+          textAlign="start"
           textDecoration="underline"
           textDecorationColor="primary.900"
         >
-          Trending Courses
+          What Other Teachers have to say
         </Text>
-        <TrendingCourses />
+        <Reviews />
         <VStack spacing={3} pt={5}>
           <Text
             color="text.900"
-            fontSize="3xl"
+            fontSize="2xl"
             fontWeight="bold"
             textAlign="center"
             textDecoration="underline"
