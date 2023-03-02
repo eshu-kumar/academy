@@ -70,6 +70,7 @@ export default function Courses(props) {
                 isInstructor={props.isInstructor}
                 courseName={item.coursename}
                 authorName={item.author}
+                description={item.description}
                 imageUri={uri}
                 rating={4.2}
                 price={item.price}
