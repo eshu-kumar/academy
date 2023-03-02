@@ -13,7 +13,7 @@ import {
 import Image from "next/image";
 import { useRouter } from "next/router";
 import Courses from "../../components/Courses";
-import TrendingCourses from "../../components/TrendingCourses";
+
 import { getCourseListService } from "../../services/courseService";
 // import { NextSeo } from "next-seo";
 import { authStore } from "../../store/authStore";
