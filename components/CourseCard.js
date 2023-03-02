@@ -22,14 +22,16 @@ import {
   ListItem,
   ListIcon,
 } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 
-import { BsFillCheckCircleFill } from "react-icons/fa";
+import { AiFillCheckCircle } from "react-icons/fa";
 
 const IMAGE =
   "https://images.unsplash.com/photo-1518051870910-a46e30d9db16?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1350&q=80";
 
 export default function CourseCard(item) {
   const initialFocusRef = React.useRef();
+  const router = useRouter();
   return (
     <Center py={12}>
       <Container
@@ -98,21 +100,20 @@ export default function CourseCard(item) {
               <PopoverBody>
                 <List spacing={3}>
                   <ListItem>
-                    <ListIcon as={BsFillCheckCircleFill} color="green.500" />
-                    {item.authorName}
+                    <ListIcon as={AiFillCheckCircle} color="green.500" />
+                    {item.description}
                   </ListItem>
                   <ListItem>
-                    <ListIcon as={BsFillCheckCircleFill} color="green.500" />
-                    {item.authorName}
+                    <ListIcon as={AiFillCheckCircle} color="green.500" />
+                    {item.description}
                   </ListItem>
                   <ListItem>
-                    <ListIcon as={BsFillCheckCircleFill} color="green.500" />
-                    {item.authorName}
+                    <ListIcon as={AiFillCheckCircle} color="green.500" />
+                    {item.description}
                   </ListItem>
-                  {/* You can also use custom icons from react-icons */}
                   <ListItem>
-                    <ListIcon as={BsFillCheckCircleFill} color="green.500" />
-                    {item.authorName}
+                    <ListIcon as={AiFillCheckCircle} color="green.500" />
+                    {item.description}
                   </ListItem>
                 </List>
               </PopoverBody>
@@ -127,6 +128,9 @@ export default function CourseCard(item) {
                   _hover={{ backgroundColor: "hover.900" }}
                   color="text.900"
                   py={3}
+                  onClick={() => {
+                    router.push("/experiments/payment-page");
+                  }}
                 >
                   Add To Cart
                 </Button>

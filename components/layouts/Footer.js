@@ -4,14 +4,15 @@ import {
   Divider,
   Link,
   VStack,
-  Box,
   HStack,
   Button,
   Icon,
   Flex,
 } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 
 export default function Footer(props) {
+  const router = useRouter();
   return (
     <Flex direction={"column"} width="full" bg="background.900" py={7} pt={5}>
       <HStack alignItems="center" justifyContent="space-between" py={5} px={10}>
@@ -30,37 +31,85 @@ export default function Footer(props) {
       >
         <HStack spacing={[4, 8, 10]}>
           <VStack spacing={2} alignItems="start">
-            <Link textColor="text.900" fontSize="sm">
+            <Button
+              variant="ghost"
+              textColor="text.900"
+              fontSize="sm"
+              _hover={{ backgroundColor: "primary.900" }}
+            >
               Academy Business
-            </Link>
-            <Link textColor="text.900" fontSize="sm">
+            </Button>
+            <Button
+              variant="ghost"
+              textColor="text.900"
+              fontSize="sm"
+              _hover={{ backgroundColor: "primary.900" }}
+            >
               Teach on Academy
-            </Link>
-            <Link textColor="text.900" fontSize="sm">
+            </Button>
+            <Button
+              variant="ghost"
+              textColor="text.900"
+              fontSize="sm"
+              _hover={{ backgroundColor: "primary.900" }}
+            >
               Contact Us
-            </Link>
+            </Button>
           </VStack>
           <VStack spacing={2} alignItems="start">
-            <Link textColor="text.900" fontSize="sm">
+            <Button
+              variant="ghost"
+              textColor="text.900"
+              fontSize="sm"
+              _hover={{ backgroundColor: "primary.900" }}
+            >
               Help And Support
-            </Link>
-            <Link textColor="text.900" fontSize="sm">
-              Affliate
-            </Link>
-            <Link textColor="text.900" fontSize="sm">
-              Investors
-            </Link>
+            </Button>
+            <Button
+              variant="ghost"
+              textColor="text.900"
+              fontSize="sm"
+              _hover={{ backgroundColor: "primary.900" }}
+              onClick={() => router.push("/student/newsletter")}
+            >
+              NewsLetter
+            </Button>
+
+            <Button
+              variant="ghost"
+              textColor="text.900"
+              fontSize="sm"
+              _hover={{ backgroundColor: "primary.900" }}
+              onClick={() => router.push("/student/contact-us")}
+            >
+              Contact Us
+            </Button>
           </VStack>
           <VStack spacing={2} alignItems="start">
-            <Link textColor="text.900" fontSize="sm">
+            <Button
+              variant="ghost"
+              textColor="text.900"
+              fontSize="sm"
+              _hover={{ backgroundColor: "primary.900" }}
+            >
               Terms
-            </Link>
-            <Link textColor="text.900" fontSize="sm">
+            </Button>
+            <Button
+              variant="ghost"
+              textColor="text.900"
+              fontSize="sm"
+              _hover={{ backgroundColor: "primary.900" }}
+            >
               Privacy Policy
-            </Link>
-            <Link textColor="text.900" fontSize="sm">
+            </Button>
+            <Button
+              variant="ghost"
+              textColor="text.900"
+              fontSize="sm"
+              _hover={{ backgroundColor: "primary.900" }}
+            >
               Cookiee Policy
-            </Link>
+            </Button>
           </VStack>
         </HStack>
         <Button variant="outline" _hover={{ backgroundColor: "hover.900" }}>
