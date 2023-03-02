@@ -124,6 +124,19 @@ export default function CourseCard(item) {
                 py={4}
               >
                 <Button
+                  my={3}
+                  backgroundColor="primary.900"
+                  _hover={{ backgroundColor: "hover.900" }}
+                  onClick={() => {
+                    router.push({
+                      pathname: item.isInstructor
+                        ? "/instructor/course-edit"
+                        : "/student/course-info",
+                      query: { _id: item._id },
+                    });
+                  }}
+                />
+                {/* <Button
                   backgroundColor="primary.900"
                   _hover={{ backgroundColor: "hover.900" }}
                   color="text.900"
@@ -133,23 +146,10 @@ export default function CourseCard(item) {
                   }}
                 >
                   Add To Cart
-                </Button>
+                </Button> */}
               </PopoverFooter>
             </PopoverContent>
           </Popover>
-          {/* <Button
-            my={3}
-            backgroundColor="primary.900"
-            _hover={{ backgroundColor: "hover.900" }}
-            onClick={() => {
-              router.push({
-                pathname: item.isInstructor
-                  ? "/instructor/course-edit"
-                  : "/student/course-info",
-                query: { _id: item._id },
-              });
-            }}
-          /> */}
         </Box>
       </Container>
     </Center>
