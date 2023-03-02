@@ -135,7 +135,9 @@ export default function CourseCard(item) {
                       query: { _id: item._id },
                     });
                   }}
-                />
+                >
+                  Course info
+                </Button>
                 {/* <Button
                   backgroundColor="primary.900"
                   _hover={{ backgroundColor: "hover.900" }}

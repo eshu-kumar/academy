@@ -116,7 +116,13 @@ export default function GetStarted(props) {
         textAlign="center"
         py={20}
       >
-        <Text color="text.900" fontWeight="bold" fontSize="3xl">
+        <Text
+          color="text.900"
+          fontWeight="bold"
+          fontSize="3xl"
+          textDecoration="underline"
+          textDecorationColor="primary.900"
+        >
           So many reasons to start
         </Text>
         <HStack
@@ -128,7 +134,13 @@ export default function GetStarted(props) {
           {rewards.map((item, index) => {
             return (
               <VStack key={index} spacing={1} justifyContent="center">
-                <Text color="text.900" fontWeight="bold" fontSize="xl">
+                <Text
+                  color="text.900"
+                  fontWeight="bold"
+                  fontSize="xl"
+                  textDecoration="underline"
+                  textDecorationColor="primary.900"
+                >
                   {item.primaryText}
                 </Text>
                 <Text color="text.900" fontWeight="normal" fontSize="sm">
@@ -139,15 +151,6 @@ export default function GetStarted(props) {
           })}
         </HStack>
       </Box>
-      {/* <Text
-        color="text.900"
-        fontWeight="bold"
-        fontSize="3xl"
-        textAlign="center"
-      >
-        What Other Teachers have to say
-      </Text>
-      <Reviews /> */}
       <VStack
         px={5}
         alignItems="center"
@@ -160,6 +163,8 @@ export default function GetStarted(props) {
           fontWeight="bold"
           fontSize="3xl"
           textAlign="center"
+          textDecoration="underline"
+          textDecorationColor="primary.900"
         >
           What Other Teachers have to say
         </Text>

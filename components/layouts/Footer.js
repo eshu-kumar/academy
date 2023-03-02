@@ -44,27 +44,12 @@ export default function Footer(props) {
               textColor="text.900"
               fontSize="sm"
               _hover={{ backgroundColor: "primary.900" }}
+              onClick={() => router.push("/instructor/get-started")}
             >
               Teach on Academy
             </Button>
-            <Button
-              variant="ghost"
-              textColor="text.900"
-              fontSize="sm"
-              _hover={{ backgroundColor: "primary.900" }}
-            >
-              Contact Us
-            </Button>
           </VStack>
           <VStack spacing={2} alignItems="start">
-            <Button
-              variant="ghost"
-              textColor="text.900"
-              fontSize="sm"
-              _hover={{ backgroundColor: "primary.900" }}
-            >
-              Help And Support
-            </Button>
             <Button
               variant="ghost"
               textColor="text.900"
@@ -91,24 +76,18 @@ export default function Footer(props) {
               textColor="text.900"
               fontSize="sm"
               _hover={{ backgroundColor: "primary.900" }}
+              onClick={() => router.push("/student/terms-condition")}
             >
-              Terms
+              Terms and condition
             </Button>
             <Button
               variant="ghost"
               textColor="text.900"
               fontSize="sm"
               _hover={{ backgroundColor: "primary.900" }}
+              onClick={() => router.push("/student/privacy-policy")}
             >
               Privacy Policy
-            </Button>
-            <Button
-              variant="ghost"
-              textColor="text.900"
-              fontSize="sm"
-              _hover={{ backgroundColor: "primary.900" }}
-            >
-              Cookiee Policy
             </Button>
           </VStack>
         </HStack>

@@ -57,11 +57,10 @@ export default function MyLearnings(props) {
             <Stack direction={"row"}>
               <Button
                 bg="primary.900"
-                rounded={"full"}
-                color={"white"}
+                color="text.900"
                 _hover={{ bg: "primary.600" }}
               >
-                Show me more
+                Get Started
               </Button>
             </Stack>
           </Stack>

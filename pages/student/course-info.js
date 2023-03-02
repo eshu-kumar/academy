@@ -94,7 +94,7 @@ export default function CourseInfo(props) {
                   onClick={() => {
                     if (course && course._id) {
                       router.push({
-                        pathname: "../student/my-learnings",
+                        pathname: "../student/payment-page",
                         query: { _id: course._id },
                       });
                     }
