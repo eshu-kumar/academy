@@ -6,6 +6,7 @@ import {
   Text,
   Spinner,
   Center,
+  Link,
 } from "@chakra-ui/react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
@@ -82,7 +83,7 @@ export default function Login() {
               }}
             >
               <Form style={{ width: "100%" }}>
-                <VStack spacing={3} w="full" alignItems={"center"}>
+                <VStack spacing={3} w="full">
                   <MyTextInput
                     label="Email"
                     id="email"
@@ -95,11 +96,21 @@ export default function Login() {
                     name="password"
                     type="password"
                   />
+                  <Link
+                    variant="ghost"
+                    color="text.900"
+                    fontSize="sm"
+                    fontWeight="bold"
+                    href="/experiments/forgot-password"
+                  >
+                    Forgot Password ?
+                  </Link>
                   <Button
                     type="submit"
                     backgroundColor="primary.900"
                     color="text.900"
                     px={6}
+                    width="80%"
                     _hover={{ backgroundColor: "primary.600" }}
                   >
                     Login
@@ -110,7 +121,7 @@ export default function Login() {
           </VStack>
         </Box>
         <Button
-          w={"full"}
+          width="80%"
           maxW={"md"}
           colorScheme={"messenger"}
           leftIcon={<FcGoogle />}
