@@ -38,6 +38,7 @@ export default function PaymentPage(props) {
       py={5}
       spacing={5}
       px={10}
+      alignItems="left"
     >
       <Text
         color="text.900"
