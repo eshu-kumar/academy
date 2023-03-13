@@ -4,29 +4,20 @@ import {
   Divider,
   Link,
   VStack,
-  Box,
   HStack,
   Button,
   Icon,
   Flex,
 } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 
 export default function Footer(props) {
+  const router = useRouter();
   return (
-    <Flex
-      direction={"column"}
-      width="full"
-      bg="background.900"
-      px={5}
-      py={7}
-      pt={5}
-    >
-      <HStack alignItems="center" justifyContent="space-between" py={5}>
+    <Flex direction={"column"} width="full" bg="background.900" py={7} pt={5}>
+      <HStack alignItems="center" justifyContent="space-between" py={5} px={10}>
         <Text textColor="text.900">
-          Top companies choose{" "}
-          <Link textColor="primary.900" href="https://chakra-ui.com">
-            Academy
-          </Link>{" "}
+          Top companies choose <Link textColor="primary.900">Academy</Link>{" "}
           Business to build in-demand career skills.
         </Text>
       </HStack>
@@ -36,76 +27,68 @@ export default function Footer(props) {
         justifyContent="space-between"
         alignItems="start"
         py={5}
+        px={10}
       >
         <HStack spacing={[4, 8, 10]}>
           <VStack spacing={2} alignItems="start">
-            <Link
+            <Button
+              variant="ghost"
               textColor="text.900"
               fontSize="sm"
-              href="https://chakra-ui.com"
+              _hover={{ backgroundColor: "primary.900" }}
             >
               Academy Business
-            </Link>
-            <Link
+            </Button>
+            <Button
+              variant="ghost"
               textColor="text.900"
               fontSize="sm"
-              href="https://chakra-ui.com"
+              _hover={{ backgroundColor: "primary.900" }}
+              onClick={() => router.push("/instructor/get-started")}
             >
               Teach on Academy
-            </Link>
-            <Link
+            </Button>
+          </VStack>
+          <VStack spacing={2} alignItems="start">
+            <Button
+              variant="ghost"
               textColor="text.900"
               fontSize="sm"
-              href="https://chakra-ui.com"
+              _hover={{ backgroundColor: "primary.900" }}
+              onClick={() => router.push("/student/newsletter")}
+            >
+              NewsLetter
+            </Button>
+
+            <Button
+              variant="ghost"
+              textColor="text.900"
+              fontSize="sm"
+              _hover={{ backgroundColor: "primary.900" }}
+              onClick={() => router.push("/student/contact-us")}
             >
               Contact Us
-            </Link>
+            </Button>
           </VStack>
           <VStack spacing={2} alignItems="start">
-            <Link
+            <Button
+              variant="ghost"
               textColor="text.900"
               fontSize="sm"
-              href="https://chakra-ui.com"
+              _hover={{ backgroundColor: "primary.900" }}
+              onClick={() => router.push("/student/terms-condition")}
             >
-              Help And Support
-            </Link>
-            <Link
+              Terms and condition
+            </Button>
+            <Button
+              variant="ghost"
               textColor="text.900"
               fontSize="sm"
-              href="https://chakra-ui.com"
-            >
-              Affliate
-            </Link>
-            <Link
-              textColor="text.900"
-              fontSize="sm"
-              href="https://chakra-ui.com"
-            >
-              Investors
-            </Link>
-          </VStack>
-          <VStack spacing={2} alignItems="start">
-            <Link
-              textColor="text.900"
-              fontSize="sm"
-              href="https://chakra-ui.com"
-            >
-              Terms
-            </Link>
-            <Link
-              textColor="text.900"
-              fontSize="sm"
-              href="https://chakra-ui.com"
+              _hover={{ backgroundColor: "primary.900" }}
+              onClick={() => router.push("/student/privacy-policy")}
             >
               Privacy Policy
-            </Link>
-            <Link
-              textColor="text.900"
-              fontSize="sm"
-              href="https://chakra-ui.com"
-            >
-              Cookiee Policy
-            </Link>
+            </Button>
           </VStack>
         </HStack>
         <Button variant="outline" _hover={{ backgroundColor: "hover.900" }}>
@@ -117,7 +100,7 @@ export default function Footer(props) {
           </HStack>
         </Button>
       </HStack>
-      <HStack alignItems="center" justifyContent="space-between">
+      <HStack alignItems="center" justifyContent="space-between" px={10}>
         <Text textColor="text.900">ACADEMY</Text>
         <Text textColor="text.900"> © 2022 Ademy, Inc.</Text>
       </HStack>

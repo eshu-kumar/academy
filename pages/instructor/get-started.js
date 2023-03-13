@@ -4,44 +4,32 @@ import {
   Button,
   Box,
   HStack,
-  Link,
   VStack,
-  Tabs,
-  TabList,
-  TabPanels,
-  Tab,
-  TabPanel,
-  Image,
+  Flex,
+  Stack,
+  chakra,
+  useBreakpointValue,
 } from "@chakra-ui/react";
+import Image from "next/image";
+import Reviews from "../../components/Reviews.js";
+
 import { useRouter } from "next/router";
-import { NextSeo } from "next-seo";
-import Reviews from "../../components/Reviews";
-const SEO = {
-  title: "MY learning page",
-  description:
-    "Welcome to your learning page here you will see all your active courses that you bought",
-  openGraph: {
-    title: "MY learning page",
-    description:
-      "Welcome to your learning page here you will see all your active courses that you bought",
-  },
-};
 
 const rewards = [
   {
     primaryText: "Teach your way",
     secondaryText:
-      "Publish the course you want, in the way you want, and always have control of your own content.",
+      "Take the liberty to plan your circulum and Publish the course you want,in the way you want,you have control",
   },
   {
     primaryText: "Contribute",
     secondaryText:
-      " Teach what you know and help learners explore their interests, gain new skills, and advance their careers.",
+      "Teach what you know and help learners explore their interests and gain new skills",
   },
   {
     primaryText: "Get rewarded",
     secondaryText:
-      " Expand your professional network, build your expertise, and earn money on each paid enrollment.",
+      "Expand your professional network, build your expertise, and earn money on each paid enrollment.",
   },
 ];
 
@@ -69,96 +57,107 @@ const facts = [
 ];
 import { authenticateServerService } from "../../services/authService";
 export default function GetStarted(props) {
+  chakra(Image);
   const router = useRouter();
-  let uri =
-    "https://images.unsplash.com/photo-1484950763426-56b5bf172dbb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fGhkJTIwcGhvdG9zfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60";
+
   return (
-    <>
-      <NextSeo {...SEO} />
-      <VStack w="full" minH="70vh" backgroundColor="background.900">
-        <Image
-          w="full"
-          h={[250, 360, 400]}
-          alt={"get started on academy"}
-          src={uri}
-        />
-        <VStack px={5} alignItems="left" justifyContent="center" pt={4}>
-          <Text
-            textAlign={"center"}
-            color="text.900"
-            fontWeight="bold"
-            fontSize="3xl"
-            textDecoration="underline"
-            textDecorationColor="primary.900"
-          >
-            Come teach with us
-          </Text>
-          <Text
-            textAlign="center"
-            color="text.900"
-            fontWeight="normal"
-            fontSize="md"
-          >
-            Become an instructor and change lives — including your own
-          </Text>
-          <Button
-            backgroundColor="primary.900"
-            color="text.900"
-            width="full"
-            _hover={{ backgroundColor: "primary.600" }}
-            onClick={() => {
-              router.push("../instructor/my-creations");
-            }}
-            textDecoration="underline"
-            textDecorationColor="primary.900"
-          >
-            Get Startd
-          </Button>
+    <VStack width="full" height="100%" backgroundColor="background.900">
+      <Flex
+        w="full"
+        h="50vh"
+        backgroundImage={
+          "url(https://images.unsplash.com/photo-1600267175161-cfaa711b4a81?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80)"
+        }
+        backgroundSize={"cover"}
+        backgroundPosition={"center center"}
+        loading="lazy"
+      >
+        <VStack
+          w={"full"}
+          justify={"center"}
+          px={useBreakpointValue({ base: 4, md: 8 })}
+          bgGradient={"linear(to-r, blackAlpha.600, transparent)"}
+        >
+          <Stack maxW={"2xl"} align={"flex-start"} spacing={6}>
+            <Text
+              color="text.900"
+              fontSize={["lg", "2xl", "3xl"]}
+              fontWeight="bold"
+            >
+              Teach new skills online
+            </Text>
+            <Text
+              color={"white"}
+              fontWeight="normal"
+              lineHeight={1.2}
+              fontSize={useBreakpointValue({ base: "3xl", md: "4xl" })}
+            >
+              If kids can be super engaged in video games, there’s a way for
+              them to be super engaged in education as well.
+            </Text>
+            <Stack direction={"row"}>
+              <Button
+                backgroundColor="primary.900"
+                color="text.900"
+                _hover={{ backgroundColor: "primary.600" }}
+                onClick={() => {
+                  router.push("../instructor/my-creations");
+                }}
+              >
+                Get Started
+              </Button>
+            </Stack>
+          </Stack>
         </VStack>
+      </Flex>
+      <Box
+        justifyContent="center"
+        alignItems="center"
+        textAlign="center"
+        py={20}
+      >
         <Text
           color="text.900"
           fontWeight="bold"
           fontSize="3xl"
-          textAlign="center"
-          pt={10}
           textDecoration="underline"
           textDecorationColor="primary.900"
         >
           So many reasons to start
         </Text>
         <HStack
-          pt={3}
-          pb={7}
-          px={5}
-          spacing={4}
-          alignItems="flex-start"
-          justifyContent="space-evenly"
+          alignItems="center"
+          justifyContent="space-between"
+          spacing={10}
+          pt={10}
         >
           {rewards.map((item, index) => {
             return (
-              <VStack key={index}>
+              <VStack key={index} spacing={1} justifyContent="center">
                 <Text
                   color="text.900"
                   fontWeight="bold"
                   fontSize="xl"
-                  textAlign="center"
                   textDecoration="underline"
                   textDecorationColor="primary.900"
                 >
                   {item.primaryText}
                 </Text>
-                <Text
-                  color="text.900"
-                  fontWeight="normal"
-                  fontSize="md"
-                  textAlign="center"
-                >
+                <Text color="text.900" fontWeight="normal" fontSize="sm">
                   {item.secondaryText}
                 </Text>
               </VStack>
             );
           })}
         </HStack>
+      </Box>
+      <VStack
+        px={5}
+        alignItems="center"
+        justifyContent="center"
+        spacing={3}
+        py={5}
+      >
         <Text
           color="text.900"
           fontWeight="bold"
@@ -173,126 +172,26 @@ export default function GetStarted(props) {
 
         <Text
           color="text.900"
-          fontWeight="bold"
-          fontSize="3xl"
+          fontWeight="semibold"
+          fontSize="sm"
           textAlign="center"
-          pt={10}
-          textDecoration="underline"
-          textDecorationColor="primary.900"
         >
-          How to begin
+          Create Your course and upload lectures and transform the life of
+          students
         </Text>
-        <Tabs px={5}>
-          <TabList justifyContent="center">
-            <Tab color="text.900" fontWeight="bold" textAlign="center">
-              Plan Your Curriculum
-            </Tab>
-            <Tab color="text.900" fontWeight="bold" textAlign="center">
-              Record Your Video
-            </Tab>
-            <Tab color="text.900" fontWeight="bold" textAlign="center">
-              Launch Yout Couse
-            </Tab>
-          </TabList>
-
-          <TabPanels>
-            <TabPanel>
-              <Text color="text.900" fontWeight="normal" textAlign="center">
-                You start with your passion and knowledge. Then choose a
-                promising topic with the help of our Marketplace Insights tool.
-                The way that you teach — what you bring to it — is up to you. We
-                offer plenty of resources on how to create your first course.
-                And, our instructor dashboard and curriculum pages help keep you
-                organized.
-              </Text>
-            </TabPanel>
-            <TabPanel>
-              <Text color="text.900" fontWeight="normal" textAlign="center">
-                Use basic tools like a smartphone or a DSLR camera. Add a good
-                microphone and you’re ready to start. If you don’t like being on
-                camera, just capture your screen. Either way, we recommend two
-                hours or more of video for a paid course. Our support team is
-                available to help you throughout the process and provide
-                feedback on test videos.
-              </Text>
-            </TabPanel>
-            <TabPanel>
-              <Text color="text.900" fontWeight="normal" textAlign="center">
-                Gather your first ratings and reviews by promoting your course
-                through social media and your professional networks. Your course
-                will be discoverable in our marketplace where you earn revenue
-                from each paid enrollment. Our custom coupon tool lets you offer
-                enrollment incentives while our global promotions drive traffic
-                to courses. There’s even more opportunity for courses chosen for
-                Udemy Business.
-              </Text>
-            </TabPanel>
-          </TabPanels>
-        </Tabs>
-        <VStack px={5} alignItems="center" justifyContent="center" pt={10}>
-          <Text
-            color="text.900"
-            fontWeight="bold"
-            fontSize="3xl"
-            textAlign="center"
-            textDecoration="underline"
-            textDecorationColor="primary.900"
-          >
-            You won’t have to do it alone
-          </Text>
-          <Text
-            color="text.900"
-            fontWeight="bold"
-            fontSize="md"
-            textAlign="center"
-          >
-            Our Instructor Support Team is here to answer your questions and
-            review your test video, while our Teaching Center gives you plenty
-            of resources to help you through the process. Plus, get the support
-            of experienced instructors in our online community.
-          </Text>
-          <Link
-            color="primary.900"
-            fontWeight="bold"
-            fontSize="lg"
-            textAlign="center"
-          >
-            Need more details before you start? Learn More
-          </Link>
-        </VStack>
-        <VStack px={5} alignItems="center" justifyContent="center" py={10}>
-          <Text
-            color="text.900"
-            fontWeight="bold"
-            fontSize="2xl"
-            textAlign="center"
-            textDecoration="underline"
-            textDecorationColor="primary.900"
-          >
-            Become an instructor today
-          </Text>
-          <Text
-            color="text.900"
-            fontWeight="bold"
-            fontSize="lg"
-            textAlign="center"
-          >
-            Join one of the world’s largest online learning marketplaces.
-          </Text>
-          <Button
-            backgroundColor="primary.900"
-            color="text.900"
-            width="full"
-            _hover={{ backgroundColor: "primary.600" }}
-            onClick={() => {
-              router.push("../instructor/my-creations");
-            }}
-          >
-            Get Startd
-          </Button>
-        </VStack>
+        <Button
+          backgroundColor="primary.900"
+          color="text.900"
+          width="50%"
+          _hover={{ backgroundColor: "primary.600" }}
+          onClick={() => {
+            router.push("../instructor/my-creations");
+          }}
+        >
+          Get Started
+        </Button>
       </VStack>
-    </>
+    </VStack>
   );
 }
 export async function getServerSideProps(context) {

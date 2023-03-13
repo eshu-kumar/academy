@@ -151,7 +151,7 @@ export default function Header(props) {
   function ExperimentsHeader() {
     return (
       <>
-        {/* <Button
+        <Button
           colorScheme="teal"
           color="text.900"
           variant="ghost"
@@ -177,7 +177,7 @@ export default function Header(props) {
           onClick={closeServer}
         >
           Close Server
-        </Button> */}
+        </Button>{" "}
         <Button
           colorScheme="teal"
           color="text.900"
@@ -226,7 +226,7 @@ export default function Header(props) {
   function NotAuthHeader() {
     return (
       <>
-        <ExperimentsHeader />
+        {/* <ExperimentsHeader /> */}
         <Button
           colorScheme="teal"
           color="text.900"
@@ -256,12 +256,12 @@ export default function Header(props) {
       justifyContent="space-between"
       alignItems="center"
       py={4}
-      px={8}
+      px={10}
       borderBottomColor="whiteAlpha.700"
       backgroundColor="background.900"
     >
-      <Link mr={10} as={NextLink} href="/">
-        <Center w="100px">
+      <Link as={NextLink} href="/">
+        <Center w="150px">
           <Text fontSize="3xl" color="text.900">
             Academy
           </Text>

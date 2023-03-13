@@ -19,7 +19,7 @@ import Lectures from "../../components/Lectures";
 
 import FormData from "form-data";
 import { Formik, Form } from "formik";
-import { NextSeo } from "next-seo";
+// import { NextSeo } from "next-seo";
 import * as Yup from "yup";
 import { useCustomToast } from "../../utils/useCustomToast";
 import {
@@ -53,7 +53,7 @@ export default function CourseEdit(props) {
     : "https://images.unsplash.com/photo-1484950763426-56b5bf172dbb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fGhkJTIwcGhvdG9zfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60";
 
   const [courseInfoRefresh, setCourseInfoRefresh] = useState(false);
-  const [userEmail, setUserEmail] = useState();
+
   const loader = loaderStore();
 
   const { _id } = router.query;
@@ -81,7 +81,7 @@ export default function CourseEdit(props) {
   };
   return (
     <>
-      <NextSeo {...SEO} />
+      {/* <NextSeo {...SEO} /> */}
       <Flex minH="90vh" width="full" backgroundColor="background.900">
         <VStack w="full" alignItems="flex-start">
           <Image
@@ -145,7 +145,7 @@ export default function CourseEdit(props) {
                   {course ? <CourseOverview course={course} /> : null}
                 </TabPanel>
                 <TabPanel>
-                  <Lectures userEmail={userEmail} lectures={lectures} />
+                  <Lectures lectures={lectures} />
                 </TabPanel>
                 <TabPanel w="full">
                   <VStack w="full" alignItems="left">
