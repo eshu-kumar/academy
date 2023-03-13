@@ -38,7 +38,8 @@ export default function CourseCard(item) {
         p={6}
         maxW={"300px"}
         w={"full"}
-        bg={useColorModeValue("white", "gray.800")}
+        // bg={useColorModeValue("white", "gray.800")}
+        backgroundColor="whiteAlpha.200"
         boxShadow={"2xl"}
         rounded={"lg"}
       >
@@ -54,24 +55,24 @@ export default function CourseCard(item) {
             }}
           />
           <Stack mt="3" spacing="2">
-            <Heading size="md" color="red.900" fontWeight="semibold">
+            <Heading size="md" color="text.900" fontWeight="semibold">
               {item.courseName}
             </Heading>
             <Text
-              color="red.900"
+              color="text.900"
               fontSize="sm"
               fontWeight="normal"
               noOfLines={2}
             >
               {item.courseDescription}
             </Text>
-            <Text color="red.900" fontSize="sm" fontWeight="normal">
+            <Text color="text.900" fontSize="sm" fontWeight="normal">
               {item.authorName}
             </Text>
-            <Text color="red.900" fontSize="sm" fontWeight="thin">
+            <Text color="text.900" fontSize="sm" fontWeight="thin">
               {item.rating}
             </Text>
-            <Text color="red.900" fontSize="sm" fontWeight="semibold">
+            <Text color="text.900" fontSize="sm" fontWeight="semibold">
               ${item.price}
             </Text>
           </Stack>
