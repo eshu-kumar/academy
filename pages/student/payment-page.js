@@ -37,7 +37,7 @@ export default function PaymentPage(props) {
       bg="background.900"
       py={5}
       spacing={5}
-      px={10}
+      px={48}
       alignItems="left"
     >
       <Text
@@ -72,8 +72,8 @@ export default function PaymentPage(props) {
 
       {list.map((item, index) => {
         return (
-          <HStack alignItems="center" justifyContent="center" key={index}>
-            <Icon as={CheckIcon} color="text.900"></Icon>
+          <HStack alignItems="center" key={index}>
+            <Icon as={CheckIcon} color="text.900" />
             <Text color="text.900" fontWeight="normal" fontSize="md">
               {item.text}
             </Text>
@@ -89,8 +89,8 @@ export default function PaymentPage(props) {
       >
         Billing Address
       </Text>
-      <HStack alignItems="center" justifyContent="space-between">
-        <VStack>
+      <HStack alignItems="center" spacing={10}>
+        <VStack justifyContent="center">
           <Text color="text.900" fontWeight="normal" fontSize="md">
             Country
           </Text>
@@ -218,7 +218,7 @@ export default function PaymentPage(props) {
         <Button
           bg="primary.900"
           color="text.900"
-          width={["100%", "80%", "100%"]}
+          width={["100%", "80%", "70%"]}
           mt={10}
           _hover={{ backgroundColor: "primary.600" }}
           onClick={() => router.push("/student/my-learnings")}
