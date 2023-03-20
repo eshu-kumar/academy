@@ -9,9 +9,7 @@ import {
   TabPanels,
   Tab,
   TabPanel,
-  Textarea,
 } from "@chakra-ui/react";
-import { useRouter } from "next/router";
 import { getCourseInfoService } from "../services/courseService";
 import {
   createCommentService,
@@ -31,31 +29,29 @@ import dynamic from "next/dynamic";
 import { authenticateServerService } from "../services/authService";
 import { useCustomToast } from "../utils/useCustomToast";
 const ReactPlayer = dynamic(() => import("react-player/lazy"), { ssr: false });
-import { Formik, Form } from "formik";
+import { Formik, Form, resetForm } from "formik";
 import * as Yup from "yup";
-import {
-  MyCheckbox,
-  MyTextInput,
-  MySelect,
-  MyFileInput,
-  MyTextArea,
-} from "../components/FormGrocery";
+import { MyTextArea } from "../components/FormGrocery";
 chakra(ReactPlayer);
 function ViewCourse(props) {
   console.log("props of view course", props);
+  console.log("review props", props.reviews);
+
   const { showToast } = useCustomToast();
   const { course, lectures } = props;
   const [viewing, setViewing] = useState(
     lectures.length > 0 ? lectures[0].file : ""
   );
+
   const [comments, setComments] = useState(props.comments);
   const [reviews, setReviews] = useState(props.reviews);
   const loader = loaderStore();
+
   let uri =
     viewing !== ""
       ? `http://localhost:3000/api/file/get-file?file=${viewing}&&userEmail=${props.user.email}`
       : `https://www.youtube.com/watch?v=hQAHSlTtcmY`;
-  console.log("uri", uri);
+
   const handleSubmit = async (values) => {
     const commentObj = { commentor: props.user.email, comment: values.comment };
     loader.setStatus("Adding  comment...");
@@ -70,18 +66,23 @@ function ViewCourse(props) {
     }
   };
   const handleReviewSubmit = async (values) => {
+    // console.log("handle the subbmit of the form");
     const commentObj = { reviewer: props.user.email, review: values.review };
     loader.setStatus("Adding  review...");
     loader.setIsLoading(true);
     const response = await createReviewService(commentObj);
     loader.setIsLoading(false);
+
     //NEED TO ADD LOGIC FOR REFRESH OF COMMENTS ONCE THE COMMENT ADDED
     if (!response.isError) {
       showToast(response.isError, response.message);
+      setReviews([commentObj, ...reviews]);
+      // resetForm();
     } else {
       showToast(response.isError, response.error);
     }
   };
+
   return (
     <VStack
       spacing={10}
@@ -194,27 +195,31 @@ function ViewCourse(props) {
                   await handleReviewSubmit(values);
                 }}
               >
-                <Form style={{ width: "100%" }}>
-                  <VStack spacing={3} w="full" alignItems={"center"}>
-                    <MyTextArea
-                      label="
-                      Add Review"
-                      type="text"
-                      id="review"
-                      name="review"
-                    />
+                {({ resetForm }) => {
+                  return (
+                    <Form style={{ width: "100%" }}>
+                      <VStack spacing={3} w="full" alignItems={"center"}>
+                        <MyTextArea
+                          label="Add Review"
+                          type="text"
+                          id="review"
+                          name="review"
+                        />
 
-                    <Button
-                      type="submit"
-                      backgroundColor="primary.900"
-                      color="text.900"
-                      px={6}
-                      _hover={{ backgroundColor: "primary.600" }}
-                    >
-                      Add Review
-                    </Button>
-                  </VStack>
-                </Form>
+                        <Button
+                          type="submit"
+                          backgroundColor="primary.900"
+                          color="text.900"
+                          px={6}
+                          _hover={{ backgroundColor: "primary.600" }}
+                          // onClick={() => resetForm()}
+                        >
+                          Add Review
+                        </Button>
+                      </VStack>
+                    </Form>
+                  );
+                }}
               </Formik>
             </VStack>
             <Reviews reviews={reviews} />
@@ -232,7 +237,7 @@ function ViewCourse(props) {
                     .required("Required"),
                 })}
                 onSubmit={async (values, { setSubmitting }) => {
-                  console.log(values);
+                  console.log("this is the values ", values);
                   await handleSubmit(values);
                 }}
               >
@@ -271,7 +276,6 @@ export async function getServerSideProps(context) {
   const user = await authenticateServerService(context.req);
   console.log("user in serversideprops", user);
   if (user.isError) {
-    // Redirect to a "not found" page
     return { redirect: { destination: "/auth-user/login", permanent: false } };
   }
   const _id = context.query._id;
@@ -280,7 +284,7 @@ export async function getServerSideProps(context) {
   const lectures = response.lectures;
   const commentsResponse = await getCommentListService(context.req);
   const reviewsResponse = await getReviewListService(context.req);
-
+  console.log(context, "this is the context from SSR");
   return {
     props: {
       user,

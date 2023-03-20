@@ -40,14 +40,7 @@ export default function QuestionAndAnswer(props) {
     >
       {props.comments.map((item, index) => {
         return (
-          <HStack
-            alignItems="center"
-            key={index}
-            spacing={4}
-            onClick={() => {
-              console.log("test");
-            }}
-          >
+          <HStack alignItems="center" key={index} spacing={4}>
             <Avatar
               name={item.commentor}
               color="text.900"
