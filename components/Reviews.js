@@ -95,15 +95,9 @@ export default function Reviews(props) {
   } else {
     orgReviews = review;
   }
-  console.log("student reviews", props.reviews);
-
   const reviews = props.isTeacher ? teachersReview : orgReviews;
   return (
-    <Stack
-      direction={{ base: "column", md: "row" }}
-      spacing={{ base: 10, md: 4, lg: 10 }}
-      align={"center"}
-    >
+    <Stack direction={{ base: "column", md: "column" }} mt={5}>
       {reviews.map((item, index) => {
         return (
           <VStack key={index} spacing={5}>
