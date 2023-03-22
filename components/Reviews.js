@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, Avatar, Stack, Flex, VStack } from "@chakra-ui/react";
+import { Text, Avatar, Stack, Flex, VStack, HStack } from "@chakra-ui/react";
 
 const review = [
   {
@@ -97,7 +97,13 @@ export default function Reviews(props) {
   }
   const reviews = props.isTeacher ? teachersReview : orgReviews;
   return (
-    <Stack direction={{ base: "column", md: "column" }} mt={5}>
+    <HStack
+      alignItems="flex-start"
+      spacing={4}
+      overflowX="auto"
+      direction={{ base: "row", md: "row" }}
+      mt={5}
+    >
       {reviews.map((item, index) => {
         return (
           <VStack key={index} spacing={5}>
@@ -136,7 +142,7 @@ export default function Reviews(props) {
           </VStack>
         );
       })}
-    </Stack>
+    </HStack>
   );
 }
 

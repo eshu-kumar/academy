@@ -61,6 +61,7 @@ function ViewCourse(props) {
     //NEED TO ADD LOGIC FOR REFRESH OF COMMENTS ONCE THE COMMENT ADDED
     if (!response.isError) {
       showToast(response.isError, response.message);
+      setComments([commentObj, ...comments]);
     } else {
       showToast(response.isError, response.error);
     }
@@ -190,36 +191,32 @@ function ViewCourse(props) {
                     .min(8, "Must be greater than 8 characters")
                     .required("Required"),
                 })}
-                onSubmit={async (values, { setSubmitting }) => {
+                onSubmit={async (values, { setSubmitting, resetForm }) => {
                   console.log(values);
                   await handleReviewSubmit(values);
+                  resetForm();
                 }}
               >
-                {({ resetForm }) => {
-                  return (
-                    <Form style={{ width: "100%" }}>
-                      <VStack spacing={3} w="full" alignItems={"center"}>
-                        <MyTextArea
-                          label="Add Review"
-                          type="text"
-                          id="review"
-                          name="review"
-                        />
+                <Form style={{ width: "100%" }}>
+                  <VStack spacing={3} w="full" alignItems={"center"}>
+                    <MyTextArea
+                      label="Add Review"
+                      type="text"
+                      id="review"
+                      name="review"
+                    />
 
-                        <Button
-                          type="submit"
-                          backgroundColor="primary.900"
-                          color="text.900"
-                          px={6}
-                          _hover={{ backgroundColor: "primary.600" }}
-                          // onClick={() => resetForm()}
-                        >
-                          Add Review
-                        </Button>
-                      </VStack>
-                    </Form>
-                  );
-                }}
+                    <Button
+                      type="submit"
+                      backgroundColor="primary.900"
+                      color="text.900"
+                      px={6}
+                      _hover={{ backgroundColor: "primary.600" }}
+                    >
+                      Add Review
+                    </Button>
+                  </VStack>
+                </Form>
               </Formik>
             </VStack>
             <Reviews reviews={reviews} />
@@ -236,9 +233,10 @@ function ViewCourse(props) {
                     .min(8, "Must be greater than 8 characters")
                     .required("Required"),
                 })}
-                onSubmit={async (values, { setSubmitting }) => {
+                onSubmit={async (values, { setSubmitting, resetForm }) => {
                   console.log("this is the values ", values);
                   await handleSubmit(values);
+                  resetForm();
                 }}
               >
                 <Form style={{ width: "100%" }}>

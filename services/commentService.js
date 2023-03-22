@@ -30,7 +30,7 @@ export async function createCommentService(commentObj) {
     );
     //console.log(response);
     const comment = response.data.data.createComment;
-    console.log(data, "this is the dats");
+
     if (!comment) {
       throw new Error("Comment could not be added ");
     }
