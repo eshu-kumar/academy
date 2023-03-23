@@ -65,19 +65,39 @@ export default function CourseCard(item) {
             </Text>
           </Stack>
           <Divider />
-          <Menu isOpen={isOpen} flex={1} placement="right-end">
+          <Menu isOpen={isOpen}>
             <MenuList
               onMouseEnter={onOpen}
               onMouseLeave={onClose}
               p={4}
               height="full"
+              borderWidth={1}
+              _light={{ borderColor: "primary.900", bg: "primary.900" }}
             >
-              <Text fontWeight="semibold" fontSize="md">
+              <Text fontWeight="semibold" fontSize="md" color="text.900">
                 {item.courseName}
               </Text>
-              <MenuItem> {item.description} </MenuItem>
-              <MenuItem> {item.description} </MenuItem>
-              <MenuItem> {item.description} </MenuItem>
+              <MenuItem
+                _light={{ bg: "primary.900" }}
+                _dark={{ bg: "whiteAlpha.200" }}
+                color="text.900"
+              >
+                {item.description}
+              </MenuItem>
+              <MenuItem
+                _light={{ bg: "primary.900" }}
+                _dark={{ bg: "whiteAlpha.200" }}
+                color="text.900"
+              >
+                {item.description}
+              </MenuItem>
+              <MenuItem
+                _light={{ bg: "primary.900" }}
+                _dark={{ bg: "whiteAlpha.200" }}
+                color="text.900"
+              >
+                {item.description}{" "}
+              </MenuItem>
             </MenuList>
           </Menu>
           <Button
