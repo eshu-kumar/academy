@@ -9,6 +9,7 @@ import {
   Link,
   useToast,
   Spacer,
+  Image
 } from "@chakra-ui/react";
 import { useCustomToast } from "../../utils/useCustomToast";
 import { useRouter } from "next/router";
@@ -260,13 +261,26 @@ export default function Header(props) {
       borderBottomColor="whiteAlpha.700"
       backgroundColor="background.900"
     >
-      <Link as={NextLink} href="/">
-        <Center w="150px">
-          <Text fontSize="3xl" color="text.900">
+       <Link as={NextLink} href="/" _hover={{ textDecoration: "none" }}>
+      <Center w="fit-content" px={2}>
+        <HStack spacing={3}>
+         
+          <Image
+  src="/logo.svg"
+  alt="Academy Logo"
+  boxSize="40px" // 4x bigger
+  objectFit="contain"
+/>
+         
+      
+
+
+          <Text fontSize="3xl" fontWeight="bold" color="white">
             Academy
           </Text>
-        </Center>
-      </Link>
+        </HStack>
+      </Center>
+    </Link>
       <Spacer />
       <Flex wrap={"wrap"}>
         {isAuthenticated ? (

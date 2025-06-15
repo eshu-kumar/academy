@@ -53,6 +53,26 @@ export default function TrendingCourses(props) {
           'left',
           defaultList.length < 4 ? 'center' : 'left',
         ]}
+        sx={{
+          // Firefox
+          scrollbarWidth: "thin",
+          scrollbarColor: "#4A5568 transparent", // thumb color, transparent track
+  
+          // WebKit (Chrome, Safari, Edge)
+          "&::-webkit-scrollbar": {
+            width: "8px",
+          },
+          "&::-webkit-scrollbar-track": {
+            background: "transparent", // Hide background of track
+          },
+          "&::-webkit-scrollbar-thumb": {
+            background: "#4A5568", // Gray thumb
+            borderRadius: "6px",
+          },
+          "&::-webkit-scrollbar-thumb:hover": {
+            background: "#718096", // Lighter on hover
+          },
+        }}
       >
         {defaultList.map((item, index) => {
           const uri =
