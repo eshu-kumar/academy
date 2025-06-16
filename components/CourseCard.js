@@ -22,6 +22,7 @@ export default function CardComponent(item) {
       border="2px"
       borderColor="whiteAlpha.300"
       alignItems="stretch"
+      backgroundColor="#000"
     >
       <CardBody h="100%" w="full" justifyContent="space-around">
         <Image
