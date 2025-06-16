@@ -92,6 +92,7 @@ export default function Reviews(props) {
             py={4}
             border="2px"
             borderColor="whiteAlpha.300"
+            backgroundColor="#000"
           >
             <CardBody>
               <Text fontSize="md" fontWeight="medium" color="text.900">
