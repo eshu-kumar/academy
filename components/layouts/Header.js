@@ -11,6 +11,7 @@ import {
   Spacer,
   Image
 } from "@chakra-ui/react";
+//commit in default master branch
 import { useCustomToast } from "../../utils/useCustomToast";
 import { useRouter } from "next/router";
 import NextLink from "next/link";
